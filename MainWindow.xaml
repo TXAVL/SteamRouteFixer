@@ -61,7 +61,7 @@
                         <MenuItem x:Name="MenuRefreshAll" Header="🔄 Làm mới dữ liệu" Click="MenuRefreshAll_Click"/>
                     </MenuItem>
 
-                    <MenuItem x:Name="MenuView" Header="_View" Foreground="{DynamicResource TextPrimaryBrush}">
+                    <MenuItem x:Name="MenuTheme" Header="_Theme" Foreground="{DynamicResource TextPrimaryBrush}">
                         <MenuItem x:Name="MenuThemeWinUI3" Header="🎨 Theme: WinUI 3 (Windows 11 Fluent)" Click="MenuThemeWinUI3_Click"/>
                         <MenuItem x:Name="MenuThemeSteamDark" Header="🎨 Theme: Steam Dark Gaming (Cyberpunk)" Click="MenuThemeSteamDark_Click"/>
                         <MenuItem x:Name="MenuThemeVSCode" Header="🎨 Theme: VS Code Studio Dark" Click="MenuThemeVSCode_Click"/>

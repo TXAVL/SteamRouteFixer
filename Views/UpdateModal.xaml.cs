@@ -105,7 +105,7 @@ namespace SteamRouteFixer.Views
                 string downloadedFile = await _checker.DownloadUpdateAsync(_latestUpdate.DownloadUrl, progress);
                 TxtUpdateStatus.Text = "✓ Đã tải xong! Đang mở bộ cài...";
 
-                if (MessageBox.Show("Đã tải xong bản cập nhật mới. Bạn có muốn khởi chạy ngay?", "Cập nhật hoàn tất", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                if (TxaMessageBox.Show(this, "Đã tải xong bản cập nhật mới. Bạn có muốn khởi chạy ngay?", "Cập nhật hoàn tất", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
                     Process.Start(new ProcessStartInfo
                     {

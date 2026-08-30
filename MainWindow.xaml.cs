@@ -92,7 +92,7 @@ namespace SteamRouteFixer
             string title = TxaLanguageManager.GetString("t_confirm_exit_title", "Xác nhận đóng ứng dụng");
             string msg = TxaLanguageManager.GetString("t_confirm_exit_msg", "Bạn có chắc chắn muốn thoát khỏi Steam Route Fixer?");
 
-            var result = MessageBox.Show(this, msg, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = TxaMessageBox.Show(this, msg, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
@@ -122,7 +122,7 @@ namespace SteamRouteFixer
                 if (MenuClearLog != null) MenuClearLog.Header = TxaLanguageManager.GetString("t_menu_clear_log", "🧹 Xóa sạch Console Log");
                 if (MenuRefreshAll != null) MenuRefreshAll.Header = TxaLanguageManager.GetString("t_menu_refresh", "🔄 Làm mới dữ liệu");
 
-                if (MenuView != null) MenuView.Header = TxaLanguageManager.GetString("t_menu_view", "_View");
+                if (MenuTheme != null) MenuTheme.Header = TxaLanguageManager.GetString("t_menu_theme", "_Theme");
                 if (MenuTools != null) MenuTools.Header = TxaLanguageManager.GetString("t_menu_tools", "_Tools");
                 if (MenuAutoFix != null) MenuAutoFix.Header = TxaLanguageManager.GetString("t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam");
                 if (MenuDiagnose != null) MenuDiagnose.Header = TxaLanguageManager.GetString("t_menu_diagnose", "🔍 Chẩn đoán kết nối ngay");
@@ -426,7 +426,7 @@ namespace SteamRouteFixer
         {
             if (_steamStatus.IsRunning)
             {
-                if (MessageBox.Show("Steam đang chạy! Để áp dụng cấu hình DNS sạch hiệu quả nhất, khuyến nghị đóng Steam trước.\n\nBạn có muốn tự động đóng Steam ngay bây giờ không?", "Cảnh báo Steam đang chạy", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                if (TxaMessageBox.Show(this, "Steam đang chạy! Để áp dụng cấu hình DNS sạch hiệu quả nhất, khuyến nghị đóng Steam trước.\n\nBạn có muốn tự động đóng Steam ngay bây giờ không?", "Cảnh báo Steam đang chạy", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     SteamDetector.CloseSteamProcesses();
                     RefreshSteamSentinel();
@@ -543,7 +543,7 @@ namespace SteamRouteFixer
                 TxtProgressStatus.Text = $"✅ Hoàn tất! Đã sửa xong {pinsToApply.Count} domain Steam. Bạn có thể mở Steam ngay mà không cần VPN/1.1.1.1!";
                 TxaLogger.Success($"=== HOÀN TẤT AUTO FIX STEAM TRONG {swTotal.Elapsed.TotalSeconds:0.0}s ===");
 
-                MessageBox.Show($"Đã sửa lỗi kết nối Steam thành công ({pinsToApply.Count} tên miền được tối ưu IP sạch)!\n\nBây giờ bạn có thể mở Steam và đăng nhập / mua game bình thường mà không cần bật VPN hay 1.1.1.1.", "Sửa lỗi hoàn tất", MessageBoxButton.OK, MessageBoxImage.Information);
+                TxaMessageBox.Show(this, $"Đã sửa lỗi kết nối Steam thành công ({pinsToApply.Count} tên miền được tối ưu IP sạch)!\n\nBây giờ bạn có thể mở Steam và đăng nhập / mua game bình thường mà không cần bật VPN hay 1.1.1.1.", "Sửa lỗi hoàn tất", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
@@ -559,7 +559,7 @@ namespace SteamRouteFixer
 
         private void BtnRevertHosts_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Bạn có chắc chắn muốn xóa toàn bộ các IP Steam đã ghim và khôi phục file hosts về trạng thái gốc?", "Xác nhận khôi phục", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (TxaMessageBox.Show(this, "Bạn có chắc chắn muốn xóa toàn bộ các IP Steam đã ghim và khôi phục file hosts về trạng thái gốc?", "Xác nhận khôi phục", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 TxaLogger.Warn("Đang khôi phục file hosts gốc...");
                 if (HostsManager.ClearAllPinned())
@@ -573,7 +573,7 @@ namespace SteamRouteFixer
                         d.Status = DomainStatus.Pending;
                     }
                     ApplyTab1Filter();
-                    MessageBox.Show("Đã khôi phục file hosts gốc thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    TxaMessageBox.Show(this, "Đã khôi phục file hosts gốc thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
@@ -588,7 +588,7 @@ namespace SteamRouteFixer
             if (DnsFlusher.FlushDnsCache())
             {
                 TxaLogger.Success("✓ Đã Flush DNS Windows thành công!");
-                MessageBox.Show("Đã làm mới DNS Cache thành công!", "Flush DNS", MessageBoxButton.OK, MessageBoxImage.Information);
+                TxaMessageBox.Show(this, "Đã làm mới DNS Cache thành công!", "Flush DNS", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -869,7 +869,7 @@ namespace SteamRouteFixer
             }
             else
             {
-                MessageBox.Show("Chưa tìm thấy thư mục cài đặt Steam trên máy tính.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                TxaMessageBox.Show(this, "Chưa tìm thấy thư mục cài đặt Steam trên máy tính.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -887,7 +887,7 @@ namespace SteamRouteFixer
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Không thể mở file hosts: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                TxaMessageBox.Show(this, $"Không thể mở file hosts: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -908,7 +908,7 @@ namespace SteamRouteFixer
                     sb.AppendLine($"[{l.TimeString}] {l.LevelPrefix} {l.Message}");
                 }
                 File.WriteAllText(sfd.FileName, sb.ToString(), Encoding.UTF8);
-                MessageBox.Show("Đã xuất file log thành công!", "Xuất Logs", MessageBoxButton.OK, MessageBoxImage.Information);
+                TxaMessageBox.Show(this, "Đã xuất file log thành công!", "Xuất Logs", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -936,7 +936,7 @@ namespace SteamRouteFixer
                 sb.AppendLine($"{d.Domain,-35} | {d.StatusText,-20} | Best IP: {d.BestIp,-15} | Ping: {d.LatencyDisplay}");
             }
             Clipboard.SetText(sb.ToString());
-            MessageBox.Show("Đã copy danh sách tên miền vào Clipboard!", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
+            TxaMessageBox.Show(this, "Đã copy danh sách tên miền vào Clipboard!", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void MenuCopyLogs_Click(object sender, RoutedEventArgs e)
@@ -947,7 +947,7 @@ namespace SteamRouteFixer
                 sb.AppendLine($"[{l.TimeString}] {l.LevelPrefix} {l.Message}");
             }
             Clipboard.SetText(sb.ToString());
-            MessageBox.Show("Đã copy toàn bộ Logs vào Clipboard!", "Copy Logs", MessageBoxButton.OK, MessageBoxImage.Information);
+            TxaMessageBox.Show(this, "Đã copy toàn bộ Logs vào Clipboard!", "Copy Logs", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void MenuClearLog_Click(object sender, RoutedEventArgs e)

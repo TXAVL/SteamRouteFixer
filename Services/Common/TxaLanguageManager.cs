@@ -145,8 +145,8 @@ namespace SteamRouteFixer.Services.Common
                 var pkg = DecryptLanguageFile(filePath);
                 if (pkg == null || string.IsNullOrWhiteSpace(pkg.lang_code) || pkg.txa_key.Count == 0)
                 {
-                    MessageBox.Show(
-                        "File ngôn ngữ .txa không hợp lệ hoặc đã bị chỉnh sửa/hư hại.",
+                    TxaMessageBox.Show(
+                        "File ngôn ngữ .txal không hợp lệ hoặc đã bị chỉnh sửa/hư hại.",
                         "Lỗi Gói Ngôn Ngữ TXA",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error
@@ -170,14 +170,14 @@ namespace SteamRouteFixer.Services.Common
                         pkg.lang_code
                     );
 
-                    MessageBox.Show(msg, title, MessageBoxButton.OK, MessageBoxImage.Information);
+                    TxaMessageBox.Show(msg, title, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi nạp file .txal: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                TxaMessageBox.Show($"Lỗi nạp file .txal: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -289,7 +289,7 @@ namespace SteamRouteFixer.Services.Common
                     { "t_menu_copy_logs", "📋 Copy toàn bộ Console Logs" },
                     { "t_menu_clear_log", "🧹 Xóa sạch Console Log" },
                     { "t_menu_refresh", "🔄 Làm mới dữ liệu" },
-                    { "t_menu_view", "_View" },
+                    { "t_menu_theme", "_Theme" },
                     { "t_menu_tools", "_Tools" },
                     { "t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam" },
                     { "t_menu_diagnose", "🔍 Chẩn đoán kết nối ngay" },
@@ -466,7 +466,7 @@ namespace SteamRouteFixer.Services.Common
                     { "t_menu_copy_logs", "📋 Copy Console Logs" },
                     { "t_menu_clear_log", "🧹 Clear Console Log" },
                     { "t_menu_refresh", "🔄 Refresh Data" },
-                    { "t_menu_view", "_View" },
+                    { "t_menu_theme", "_Theme" },
                     { "t_menu_tools", "_Tools" },
                     { "t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam" },
                     { "t_menu_diagnose", "🔍 Diagnose Connections Now" },

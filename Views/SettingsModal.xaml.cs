@@ -182,23 +182,23 @@ namespace SteamRouteFixer.Views
             if (LstBackups.SelectedItem is string selectedFile)
             {
                 string fullPath = Path.Combine(StoragePathManager.BackupsDirectory, selectedFile);
-                if (MessageBox.Show($"Bạn có chắc chắn muốn khôi phục file hosts từ bản sao lưu:\n{selectedFile}?", "Xác nhận khôi phục", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (TxaMessageBox.Show(this, $"Bạn có chắc chắn muốn khôi phục file hosts từ bản sao lưu:\n{selectedFile}?", "Xác nhận khôi phục", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     if (HostsManager.RestoreBackup(fullPath))
                     {
                         DnsFlusher.FlushDnsCache();
-                        MessageBox.Show("Khôi phục file hosts thành công và đã Flush DNS!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                        TxaMessageBox.Show(this, "Khôi phục file hosts thành công và đã Flush DNS!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
                         RefreshBackupsList();
                     }
                     else
                     {
-                        MessageBox.Show("Không thể khôi phục file hosts. Vui lòng chạy phần mềm với quyền Administrator.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        TxaMessageBox.Show(this, "Không thể khôi phục file hosts. Vui lòng chạy phần mềm với quyền Administrator.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn 1 bản sao lưu trong danh sách!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                TxaMessageBox.Show(this, "Vui lòng chọn 1 bản sao lưu trong danh sách!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

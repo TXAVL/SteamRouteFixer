@@ -285,14 +285,14 @@ namespace SteamRouteFixer.Views
         {
             if (CmbTargetCulture.SelectedItem is not CultureOption selected)
             {
-                MessageBox.Show("Vui lòng chọn một ngôn ngữ đích để lưu.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                TxaMessageBox.Show(this, "Vui lòng chọn một ngôn ngữ đích để lưu.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             int translatedCount = TranslationItems.Count(t => !string.IsNullOrWhiteSpace(t.TranslatedText));
             if (translatedCount == 0)
             {
-                MessageBox.Show("Vui lòng dịch ít nhất một vài câu trước khi lưu & áp dụng.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                TxaMessageBox.Show(this, "Vui lòng dịch ít nhất một vài câu trước khi lưu & áp dụng.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -323,7 +323,8 @@ namespace SteamRouteFixer.Views
                 TxaLanguageManager.ScanAvailableLanguages();
                 TxaLanguageManager.ApplyLanguageByCode(selected.Code, saveToConfig: true);
 
-                MessageBox.Show(
+                TxaMessageBox.Show(
+                    this,
                     $"Đã lưu thành công gói ngôn ngữ {pkg.lang_name} ({pkg.lang_code}) và áp dụng ngay lập tức vào Steam Route Fixer!",
                     "Hoàn tất biên dịch",
                     MessageBoxButton.OK,
@@ -335,7 +336,7 @@ namespace SteamRouteFixer.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi lưu gói ngôn ngữ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                TxaMessageBox.Show(this, $"Lỗi khi lưu gói ngôn ngữ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -343,18 +344,20 @@ namespace SteamRouteFixer.Views
         {
             if (CmbTargetCulture.SelectedItem is not CultureOption selected) return;
 
-            string authorName = string.IsNullOrWhiteSpace(TxtAuthor.Text) ? Environment.UserName : TxtAuthor.Text.Trim();
-            
-            var translationDict = TranslationItems.ToDictionary(t => t.Key, t => t.TranslatedText);
-            string jsonBody = JsonSerializer.Serialize(translationDict, new JsonSerializerOptions { WriteIndented = true });
+            string jsonBody = JsonSerializer.Serialize(new
+            {
+                lang_code = selected.Code,
+                lang_name = selected.NativeName,
+                author = string.IsNullOrWhiteSpace(TxtAuthor.Text) ? Environment.UserName : TxtAuthor.Text.Trim(),
+                keys = TranslationItems.ToDictionary(t => t.Key, t => t.TranslatedText)
+            }, new JsonSerializerOptions { WriteIndented = true });
 
-            string title = $"[Community Language] {selected.NativeName} ({selected.Code}) by {authorName}";
-            string body = $@"### 🌐 Community Language Translation Submission
+            string title = $"[New Language Submission] {selected.NativeName} ({selected.Code})";
+            string body = $@"### 🌐 New TXA Language Package Contribution
 
-- **Language Name**: {selected.NativeName}
-- **Language Code**: {selected.Code}
-- **Author / Translator**: {authorName}
-- **App Version**: Steam Route Fixer v1.0.0
+**Language**: {selected.DisplayName}
+**Code**: `{selected.Code}`
+**Author**: {TxtAuthor.Text}
 
 ```json
 {jsonBody}
@@ -374,7 +377,7 @@ namespace SteamRouteFixer.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Không thể mở trình duyệt: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                TxaMessageBox.Show(this, $"Không thể mở trình duyệt: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

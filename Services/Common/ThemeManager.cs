@@ -32,28 +32,26 @@ namespace SteamRouteFixer.Services.Common
                 var app = Application.Current;
                 if (app != null)
                 {
-                    // Find and replace theme dictionary or add it
-                    ResourceDictionary? existing = null;
-                    foreach (var dict in app.Resources.MergedDictionaries)
+                    app.Resources.MergedDictionaries.Clear();
+                    app.Resources.MergedDictionaries.Add(new ResourceDictionary
                     {
-                        if (dict.Source != null && dict.Source.OriginalString.Contains("Theme", StringComparison.OrdinalIgnoreCase))
-                        {
-                            existing = dict;
-                            break;
-                        }
-                    }
-
-                    if (existing != null)
-                    {
-                        app.Resources.MergedDictionaries.Remove(existing);
-                    }
+                        Source = new Uri("pack://application:,,,/SteamRouteFixer;component/Styles/Animations.xaml", UriKind.Absolute)
+                    });
                     app.Resources.MergedDictionaries.Add(newDict);
+
+                    foreach (Window win in app.Windows)
+                    {
+                        try
+                        {
+                            win.Resources.MergedDictionaries.Clear();
+                            win.Resources.MergedDictionaries.Add(newDict);
+                            ApplyDwmBackdrop(win, themeName == "WinUI3");
+                        }
+                        catch { }
+                    }
                 }
 
-                if (targetWindow != null)
-                {
-                    ApplyDwmBackdrop(targetWindow, themeName == "WinUI3");
-                }
+                TxaLogger.Success($"🎨 Đã áp dụng giao diện: {themeName}");
             }
             catch (Exception ex)
             {
