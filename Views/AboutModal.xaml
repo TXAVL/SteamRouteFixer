@@ -22,8 +22,8 @@
                     <Image Source="pack://application:,,,/SteamRouteFixer;component/Assets/app.png" Width="52" Height="52" Margin="0,0,16,0" VerticalAlignment="Center"/>
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="Steam Route Fixer" FontWeight="Bold" FontSize="20" Foreground="{DynamicResource PrimaryAccentBrush}"/>
-                        <TextBlock Text="Tool Steam Route Fixer &amp; HTTP/HTTPS Traffic Inspector" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        <TextBlock Text="Phát triển bởi TXA Studio • Version 1.0 (Build 2026.08)" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" Margin="0,2,0,0"/>
+                        <TextBlock x:Name="TxtAboutSubtitle" Text="Tool Steam Route Fixer &amp; HTTP/HTTPS Traffic Inspector" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="TxtAboutDev" Text="Phát triển bởi TXA Studio • Version 1.0 (Build 2026.08)" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" Margin="0,2,0,0"/>
                     </StackPanel>
                 </StackPanel>
                 <Separator Background="{DynamicResource CardBorderBrush}" Height="1"/>
@@ -38,17 +38,17 @@
                     Padding="16" Margin="0,0,0,16">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>
-                        <TextBlock Text="🎮 Về ứng dụng Steam Route Fixer" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
-                        <TextBlock TextWrapping="Wrap" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12" LineHeight="17">
+                        <TextBlock x:Name="TxtAboutAppHeader" Text="🎮 Về ứng dụng Steam Route Fixer" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="TxtAboutAppDesc" TextWrapping="Wrap" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12" LineHeight="17">
                             Ứng dụng chuyên nghiệp giúp game thủ Việt Nam tự động quét, chẩn đoán và khắc phục triệt để tình trạng lỗi kết nối mạng Steam (Steam Store, Community, Friends, Cloud Sync) bằng kỹ thuật tối ưu hóa định tuyến IP sạch chuẩn xác, hoàn toàn không cần cài đặt VPN hay phần mềm bên thứ 3.
                         </TextBlock>
 
-                        <TextBlock Text="⚡ Các tính năng cốt lõi" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="TxtAboutFeaturesHeader" Text="⚡ Các tính năng cốt lõi" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
                         <StackPanel Margin="6,0,0,12">
-                            <TextBlock Text="• 1-Click Auto Fix: Tự động phát hiện lỗi và ghim IP sạch vào hosts." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
-                            <TextBlock Text="• Giám sát lưu lượng HTTP/HTTPS &amp; TCP Socket theo thời gian thực." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
-                            <TextBlock Text="• Hệ thống bảo vệ Steam Sentinel &amp; Tự động sao lưu file hosts." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
-                            <TextBlock Text="• Giao diện Microsoft WinUI 3 Fluent Dark sắc nét, độ tương phản cao." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
+                            <TextBlock x:Name="TxtAboutF1" Text="• 1-Click Auto Fix: Tự động phát hiện lỗi và ghim IP sạch vào hosts." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
+                            <TextBlock x:Name="TxtAboutF2" Text="• Giám sát lưu lượng HTTP/HTTPS &amp; TCP Socket theo thời gian thực." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
+                            <TextBlock x:Name="TxtAboutF3" Text="• Hệ thống bảo vệ Steam Sentinel &amp; Tự động sao lưu file hosts." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
+                            <TextBlock x:Name="TxtAboutF4" Text="• Giao diện Microsoft WinUI 3 Fluent Dark sắc nét, độ tương phản cao." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
                         </StackPanel>
 
                         <!-- Language & Translator Info (Matching User Screenshot) -->
@@ -62,8 +62,8 @@
                             </StackPanel>
                         </Border>
 
-                        <TextBlock Text="🛠️ Thông tin kỹ thuật &amp; Mã nguồn" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
-                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" LineHeight="16">
+                        <TextBlock x:Name="TxtAboutTechHeader" Text="🛠️ Thông tin kỹ thuật &amp; Mã nguồn" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="TxtAboutTechBody" TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" LineHeight="16">
                             Framework: .NET 10 (Desktop Runtime) • Windows Native Win32 API&#x0a;
                             Repository: https://github.com/TXAVL/SteamRouteFixer&#x0a;
                             Bản quyền © 2026 TXA Studio. All rights reserved.
@@ -81,11 +81,11 @@
                         <Viewbox Width="16" Height="16" Margin="0,0,8,0" VerticalAlignment="Center">
                             <Path Fill="#FFFFFF" Data="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                         </Viewbox>
-                        <TextBlock Text="⭐ Star on GitHub" FontWeight="SemiBold" FontSize="12" Foreground="#FFFFFF" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtStarGithub" Text="⭐ Star on GitHub" FontWeight="SemiBold" FontSize="12" Foreground="#FFFFFF" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
-                <Button Content="Đóng" Style="{DynamicResource WinUI3PrimaryButtonStyle}" HorizontalAlignment="Right" Width="90" Click="BtnClose_Click"/>
+                <Button x:Name="BtnClose" Content="Đóng" Style="{DynamicResource WinUI3PrimaryButtonStyle}" HorizontalAlignment="Right" Width="90" Click="BtnClose_Click"/>
             </Grid>
         </Grid>
     </Border>

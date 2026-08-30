@@ -45,42 +45,42 @@
 
                 <!-- Top Menu Bar (File, Edit, View, Tools, Help) -->
                 <Menu Grid.Column="1" Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" FontSize="12">
-                    <MenuItem Header="_File" Foreground="{DynamicResource TextPrimaryBrush}">
-                        <MenuItem Header="🎮 Mở thư mục cài đặt Steam" Click="MenuOpenSteamDir_Click"/>
-                        <MenuItem Header="📝 Mở file hosts Windows (Notepad)" Click="MenuOpenHostsFile_Click"/>
-                        <MenuItem Header="💾 Xuất nhật ký Logs ra file..." Click="MenuExportLogs_Click"/>
+                    <MenuItem x:Name="MenuFile" Header="_File" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem x:Name="MenuSteamDir" Header="🎮 Mở thư mục cài đặt Steam" Click="MenuOpenSteamDir_Click"/>
+                        <MenuItem x:Name="MenuHostsFile" Header="📝 Mở file hosts Windows (Notepad)" Click="MenuOpenHostsFile_Click"/>
+                        <MenuItem x:Name="MenuExportLogs" Header="💾 Xuất nhật ký Logs ra file..." Click="MenuExportLogs_Click"/>
                         <Separator/>
-                        <MenuItem Header="❌ Thoát" Click="MenuExit_Click"/>
+                        <MenuItem x:Name="MenuExit" Header="❌ Thoát" Click="MenuExit_Click"/>
                     </MenuItem>
 
-                    <MenuItem Header="_Edit" Foreground="{DynamicResource TextPrimaryBrush}">
-                        <MenuItem Header="📋 Copy danh sách Domain" Click="MenuCopyDomains_Click"/>
-                        <MenuItem Header="📋 Copy toàn bộ Console Logs" Click="MenuCopyLogs_Click"/>
-                        <MenuItem Header="🧹 Xóa sạch Console Log" Click="MenuClearLog_Click"/>
+                    <MenuItem x:Name="MenuEdit" Header="_Edit" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem x:Name="MenuCopyDomains" Header="📋 Copy danh sách Domain" Click="MenuCopyDomains_Click"/>
+                        <MenuItem x:Name="MenuCopyLogs" Header="📋 Copy toàn bộ Console Logs" Click="MenuCopyLogs_Click"/>
+                        <MenuItem x:Name="MenuClearLog" Header="🧹 Xóa sạch Console Log" Click="MenuClearLog_Click"/>
                         <Separator/>
-                        <MenuItem Header="🔄 Làm mới dữ liệu" Click="MenuRefreshAll_Click"/>
+                        <MenuItem x:Name="MenuRefreshAll" Header="🔄 Làm mới dữ liệu" Click="MenuRefreshAll_Click"/>
                     </MenuItem>
 
-                    <MenuItem Header="_View" Foreground="{DynamicResource TextPrimaryBrush}">
-                        <MenuItem Header="🎨 Theme: WinUI 3 (Windows 11 Fluent)" Click="MenuThemeWinUI3_Click"/>
-                        <MenuItem Header="🎨 Theme: Steam Dark Gaming (Cyberpunk)" Click="MenuThemeSteamDark_Click"/>
-                        <MenuItem Header="🎨 Theme: VS Code Studio Dark" Click="MenuThemeVSCode_Click"/>
+                    <MenuItem x:Name="MenuView" Header="_View" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem x:Name="MenuThemeWinUI3" Header="🎨 Theme: WinUI 3 (Windows 11 Fluent)" Click="MenuThemeWinUI3_Click"/>
+                        <MenuItem x:Name="MenuThemeSteamDark" Header="🎨 Theme: Steam Dark Gaming (Cyberpunk)" Click="MenuThemeSteamDark_Click"/>
+                        <MenuItem x:Name="MenuThemeVSCode" Header="🎨 Theme: VS Code Studio Dark" Click="MenuThemeVSCode_Click"/>
                     </MenuItem>
 
-                    <MenuItem Header="_Tools" Foreground="{DynamicResource TextPrimaryBrush}">
-                        <MenuItem Header="⚡ 1-Click Auto Fix Steam" Click="BtnAutoFix_Click"/>
-                        <MenuItem Header="🔍 Chẩn đoán kết nối ngay" Click="BtnDiagnose_Click"/>
-                        <MenuItem Header="🧹 Khôi phục file Hosts gốc" Click="BtnRevertHosts_Click"/>
+                    <MenuItem x:Name="MenuTools" Header="_Tools" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem x:Name="MenuAutoFix" Header="⚡ 1-Click Auto Fix Steam" Click="BtnAutoFix_Click"/>
+                        <MenuItem x:Name="MenuDiagnose" Header="🔍 Chẩn đoán kết nối ngay" Click="BtnDiagnose_Click"/>
+                        <MenuItem x:Name="MenuRevertHosts" Header="🧹 Khôi phục file Hosts gốc" Click="BtnRevertHosts_Click"/>
                         <Separator/>
-                        <MenuItem Header="🔄 Flush DNS Cache Windows" Click="BtnFlushDns_Click"/>
-                        <MenuItem Header="📂 Mở thư mục dữ liệu AppData (%LocalAppData%)" Click="MenuOpenAppData_Click"/>
+                        <MenuItem x:Name="MenuFlushDns" Header="🔄 Flush DNS Cache Windows" Click="BtnFlushDns_Click"/>
+                        <MenuItem x:Name="MenuOpenAppData" Header="📂 Mở thư mục dữ liệu AppData (%LocalAppData%)" Click="MenuOpenAppData_Click"/>
                         <Separator/>
-                        <MenuItem Header="⚙️ Cài đặt hệ thống..." Click="MenuSettings_Click"/>
+                        <MenuItem x:Name="MenuSettings" Header="⚙️ Cài đặt hệ thống..." Click="MenuSettings_Click"/>
                     </MenuItem>
 
-                    <MenuItem Header="_Help" Foreground="{DynamicResource TextPrimaryBrush}">
-                        <MenuItem Header="🔄 Kiểm tra cập nhật (Check Update...)" Click="MenuCheckUpdate_Click"/>
-                        <MenuItem Header="ℹ️ Giới thiệu (About SteamRouteFixer...)" Click="MenuAbout_Click"/>
+                    <MenuItem x:Name="MenuHelp" Header="_Help" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem x:Name="MenuCheckUpdate" Header="🔄 Kiểm tra cập nhật (Check Update...)" Click="MenuCheckUpdate_Click"/>
+                        <MenuItem x:Name="MenuAbout" Header="ℹ️ Giới thiệu (About SteamRouteFixer...)" Click="MenuAbout_Click"/>
                     </MenuItem>
                 </Menu>
 
@@ -89,7 +89,7 @@
                     <Border x:Name="BadgeAdmin" Background="#163820" BorderBrush="#2D6A4F" BorderThickness="1" CornerRadius="5" Padding="8,3" Margin="0,0,10,0">
                         <TextBlock x:Name="TxtAdminStatus" Text="🛡️ Administrator" FontSize="11" FontWeight="SemiBold" Foreground="#26E07F"/>
                     </Border>
-                    <Button Content="⚙️ Cài Đặt" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="10,3" FontSize="11.5" Click="MenuSettings_Click"/>
+                    <Button x:Name="BtnSettingsTop" Content="⚙️ Cài Đặt" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="10,3" FontSize="11.5" Click="MenuSettings_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -161,12 +161,12 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="⚠️" FontSize="18" VerticalAlignment="Center" Margin="0,0,10,0"/>
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                <TextBlock Text="PHÁT HIỆN TIẾN TRÌNH STEAM ĐANG CHẠY - CÁC TÁC VỤ SỬA ROUTE ĐÃ ĐƯỢC TẠM KHÓA"
+                                <TextBlock x:Name="TxtNoticeSteamRunningHeader" Text="PHÁT HIỆN TIẾN TRÌNH STEAM ĐANG CHẠY - CÁC TÁC VỤ SỬA ROUTE ĐÃ ĐƯỢC TẠM KHÓA"
                                            FontWeight="Bold" FontSize="12" Foreground="#FFE600"/>
-                                <TextBlock Text="Vui lòng nhấn 'Đóng Steam Ngay' để giải phóng Socket và ghi file hosts an toàn trước khi thao tác."
+                                <TextBlock x:Name="TxtNoticeSteamRunningDesc" Text="Vui lòng nhấn 'Đóng Steam Ngay' để giải phóng Socket và ghi file hosts an toàn trước khi thao tác."
                                            FontSize="11" Foreground="#DDD0A0" Margin="0,2,0,0"/>
                             </StackPanel>
-                            <Button Grid.Column="2" Content="🛑 Đóng Steam Ngay"
+                            <Button x:Name="BtnNoticeCloseSteam" Grid.Column="2" Content="🛑 Đóng Steam Ngay"
                                     Style="{DynamicResource WinUI3DangerButtonStyle}"
                                     Padding="12,5" Click="BtnCloseSteam_Click" VerticalAlignment="Center"/>
                         </Grid>
@@ -201,14 +201,14 @@
 
                         <!-- Quick Filter Chips (Tab 1) -->
                         <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="Lọc trạng thái: " Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,6,0" FontSize="11.5"/>
+                            <TextBlock x:Name="TxtFilterStatusLabel1" Text="Lọc trạng thái: " Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,6,0" FontSize="11.5"/>
                             
                             <!-- All -->
                             <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab1_All_Click"
                                     Background="#1A4CC2FF" BorderBrush="#354CC2FF">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Ellipse Width="7" Height="7" Fill="#4CC2FF" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Tất cả" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="11.5"/>
+                                    <TextBlock x:Name="TxtFilterAll1" Text="Tất cả" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="11.5"/>
                                 </StackPanel>
                             </Button>
 
@@ -217,7 +217,7 @@
                                     Background="#1800E676" BorderBrush="#3500E676">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Ellipse Width="7" Height="7" Fill="#00E676" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Open" Foreground="#26E07F" FontWeight="Bold" FontSize="11.5"/>
+                                    <TextBlock x:Name="TxtFilterOpen1" Text="Open" Foreground="#26E07F" FontWeight="Bold" FontSize="11.5"/>
                                 </StackPanel>
                             </Button>
 
@@ -226,7 +226,7 @@
                                     Background="#18FFB900" BorderBrush="#35FFB900">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Ellipse Width="7" Height="7" Fill="#FFB900" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Poisoned" Foreground="#FFD54F" FontWeight="Bold" FontSize="11.5"/>
+                                    <TextBlock x:Name="TxtFilterPoisoned1" Text="Poisoned" Foreground="#FFD54F" FontWeight="Bold" FontSize="11.5"/>
                                 </StackPanel>
                             </Button>
 
@@ -235,7 +235,7 @@
                                     Background="#18FF5252" BorderBrush="#35FF5252">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Ellipse Width="7" Height="7" Fill="#FF5252" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Blocked" Foreground="#FF6E6E" FontWeight="Bold" FontSize="11.5"/>
+                                    <TextBlock x:Name="TxtFilterBlocked1" Text="Blocked" Foreground="#FF6E6E" FontWeight="Bold" FontSize="11.5"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -297,7 +297,7 @@
                                   BorderThickness="0">
                             <DataGrid.Columns>
                                 <!-- Category -->
-                                <DataGridTemplateColumn Header="Mục Đích" Width="140">
+                                <DataGridTemplateColumn x:Name="ColPurpose" Header="Mục Đích" Width="140">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Category, Mode=OneWay}" Foreground="#A8A8A8" FontWeight="SemiBold" VerticalAlignment="Center"/>
@@ -306,7 +306,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Domain -->
-                                <DataGridTemplateColumn Header="Tên Miền (Domain)" Width="250">
+                                <DataGridTemplateColumn x:Name="ColDomain" Header="Tên Miền (Domain)" Width="250">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Domain, Mode=OneWay}" Foreground="#4CC2FF" FontWeight="SemiBold" VerticalAlignment="Center"/>
@@ -315,7 +315,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- System IP -->
-                                <DataGridTemplateColumn Header="IP Máy / ISP" Width="140">
+                                <DataGridTemplateColumn x:Name="ColSystemIp" Header="IP Máy / ISP" Width="140">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding SystemIp, Mode=OneWay}" Foreground="#C8C8C8" VerticalAlignment="Center"/>
@@ -324,7 +324,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Clean IP -->
-                                <DataGridTemplateColumn Header="IP Sạch Nhanh Nhất" Width="160">
+                                <DataGridTemplateColumn x:Name="ColBestIp" Header="IP Sạch Nhanh Nhất" Width="160">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding BestIp, Mode=OneWay}" Foreground="#26E07F" FontWeight="Bold" VerticalAlignment="Center"/>
@@ -333,7 +333,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Ping -->
-                                <DataGridTemplateColumn Header="Ping" Width="85">
+                                <DataGridTemplateColumn x:Name="ColPing" Header="Ping" Width="85">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding LatencyDisplay, Mode=OneWay}" Foreground="#FFD54F" FontWeight="SemiBold" VerticalAlignment="Center"/>
@@ -342,7 +342,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Status Badge -->
-                                <DataGridTemplateColumn Header="Trạng Thái" Width="*">
+                                <DataGridTemplateColumn x:Name="ColStatus" Header="Trạng Thái" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Border Background="{Binding StatusBadgeColor, Mode=OneWay}" CornerRadius="4" Padding="8,3" HorizontalAlignment="Left">
@@ -369,12 +369,12 @@
                             </Grid.RowDefinitions>
 
                             <Grid Grid.Row="0" Margin="4,0,4,6">
-                                <TextBlock Text="📜 NHẬT KÝ HOẠT ĐỘNG (REAL-TIME LOGS)"
+                                <TextBlock x:Name="TxtLogConsoleHeader" Text="📜 NHẬT KÝ HOẠT ĐỘNG (REAL-TIME LOGS)"
                                            FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Content="📋 Copy Logs" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="8,2" FontSize="10.5" Margin="0,0,6,0" Click="MenuCopyLogs_Click"/>
-                                    <Button Content="🧹 Clear" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="8,2" FontSize="10.5" Click="MenuClearLog_Click"/>
+                                    <Button x:Name="BtnCopyLogsTab1" Content="📋 Copy Logs" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="8,2" FontSize="10.5" Margin="0,0,6,0" Click="MenuCopyLogs_Click"/>
+                                    <Button x:Name="BtnClearLogTab1" Content="🧹 Clear" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="8,2" FontSize="10.5" Click="MenuClearLog_Click"/>
                                 </StackPanel>
                             </Grid>
 
@@ -487,22 +487,22 @@
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="📊 Tổng Requests" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="TxtStatRequestsLabel" Text="📊 Tổng Requests" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                 <TextBlock x:Name="TxtStatRequests" Text="0 reqs" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource PrimaryAccentBrush}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="📥 Đã Tải Về (Download)" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="TxtStatDownloadLabel" Text="📥 Đã Tải Về (Download)" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                 <TextBlock x:Name="TxtStatDownload" Text="0 B" FontSize="15" FontWeight="Bold" Foreground="#26E07F"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="2">
-                                <TextBlock Text="📤 Đã Tải Lên (Upload)" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="TxtStatUploadLabel" Text="📤 Đã Tải Lên (Upload)" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                 <TextBlock x:Name="TxtStatUpload" Text="0 B" FontSize="15" FontWeight="Bold" Foreground="#0078D4"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="3">
-                                <TextBlock Text="⚡ Tốc Độ Mạng Hiện Tại" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="TxtStatSpeedLabel" Text="⚡ Tốc Độ Mạng Hiện Tại" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                 <TextBlock x:Name="TxtStatSpeed" Text="0 B/s" FontSize="15" FontWeight="Bold" Foreground="#FFB900"/>
                             </StackPanel>
                         </Grid>
@@ -511,14 +511,14 @@
                     <!-- 3. Quick Status Filter Chips (2xx, 3xx, 4xx, 5xx, Active) -->
                     <Grid Grid.Row="2" Margin="0,0,0,8">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Lọc trạng thái: " Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="11.5"/>
+                            <TextBlock x:Name="TxtFilterStatusLabel2" Text="Lọc trạng thái: " Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="11.5"/>
                             
                             <!-- All -->
                             <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab2_All_Click"
                                     Background="#1A4CC2FF" BorderBrush="#354CC2FF">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Ellipse Width="7" Height="7" Fill="#4CC2FF" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Tất cả" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="11.5"/>
+                                    <TextBlock x:Name="TxtFilterAll2" Text="Tất cả" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="11.5"/>
                                 </StackPanel>
                             </Button>
 
@@ -563,13 +563,13 @@
                                     Background="#18E040FB" BorderBrush="#35E040FB">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Ellipse Width="7" Height="7" Fill="#E040FB" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Đang hoạt động" Foreground="#E040FB" FontWeight="Bold" FontSize="11.5"/>
+                                    <TextBlock x:Name="TxtFilterActive" Text="Đang hoạt động" Foreground="#E040FB" FontWeight="Bold" FontSize="11.5"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
 
                         <Border HorizontalAlignment="Right" Background="#154CC2FF" BorderBrush="#254CC2FF" BorderThickness="1" CornerRadius="5" Padding="8,3">
-                            <TextBlock Text="💡 Nhấp đúp vào dòng Request để mở Modal &amp; Copy Response"
+                            <TextBlock x:Name="TxtTipTab2Header" Text="💡 Nhấp đúp vào dòng Request để mở Modal &amp; Copy Response"
                                        FontSize="11" Foreground="{DynamicResource PrimaryAccentBrush}"/>
                         </Border>
                     </Grid>

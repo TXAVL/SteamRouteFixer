@@ -103,22 +103,95 @@ namespace SteamRouteFixer
         {
             Dispatcher.Invoke(() =>
             {
+                // Window Title
                 Title = TxaLanguageManager.GetString("t_app_title", "Steam Route Fixer & Traffic Inspector");
+
+                // Top Menus
+                if (MenuFile != null) MenuFile.Header = TxaLanguageManager.GetString("t_menu_file", "_File");
+                if (MenuSteamDir != null) MenuSteamDir.Header = TxaLanguageManager.GetString("t_menu_steam_dir", "🎮 Mở thư mục cài đặt Steam");
+                if (MenuHostsFile != null) MenuHostsFile.Header = TxaLanguageManager.GetString("t_menu_hosts_file", "📝 Mở file hosts Windows (Notepad)");
+                if (MenuExportLogs != null) MenuExportLogs.Header = TxaLanguageManager.GetString("t_menu_export_logs", "💾 Xuất nhật ký Logs ra file...");
+                if (MenuExit != null) MenuExit.Header = TxaLanguageManager.GetString("t_menu_exit", "❌ Thoát");
+
+                if (MenuEdit != null) MenuEdit.Header = TxaLanguageManager.GetString("t_menu_edit", "_Edit");
+                if (MenuCopyDomains != null) MenuCopyDomains.Header = TxaLanguageManager.GetString("t_menu_copy_domains", "📋 Copy danh sách Domain");
+                if (MenuCopyLogs != null) MenuCopyLogs.Header = TxaLanguageManager.GetString("t_menu_copy_logs", "📋 Copy toàn bộ Console Logs");
+                if (MenuClearLog != null) MenuClearLog.Header = TxaLanguageManager.GetString("t_menu_clear_log", "🧹 Xóa sạch Console Log");
+                if (MenuRefreshAll != null) MenuRefreshAll.Header = TxaLanguageManager.GetString("t_menu_refresh", "🔄 Làm mới dữ liệu");
+
+                if (MenuView != null) MenuView.Header = TxaLanguageManager.GetString("t_menu_view", "_View");
+                if (MenuTools != null) MenuTools.Header = TxaLanguageManager.GetString("t_menu_tools", "_Tools");
+                if (MenuAutoFix != null) MenuAutoFix.Header = TxaLanguageManager.GetString("t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam");
+                if (MenuDiagnose != null) MenuDiagnose.Header = TxaLanguageManager.GetString("t_menu_diagnose", "🔍 Chẩn đoán kết nối ngay");
+                if (MenuRevertHosts != null) MenuRevertHosts.Header = TxaLanguageManager.GetString("t_menu_revert", "🧹 Khôi phục file Hosts gốc");
+                if (MenuFlushDns != null) MenuFlushDns.Header = TxaLanguageManager.GetString("t_menu_flush_dns", "🔄 Flush DNS Cache Windows");
+                if (MenuOpenAppData != null) MenuOpenAppData.Header = TxaLanguageManager.GetString("t_menu_appdata", "📂 Mở thư mục dữ liệu AppData (%LocalAppData%)");
+                if (MenuSettings != null) MenuSettings.Header = TxaLanguageManager.GetString("t_menu_settings", "⚙️ Cài đặt hệ thống...");
+
+                if (MenuHelp != null) MenuHelp.Header = TxaLanguageManager.GetString("t_menu_help", "_Help");
+                if (MenuCheckUpdate != null) MenuCheckUpdate.Header = TxaLanguageManager.GetString("t_menu_check_update", "🔄 Kiểm tra cập nhật (Check Update...)");
+                if (MenuAbout != null) MenuAbout.Header = TxaLanguageManager.GetString("t_menu_about", "ℹ️ Giới thiệu (About SteamRouteFixer...)");
+
+                // Header Top
+                if (BtnSettingsTop != null) BtnSettingsTop.Content = TxaLanguageManager.GetString("t_btn_settings", "⚙️ Cài Đặt");
+
+                // Tabs
                 if (TabSteamItem != null) TabSteamItem.Header = TxaLanguageManager.GetString("t_tab_steam", "🎮 STEAM ROUTE FIXER");
                 if (TabTrafficItem != null) TabTrafficItem.Header = TxaLanguageManager.GetString("t_tab_traffic", "🌐 HTTP/HTTPS TRAFFIC & PROCESS INSPECTOR");
 
+                // Tab 1 Action buttons
                 if (BtnAutoFix != null) BtnAutoFix.Content = TxaLanguageManager.GetString("t_btn_autofix", "⚡ 1-Click Auto Fix Steam");
                 if (BtnDiagnose != null) BtnDiagnose.Content = TxaLanguageManager.GetString("t_btn_diagnose", "🔍 Kiểm Tra (Diagnose)");
                 if (BtnRevertHosts != null) BtnRevertHosts.Content = TxaLanguageManager.GetString("t_btn_revert_hosts", "🧹 Khôi Phục Hosts");
                 if (BtnFlushDns != null) BtnFlushDns.Content = TxaLanguageManager.GetString("t_btn_flush_dns", "🔄 Flush DNS");
                 if (BtnLaunchSteam != null) BtnLaunchSteam.Content = TxaLanguageManager.GetString("t_btn_open_steam", "🚀 Mở Steam");
+                if (BtnCloseSteam != null) BtnCloseSteam.Content = TxaLanguageManager.GetString("t_btn_close_steam", "🛑 Đóng Steam Ngay");
+                if (BtnNoticeCloseSteam != null) BtnNoticeCloseSteam.Content = TxaLanguageManager.GetString("t_btn_close_steam", "🛑 Đóng Steam Ngay");
 
+                // Tab 1 Sentinel & Warning
                 if (TxtSentinelHeader != null) TxtSentinelHeader.Text = TxaLanguageManager.GetString("t_sentinel_title", "BẢO VỆ STEAM SENTINEL: ");
+                if (TxtNoticeSteamRunningHeader != null) TxtNoticeSteamRunningHeader.Text = TxaLanguageManager.GetString("t_steam_running_title", "PHÁT HIỆN TIẾN TRÌNH STEAM ĐANG CHẠY - CÁC TÁC VỤ SỬA ROUTE ĐÃ ĐƯỢC TẠM KHÓA");
+                if (TxtNoticeSteamRunningDesc != null) TxtNoticeSteamRunningDesc.Text = TxaLanguageManager.GetString("t_steam_running_desc", "Vui lòng nhấn 'Đóng Steam Ngay' để giải phóng Socket và ghi file hosts an toàn trước khi thao tác.");
+
+                // Tab 1 Filters
+                if (TxtFilterStatusLabel1 != null) TxtFilterStatusLabel1.Text = TxaLanguageManager.GetString("t_filter_status", "Lọc trạng thái: ");
+                if (TxtFilterAll1 != null) TxtFilterAll1.Text = TxaLanguageManager.GetString("t_filter_all", "Tất cả");
+                if (TxtFilterOpen1 != null) TxtFilterOpen1.Text = TxaLanguageManager.GetString("t_filter_open", "Open");
+                if (TxtFilterPoisoned1 != null) TxtFilterPoisoned1.Text = TxaLanguageManager.GetString("t_filter_poisoned", "Poisoned");
+                if (TxtFilterBlocked1 != null) TxtFilterBlocked1.Text = TxaLanguageManager.GetString("t_filter_blocked", "Blocked");
+
+                // Tab 1 Progress & Grid Columns
+                if (TxtProgressStatus != null && (MainProgressBar == null || MainProgressBar.Value == 0)) TxtProgressStatus.Text = TxaLanguageManager.GetString("t_progress_ready", "Sẵn sàng kiểm tra và sửa lỗi kết nối Steam.");
+                if (TxtEtaCountdown != null && (MainProgressBar == null || MainProgressBar.Value == 0)) TxtEtaCountdown.Text = TxaLanguageManager.GetString("t_eta_ready", "ETA: Sẵn sàng");
+                if (ColPurpose != null) ColPurpose.Header = TxaLanguageManager.GetString("t_col_purpose", "Mục Đích");
+                if (ColDomain != null) ColDomain.Header = TxaLanguageManager.GetString("t_col_domain", "Tên Miền (Domain)");
+                if (ColSystemIp != null) ColSystemIp.Header = TxaLanguageManager.GetString("t_col_dns_ip", "IP Máy / ISP");
+                if (ColBestIp != null) ColBestIp.Header = TxaLanguageManager.GetString("t_col_clean_ip", "IP Sạch Nhanh Nhất");
+                if (ColPing != null) ColPing.Header = TxaLanguageManager.GetString("t_col_latency", "Ping");
+                if (ColStatus != null) ColStatus.Header = TxaLanguageManager.GetString("t_col_status", "Trạng Thái");
+
+                // Tab 1 Log
+                if (TxtLogConsoleHeader != null) TxtLogConsoleHeader.Text = TxaLanguageManager.GetString("t_log_console", "📜 NHẬT KÝ HOẠT ĐỘNG (REAL-TIME LOGS)");
+                if (BtnCopyLogsTab1 != null) BtnCopyLogsTab1.Content = TxaLanguageManager.GetString("t_btn_copy_logs", "📋 Copy Logs");
+                if (BtnClearLogTab1 != null) BtnClearLogTab1.Content = TxaLanguageManager.GetString("t_btn_clear_log_short", "🧹 Clear");
+
+                // Tab 2 Toolbar & Stats
                 if (TxtFilterAppLabel != null) TxtFilterAppLabel.Text = TxaLanguageManager.GetString("t_filter_app", "📱 LỌC THEO APP: ");
                 if (BtnRefreshProcesses != null) BtnRefreshProcesses.Content = TxaLanguageManager.GetString("t_btn_scan_app", "🔄 Quét App");
                 if (BtnClearRequests != null) BtnClearRequests.Content = TxaLanguageManager.GetString("t_btn_clear_table", "🧹 Xóa Bảng");
+                if (BtnToggleCapture != null) BtnToggleCapture.Content = _isCapturingTraffic ? TxaLanguageManager.GetString("t_btn_pause", "⏸ Tạm Dừng") : TxaLanguageManager.GetString("t_btn_resume", "▶ Tiếp Tục");
 
-                // Translate Tab 2 Grid Columns
+                if (TxtStatRequestsLabel != null) TxtStatRequestsLabel.Text = TxaLanguageManager.GetString("t_stat_requests", "📊 Tổng Requests");
+                if (TxtStatDownloadLabel != null) TxtStatDownloadLabel.Text = TxaLanguageManager.GetString("t_stat_download", "📥 Đã Tải Về (Download)");
+                if (TxtStatUploadLabel != null) TxtStatUploadLabel.Text = TxaLanguageManager.GetString("t_stat_upload", "📤 Đã Tải Lên (Upload)");
+                if (TxtStatSpeedLabel != null) TxtStatSpeedLabel.Text = TxaLanguageManager.GetString("t_stat_speed", "⚡ Tốc Độ Mạng Hiện Tại");
+
+                // Tab 2 Filters
+                if (TxtFilterStatusLabel2 != null) TxtFilterStatusLabel2.Text = TxaLanguageManager.GetString("t_filter_status", "Lọc trạng thái: ");
+                if (TxtFilterAll2 != null) TxtFilterAll2.Text = TxaLanguageManager.GetString("t_filter_all", "Tất cả");
+                if (TxtTipTab2Header != null) TxtTipTab2Header.Text = TxaLanguageManager.GetString("t_tip_tab2", "💡 Nhấp đúp vào dòng Request để mở Modal & Copy Response");
+
+                // Tab 2 Grid Columns
                 if (ColReqTime != null) ColReqTime.Header = TxaLanguageManager.GetString("t_col_time", "Thời Gian");
                 if (ColReqApp != null) ColReqApp.Header = TxaLanguageManager.GetString("t_col_app", "Ứng Dụng");
                 if (ColReqProto != null) ColReqProto.Header = TxaLanguageManager.GetString("t_col_proto", "Giao Thức");
@@ -126,6 +199,15 @@ namespace SteamRouteFixer
                 if (ColReqSize != null) ColReqSize.Header = TxaLanguageManager.GetString("t_col_size", "Dung Lượng (↓/↑)");
                 if (ColReqLatency != null) ColReqLatency.Header = TxaLanguageManager.GetString("t_col_latency", "Độ Trễ");
 
+                // Bottom Tip
+                if (TxtBottomTip != null)
+                {
+                    TxtBottomTip.Text = (MainTabControl?.SelectedIndex == 0)
+                        ? TxaLanguageManager.GetString("t_tip_tab1", "💡 Mẹo: Nhấn '1-Click Auto Fix' để tự động ghim IP sạch & sửa lỗi Steam không cần VPN")
+                        : TxaLanguageManager.GetString("t_tip_tab2", "💡 Mẹo: Nhấp đúp vào bất kỳ dòng Request nào để mở Modal chi tiết và Copy Response");
+                }
+
+                CheckAdminRights();
                 RefreshSteamSentinel();
             });
         }
@@ -142,11 +224,11 @@ namespace SteamRouteFixer
             {
                 if (MainTabControl.SelectedIndex == 0)
                 {
-                    TxtBottomTip.Text = "💡 Mẹo: Nhấn '1-Click Auto Fix' để tự động ghim IP sạch & sửa lỗi Steam không cần VPN";
+                    TxtBottomTip.Text = TxaLanguageManager.GetString("t_tip_tab1", "💡 Mẹo: Nhấn '1-Click Auto Fix' để tự động ghim IP sạch & sửa lỗi Steam không cần VPN");
                 }
                 else
                 {
-                    TxtBottomTip.Text = "💡 Mẹo: Nhấp đúp vào bất kỳ dòng Request nào để mở Modal chi tiết và Copy Response";
+                    TxtBottomTip.Text = TxaLanguageManager.GetString("t_tip_tab2", "💡 Mẹo: Nhấp đúp vào bất kỳ dòng Request nào để mở Modal chi tiết và Copy Response");
                 }
             }
         }
@@ -184,12 +266,12 @@ namespace SteamRouteFixer
 
             if (isAdmin)
             {
-                TxtAdminStatus.Text = "🛡️ Administrator";
+                TxtAdminStatus.Text = TxaLanguageManager.GetString("t_admin_ok", "🛡️ Administrator");
                 BadgeAdmin.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 22, 56, 32));
             }
             else
             {
-                TxtAdminStatus.Text = "⚠️ Cần Quyền Admin";
+                TxtAdminStatus.Text = TxaLanguageManager.GetString("t_admin_needed", "⚠️ Cần Quyền Admin");
                 BadgeAdmin.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 90, 40, 20));
             }
         }

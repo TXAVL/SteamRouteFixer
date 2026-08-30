@@ -16,7 +16,22 @@ namespace SteamRouteFixer.Views
             InitializeComponent();
             _checker = new UpdateChecker();
             _config = StoragePathManager.LoadConfig();
+            ApplyLanguageTranslations();
+            TxaLanguageManager.OnLanguageChanged += ApplyLanguageTranslations;
+            Closed += (s, e) => TxaLanguageManager.OnLanguageChanged -= ApplyLanguageTranslations;
             TxtCurrentVersion.Text = $"Phiên bản hiện tại: v{UpdateChecker.CurrentVersion}";
+        }
+
+        private void ApplyLanguageTranslations()
+        {
+            Title = TxaLanguageManager.GetString("t_update_title", "Kiểm tra Cập nhật - Steam Route Fixer");
+            if (TxtUpdateMainTitle != null) TxtUpdateMainTitle.Text = TxaLanguageManager.GetString("t_update_header", "Cập Nhật Phần Mềm");
+            if (TxtUpdateMainSub != null) TxtUpdateMainSub.Text = TxaLanguageManager.GetString("t_update_sub", "Kiểm tra phiên bản mới từ GitHub TXAVL/SteamRouteFixer");
+            if (TxtReleaseInfoTitle != null) TxtReleaseInfoTitle.Text = TxaLanguageManager.GetString("t_changelog_header", "📋 Thông tin bản phát hành:");
+            if (BtnCheckUpdate != null) BtnCheckUpdate.Content = TxaLanguageManager.GetString("t_btn_check_again", "🔄 Kiểm Tra Ngay");
+            if (BtnDownloadUpdate != null) BtnDownloadUpdate.Content = TxaLanguageManager.GetString("t_btn_download_update", "⬇ Tải Bản Cập Nhật Mới");
+            if (BtnOpenGithub != null) BtnOpenGithub.Content = "🌐 GitHub Releases";
+            if (BtnCloseUpdate != null) BtnCloseUpdate.Content = TxaLanguageManager.GetString("t_btn_close", "Đóng");
         }
 
         private async void BtnCheckUpdate_Click(object sender, RoutedEventArgs e)

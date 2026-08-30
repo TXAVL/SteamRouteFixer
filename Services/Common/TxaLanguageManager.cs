@@ -267,53 +267,78 @@ namespace SteamRouteFixer.Services.Common
                 author = "TXAVL",
                 txa_key = new Dictionary<string, string>
                 {
+                    // Global & App
                     { "t_app_title", "Steam Route Fixer & Traffic Inspector" },
                     { "t_tab_steam", "🎮 STEAM ROUTE FIXER" },
                     { "t_tab_traffic", "🌐 HTTP/HTTPS TRAFFIC & PROCESS INSPECTOR" },
-                    { "t_menu_file", "_Tệp" },
+                    { "t_admin_ok", "🛡️ Administrator" },
+                    { "t_admin_needed", "⚠️ Cần Quyền Admin" },
+                    { "t_btn_settings", "⚙️ Cài Đặt" },
+                    { "t_star_github", "⭐ Star on GitHub" },
+                    { "t_btn_close", "Đóng" },
+                    { "t_btn_save", "Lưu Cài Đặt" },
+
+                    // Top Menu
+                    { "t_menu_file", "_File" },
                     { "t_menu_steam_dir", "🎮 Mở thư mục cài đặt Steam" },
                     { "t_menu_hosts_file", "📝 Mở file hosts Windows (Notepad)" },
                     { "t_menu_export_logs", "💾 Xuất nhật ký Logs ra file..." },
                     { "t_menu_exit", "❌ Thoát" },
-                    { "t_menu_edit", "_Chỉnh sửa" },
+                    { "t_menu_edit", "_Edit" },
                     { "t_menu_copy_domains", "📋 Copy danh sách Domain" },
                     { "t_menu_copy_logs", "📋 Copy toàn bộ Console Logs" },
                     { "t_menu_clear_log", "🧹 Xóa sạch Console Log" },
                     { "t_menu_refresh", "🔄 Làm mới dữ liệu" },
-                    { "t_menu_view", "_Giao diện" },
-                    { "t_menu_tools", "_Công cụ" },
+                    { "t_menu_view", "_View" },
+                    { "t_menu_tools", "_Tools" },
                     { "t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam" },
                     { "t_menu_diagnose", "🔍 Chẩn đoán kết nối ngay" },
                     { "t_menu_revert", "🧹 Khôi phục file Hosts gốc" },
                     { "t_menu_flush_dns", "🔄 Flush DNS Cache Windows" },
                     { "t_menu_appdata", "📂 Mở thư mục dữ liệu AppData (%LocalAppData%)" },
                     { "t_menu_settings", "⚙️ Cài đặt hệ thống..." },
-                    { "t_menu_help", "_Trợ giúp" },
+                    { "t_menu_help", "_Help" },
                     { "t_menu_check_update", "🔄 Kiểm tra cập nhật (Check Update...)" },
                     { "t_menu_about", "ℹ️ Giới thiệu (About SteamRouteFixer...)" },
+
+                    // Tab 1 Steam Sentinel & Warnings
+                    { "t_sentinel_title", "BẢO VỆ STEAM SENTINEL: " },
+                    { "t_sentinel_installed", "Steam đã cài đặt" },
+                    { "t_sentinel_running", "Đang chạy" },
+                    { "t_sentinel_stopped", "Đang tắt" },
+                    { "t_sentinel_detecting", "Đang phát hiện cài đặt và tiến trình Steam..." },
+                    { "t_sentinel_path_prefix", "Đường dẫn Steam: " },
+                    { "t_sentinel_path_not_found", "Chưa phát hiện đường dẫn cài đặt Steam." },
+                    { "t_steam_running_title", "PHÁT HIỆN TIẾN TRÌNH STEAM ĐANG CHẠY - CÁC TÁC VỤ SỬA ROUTE ĐÃ ĐƯỢC TẠM KHÓA" },
+                    { "t_steam_running_desc", "Vui lòng nhấn 'Đóng Steam Ngay' để giải phóng Socket và ghi file hosts an toàn trước khi thao tác." },
+                    { "t_btn_close_steam", "🛑 Đóng Steam Ngay" },
+                    { "t_btn_open_steam", "🚀 Mở Steam" },
+
+                    // Tab 1 Action Buttons & Filters
                     { "t_btn_autofix", "⚡ 1-Click Auto Fix Steam" },
                     { "t_btn_diagnose", "🔍 Kiểm Tra (Diagnose)" },
                     { "t_btn_revert_hosts", "🧹 Khôi Phục Hosts" },
                     { "t_btn_flush_dns", "🔄 Flush DNS" },
-                    { "t_btn_open_steam", "🚀 Mở Steam" },
                     { "t_filter_status", "Lọc trạng thái: " },
                     { "t_filter_all", "Tất cả" },
                     { "t_filter_open", "Open" },
                     { "t_filter_poisoned", "Poisoned" },
                     { "t_filter_blocked", "Blocked" },
-                    { "t_sentinel_title", "BẢO VỆ STEAM SENTINEL:" },
-                    { "t_sentinel_installed", "Steam đã cài đặt" },
-                    { "t_sentinel_running", "Đang chạy" },
-                    { "t_sentinel_stopped", "Đang tắt" },
+
+                    // Tab 1 Progress & Grid
                     { "t_progress_ready", "Sẵn sàng kiểm tra và sửa lỗi kết nối Steam." },
                     { "t_eta_ready", "ETA: Sẵn sàng" },
+                    { "t_col_purpose", "Mục Đích" },
                     { "t_col_domain", "Tên Miền (Steam Hostname)" },
                     { "t_col_dns_ip", "IP Mạng Hiện Tại" },
                     { "t_col_clean_ip", "IP Sạch (Tối Ưu)" },
                     { "t_col_latency", "Độ Trễ" },
                     { "t_col_status", "Trạng Thái" },
-                    { "t_col_action", "Hành Động" },
-                    { "t_log_console", "NHẬT KÝ HOẠT ĐỘNG THỜI GIAN THỰC (LIVE CONSOLE):" },
+                    { "t_log_console", "📜 NHẬT KÝ HOẠT ĐỘNG (REAL-TIME LOGS)" },
+                    { "t_btn_copy_logs", "📋 Copy Logs" },
+                    { "t_btn_clear_log_short", "🧹 Clear" },
+
+                    // Tab 2 Traffic Inspector
                     { "t_filter_app", "📱 LỌC THEO APP: " },
                     { "t_btn_scan_app", "🔄 Quét App" },
                     { "t_stat_requests", "📊 Tổng Requests" },
@@ -323,10 +348,87 @@ namespace SteamRouteFixer.Services.Common
                     { "t_btn_pause", "⏸ Tạm Dừng" },
                     { "t_btn_resume", "▶ Tiếp Tục" },
                     { "t_btn_clear_table", "🧹 Xóa Bảng" },
-                    { "t_tip_tab2", "💡 Nhấp đúp vào dòng Request để mở Modal & Copy Response" },
+                    { "t_col_time", "Thời Gian" },
+                    { "t_col_app", "Ứng Dụng" },
+                    { "t_col_proto", "Giao Thức" },
+                    { "t_col_host", "Host / Endpoint URL" },
+                    { "t_col_size", "Dung Lượng (↓/↑)" },
+
+                    // Bottom Tips
+                    { "t_tip_tab1", "💡 Mẹo: Nhấn '1-Click Auto Fix' để tự động ghim IP sạch & sửa lỗi Steam không cần VPN" },
+                    { "t_tip_tab2", "💡 Mẹo: Nhấp đúp vào bất kỳ dòng Request nào để mở Modal chi tiết và Copy Response" },
+
+                    // Confirm Exit
+                    { "t_confirm_exit_title", "Xác nhận đóng ứng dụng" },
+                    { "t_confirm_exit_msg", "Bạn có chắc chắn muốn thoát khỏi Steam Route Fixer?" },
+
+                    // Switch Language Alert
                     { "t_lang_switched_title", "Đổi Ngôn Ngữ Thành Công" },
                     { "t_lang_switched_msg", "Đã nạp và áp dụng thành công gói ngôn ngữ: {0} ({1})" },
-                    { "t_star_github", "⭐ Star on GitHub" }
+
+                    // Settings Modal
+                    { "t_settings_title", "Cài Đặt Hệ Thống & Giao Diện" },
+                    { "t_theme_header", "🎨 CHỦ ĐỀ GIAO DIỆN (THEME)" },
+                    { "t_theme_desc", "Tùy biến phong cách hiển thị WinUI 3 Fluent, Steam Dark Gaming hoặc VS Code Studio Dark:" },
+                    { "t_lang_header", "🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)" },
+                    { "t_lang_desc", "Quét tự động các gói ngôn ngữ (.txal) trong %LocalAppData%\\SteamRouteFixer\\languages\\:" },
+                    { "t_btn_import_txa", "📂 Nạp File .txal" },
+                    { "t_btn_open_lang_dir", "📁 Mở Thư Mục Lang" },
+                    { "t_btn_translate_app", "🌐 Tự Tạo Bản Dịch Mới (Translate App...)" },
+                    { "t_steam_path_header", "🎮 ĐƯỜNG DẪN STEAM TÙY CHỌN" },
+                    { "t_steam_path_desc", "Nếu bạn cài Steam ở ổ đĩa khác và công cụ chưa tự nhận diện, hãy chọn file steam.exe:" },
+                    { "t_btn_browse", "Duyệt File..." },
+                    { "t_btn_auto_detect", "Tự Nhận Diện" },
+                    { "t_hosts_backup_header", "🛡️ SAO LƯU FILE HOSTS HỆ THỐNG" },
+                    { "t_hosts_backup_desc", "Danh sách các bản sao lưu tự động tạo trước mỗi lần sửa đổi:" },
+                    { "t_btn_restore_backup", "Khôi Phục Bản Này" },
+                    { "t_btn_create_backup", "Tạo Sao Lưu Mới" },
+
+                    // About Modal
+                    { "t_about_title", "Giới thiệu - Steam Route Fixer" },
+                    { "t_about_subtitle", "Tool Steam Route Fixer & HTTP/HTTPS Traffic Inspector" },
+                    { "t_about_dev", "Phát triển bởi TXA Studio • Version 1.0 (Build 2026.08)" },
+                    { "t_about_app_header", "🎮 Về ứng dụng Steam Route Fixer" },
+                    { "t_about_app_desc", "Ứng dụng chuyên nghiệp giúp game thủ Việt Nam tự động quét, chẩn đoán và khắc phục triệt để tình trạng lỗi kết nối mạng Steam (Steam Store, Community, Friends, Cloud Sync) bằng kỹ thuật tối ưu hóa định tuyến IP sạch chuẩn xác, hoàn toàn không cần cài đặt VPN hay phần mềm bên thứ 3." },
+                    { "t_about_features_header", "⚡ Các tính năng cốt lõi" },
+                    { "t_about_f1", "• 1-Click Auto Fix: Tự động phát hiện lỗi và ghim IP sạch vào hosts." },
+                    { "t_about_f2", "• Giám sát lưu lượng HTTP/HTTPS & TCP Socket theo thời gian thực." },
+                    { "t_about_f3", "• Hệ thống bảo vệ Steam Sentinel & Tự động sao lưu file hosts." },
+                    { "t_about_f4", "• Giao diện Microsoft WinUI 3 Fluent Dark sắc nét, độ tương phản cao." },
+                    { "t_about_tech_header", "🛠️ Thông tin kỹ thuật & Mã nguồn" },
+                    { "t_about_tech_body", "Framework: .NET 10 (Desktop Runtime) • Windows Native Win32 API\r\nRepository: https://github.com/TXAVL/SteamRouteFixer\r\nBản quyền © 2026 TXA Studio. All rights reserved." },
+                    { "t_about_lang_ver_prefix", "Phiên bản " },
+                    { "t_about_translator_prefix", "Dịch bởi " },
+
+                    // Request Detail Modal
+                    { "t_req_detail_title", "Chi Tiết HTTP Request & Response" },
+                    { "t_req_detail_header", "🔍 THÔNG TIN CHI TIẾT REQUEST & RESPONSE" },
+                    { "t_meta_process", "📱 Tiến trình: " },
+                    { "t_meta_remote", "🌐 Remote: " },
+                    { "t_meta_latency", "⏱ Độ trễ: " },
+                    { "t_meta_req_size", "📦 Request Size: " },
+                    { "t_meta_resp_size", "📥 Response Size: " },
+                    { "t_tab_response", "📤 RESPONSE (PHẢN HỒI)" },
+                    { "t_resp_sub", "Response Headers & Payload:" },
+                    { "t_tab_request", "📥 REQUEST (YÊU CẦU)" },
+                    { "t_req_sub", "Request Headers & Body:" },
+                    { "t_btn_copy_url", "📋 Copy URL" },
+                    { "t_btn_copy_req", "📋 Copy Request" },
+                    { "t_btn_copy_resp", "✨ 📋 COPY RESPONSE (BODY)" },
+                    { "t_toast_copy_url", "📋 Đã sao chép liên kết URL vào Clipboard!" },
+                    { "t_toast_copy_req", "📥 Đã sao chép nội dung Request vào Clipboard!" },
+                    { "t_toast_copy_resp", "✨ 📤 Đã sao chép toàn bộ Response Body vào Clipboard!" },
+
+                    // Translation Modal
+                    { "t_trans_title", "Biên dịch Ngôn ngữ - TXA Language Translator" },
+                    { "t_trans_header", "TRÌNH BIÊN DỊCH NGÔN NGỮ (TXA TRANSLATOR)" },
+                    { "t_trans_sub", "Biên dịch toàn bộ giao diện từ Tiếng Anh chuẩn sang ngôn ngữ mong muốn. Tiến độ nháp tự động lưu liên tục." },
+                    { "t_trans_target_lbl", "🎯 CHỌN NGÔN NGỮ ĐÍCH BIÊN DỊCH:" },
+                    { "t_trans_author_lbl", "✍️ TÊN / NICKNAME TÁC GIẢ BẢN DỊCH:" },
+                    { "t_trans_col_source", "🔤 VĂN BẢN TIẾNG ANH GỐC (SOURCE EN-US)" },
+                    { "t_trans_col_target", "✏️ BẢN DỊCH NGÔN NGỮ ĐÍCH CỦA BẠN (TARGET TRANSLATION)" },
+                    { "t_trans_btn_save", "💾 Lưu & Áp Dụng (.txal)" },
+                    { "t_trans_btn_submit", "🚀 Gửi Lên GitHub (100%)" }
                 }
             };
         }
@@ -340,9 +442,18 @@ namespace SteamRouteFixer.Services.Common
                 author = "TXAVL",
                 txa_key = new Dictionary<string, string>
                 {
+                    // Global & App
                     { "t_app_title", "Steam Route Fixer & Traffic Inspector" },
                     { "t_tab_steam", "🎮 STEAM ROUTE FIXER" },
                     { "t_tab_traffic", "🌐 HTTP/HTTPS TRAFFIC & PROCESS INSPECTOR" },
+                    { "t_admin_ok", "🛡️ Administrator" },
+                    { "t_admin_needed", "⚠️ Admin Rights Required" },
+                    { "t_btn_settings", "⚙️ Settings" },
+                    { "t_star_github", "⭐ Star on GitHub" },
+                    { "t_btn_close", "Close" },
+                    { "t_btn_save", "Save Settings" },
+
+                    // Top Menu
                     { "t_menu_file", "_File" },
                     { "t_menu_steam_dir", "🎮 Open Steam Installation Directory" },
                     { "t_menu_hosts_file", "📝 Open Windows hosts File (Notepad)" },
@@ -364,29 +475,45 @@ namespace SteamRouteFixer.Services.Common
                     { "t_menu_help", "_Help" },
                     { "t_menu_check_update", "🔄 Check for Updates..." },
                     { "t_menu_about", "ℹ️ About SteamRouteFixer..." },
+
+                    // Tab 1 Steam Sentinel & Warnings
+                    { "t_sentinel_title", "STEAM SENTINEL PROTECTION: " },
+                    { "t_sentinel_installed", "Steam Installed" },
+                    { "t_sentinel_running", "Running" },
+                    { "t_sentinel_stopped", "Stopped" },
+                    { "t_sentinel_detecting", "Detecting Steam installation and processes..." },
+                    { "t_sentinel_path_prefix", "Steam Path: " },
+                    { "t_sentinel_path_not_found", "Steam installation directory not found." },
+                    { "t_steam_running_title", "STEAM PROCESS IS ACTIVE - ROUTE MODIFICATIONS TEMPORARILY LOCKED" },
+                    { "t_steam_running_desc", "Please click 'Close Steam Now' to release sockets and safely update the hosts file." },
+                    { "t_btn_close_steam", "🛑 Close Steam Now" },
+                    { "t_btn_open_steam", "🚀 Launch Steam" },
+
+                    // Tab 1 Action Buttons & Filters
                     { "t_btn_autofix", "⚡ 1-Click Auto Fix Steam" },
                     { "t_btn_diagnose", "🔍 Diagnose Connections" },
                     { "t_btn_revert_hosts", "🧹 Revert Hosts" },
                     { "t_btn_flush_dns", "🔄 Flush DNS" },
-                    { "t_btn_open_steam", "🚀 Launch Steam" },
                     { "t_filter_status", "Filter status: " },
                     { "t_filter_all", "All" },
                     { "t_filter_open", "Open" },
                     { "t_filter_poisoned", "Poisoned" },
                     { "t_filter_blocked", "Blocked" },
-                    { "t_sentinel_title", "STEAM SENTINEL PROTECTION:" },
-                    { "t_sentinel_installed", "Steam Installed" },
-                    { "t_sentinel_running", "Running" },
-                    { "t_sentinel_stopped", "Stopped" },
+
+                    // Tab 1 Progress & Grid
                     { "t_progress_ready", "Ready to diagnose and fix Steam routing issues." },
                     { "t_eta_ready", "ETA: Ready" },
+                    { "t_col_purpose", "Purpose" },
                     { "t_col_domain", "Domain (Steam Hostname)" },
                     { "t_col_dns_ip", "Current ISP IP" },
                     { "t_col_clean_ip", "Clean IP (Optimized)" },
                     { "t_col_latency", "Latency" },
                     { "t_col_status", "Status" },
-                    { "t_col_action", "Action" },
-                    { "t_log_console", "REAL-TIME ACTIVITY LOG (LIVE CONSOLE):" },
+                    { "t_log_console", "📜 REAL-TIME ACTIVITY LOG (LIVE CONSOLE)" },
+                    { "t_btn_copy_logs", "📋 Copy Logs" },
+                    { "t_btn_clear_log_short", "🧹 Clear" },
+
+                    // Tab 2 Traffic Inspector
                     { "t_filter_app", "📱 FILTER BY APP: " },
                     { "t_btn_scan_app", "🔄 Scan Apps" },
                     { "t_stat_requests", "📊 Total Requests" },
@@ -396,10 +523,87 @@ namespace SteamRouteFixer.Services.Common
                     { "t_btn_pause", "⏸ Pause" },
                     { "t_btn_resume", "▶ Resume" },
                     { "t_btn_clear_table", "🧹 Clear Table" },
-                    { "t_tip_tab2", "💡 Double-click any Request row to open Detail Modal & Copy Response" },
+                    { "t_col_time", "Time" },
+                    { "t_col_app", "Application" },
+                    { "t_col_proto", "Protocol" },
+                    { "t_col_host", "Host / Endpoint URL" },
+                    { "t_col_size", "Size (↓/↑)" },
+
+                    // Bottom Tips
+                    { "t_tip_tab1", "💡 Tip: Click '1-Click Auto Fix' to automatically pin clean IPs and fix Steam issues without a VPN" },
+                    { "t_tip_tab2", "💡 Tip: Double-click any Request row to inspect full details and copy responses" },
+
+                    // Confirm Exit
+                    { "t_confirm_exit_title", "Confirm Exit" },
+                    { "t_confirm_exit_msg", "Are you sure you want to close and exit Steam Route Fixer?" },
+
+                    // Switch Language Alert
                     { "t_lang_switched_title", "Language Changed Successfully" },
                     { "t_lang_switched_msg", "Successfully loaded and applied language package: {0} ({1})" },
-                    { "t_star_github", "⭐ Star on GitHub" }
+
+                    // Settings Modal
+                    { "t_settings_title", "System Settings & Appearance" },
+                    { "t_theme_header", "🎨 APP THEME" },
+                    { "t_theme_desc", "Customize display style: WinUI 3 Fluent, Steam Dark Gaming, or VS Code Studio Dark:" },
+                    { "t_lang_header", "🌐 APP LANGUAGE (TXA LANGUAGE)" },
+                    { "t_lang_desc", "Automatically scans (.txal) language packages in %LocalAppData%\\SteamRouteFixer\\languages\\:" },
+                    { "t_btn_import_txa", "📂 Import .txal File" },
+                    { "t_btn_open_lang_dir", "📁 Open Lang Folder" },
+                    { "t_btn_translate_app", "🌐 Translate App (New Language...)" },
+                    { "t_steam_path_header", "🎮 CUSTOM STEAM PATH" },
+                    { "t_steam_path_desc", "If Steam is installed in a custom location, locate the steam.exe binary manually:" },
+                    { "t_btn_browse", "Browse File..." },
+                    { "t_btn_auto_detect", "Auto Detect" },
+                    { "t_hosts_backup_header", "🛡️ SYSTEM HOSTS BACKUPS" },
+                    { "t_hosts_backup_desc", "List of automated backups created before each modification:" },
+                    { "t_btn_restore_backup", "Restore Selected" },
+                    { "t_btn_create_backup", "Create Backup" },
+
+                    // About Modal
+                    { "t_about_title", "About - Steam Route Fixer" },
+                    { "t_about_subtitle", "Tool Steam Route Fixer & HTTP/HTTPS Traffic Inspector" },
+                    { "t_about_dev", "Developed by TXA Studio • Version 1.0 (Build 2026.08)" },
+                    { "t_about_app_header", "🎮 About Steam Route Fixer" },
+                    { "t_about_app_desc", "Professional network utility designed to automatically scan, diagnose, and permanently resolve Steam connection errors (Store, Community, Market, Cloud Sync) by routing through optimized clean IPs without requiring VPNs." },
+                    { "t_about_features_header", "⚡ Core Features" },
+                    { "t_about_f1", "• 1-Click Auto Fix: Auto-detects blocked routes and pins clean IPs into hosts." },
+                    { "t_about_f2", "• Real-time HTTP/HTTPS traffic and TCP Socket Inspector." },
+                    { "t_about_f3", "• Steam Sentinel real-time process shield & automated hosts backups." },
+                    { "t_about_f4", "• High-contrast Microsoft WinUI 3 Fluent Dark interface." },
+                    { "t_about_tech_header", "🛠️ Technical Information & Source Code" },
+                    { "t_about_tech_body", "Framework: .NET 10 (Desktop Runtime) • Windows Native Win32 API\r\nRepository: https://github.com/TXAVL/SteamRouteFixer\r\nCopyright © 2026 TXA Studio. All rights reserved." },
+                    { "t_about_lang_ver_prefix", "Version: " },
+                    { "t_about_translator_prefix", "Translated by " },
+
+                    // Request Detail Modal
+                    { "t_req_detail_title", "HTTP Request & Response Details" },
+                    { "t_req_detail_header", "🔍 DETAILED REQUEST & RESPONSE" },
+                    { "t_meta_process", "📱 Process: " },
+                    { "t_meta_remote", "🌐 Remote: " },
+                    { "t_meta_latency", "⏱ Latency: " },
+                    { "t_meta_req_size", "📦 Request Size: " },
+                    { "t_meta_resp_size", "📥 Response Size: " },
+                    { "t_tab_response", "📤 RESPONSE" },
+                    { "t_resp_sub", "Response Headers & Payload:" },
+                    { "t_tab_request", "📥 REQUEST" },
+                    { "t_req_sub", "Request Headers & Body:" },
+                    { "t_btn_copy_url", "📋 Copy URL" },
+                    { "t_btn_copy_req", "📋 Copy Request" },
+                    { "t_btn_copy_resp", "✨ 📋 COPY RESPONSE (BODY)" },
+                    { "t_toast_copy_url", "📋 URL copied to Clipboard!" },
+                    { "t_toast_copy_req", "📥 Request contents copied to Clipboard!" },
+                    { "t_toast_copy_resp", "✨ 📤 Response Body copied to Clipboard!" },
+
+                    // Translation Modal
+                    { "t_trans_title", "Language Translator - TXA Language Translator" },
+                    { "t_trans_header", "APPLICATION LANGUAGE TRANSLATOR (TXA TRANSLATOR)" },
+                    { "t_trans_sub", "Translate the entire app from standard English into any desired language. Drafts auto-save continuously." },
+                    { "t_trans_target_lbl", "🎯 SELECT TARGET TRANSLATION LANGUAGE:" },
+                    { "t_trans_author_lbl", "✍️ TRANSLATOR / AUTHOR NAME / NICKNAME:" },
+                    { "t_trans_col_source", "🔤 ORIGINAL ENGLISH SOURCE TEXT (EN-US)" },
+                    { "t_trans_col_target", "✏️ YOUR TARGET TRANSLATION TEXT" },
+                    { "t_trans_btn_save", "💾 Save & Apply (.txal)" },
+                    { "t_trans_btn_submit", "🚀 Submit to GitHub (100%)" }
                 }
             };
         }

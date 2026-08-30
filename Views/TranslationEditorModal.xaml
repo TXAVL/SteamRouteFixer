@@ -23,8 +23,8 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="🌐" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="TRÌNH BIÊN DỊCH NGÔN NGỮ (TXA TRANSLATOR)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource PrimaryAccentBrush}"/>
-                        <TextBlock Text="Biên dịch toàn bộ giao diện từ Tiếng Anh chuẩn sang ngôn ngữ mong muốn. Tiến độ nháp tự động lưu liên tục."
+                        <TextBlock x:Name="TxtTranslatorMainTitle" Text="TRÌNH BIÊN DỊCH NGÔN NGỮ (TXA TRANSLATOR)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+                        <TextBlock x:Name="TxtTranslatorMainSub" Text="Biên dịch toàn bộ giao diện từ Tiếng Anh chuẩn sang ngôn ngữ mong muốn. Tiến độ nháp tự động lưu liên tục."
                                    FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
                     </StackPanel>
                 </StackPanel>
@@ -47,7 +47,7 @@
 
                     <!-- Target Language Dropdown -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="🎯 CHỌN NGÔN NGỮ ĐÍCH BIÊN DỊCH:" FontWeight="SemiBold" FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="TxtTargetLangLabel" Text="🎯 CHỌN NGÔN NGỮ ĐÍCH BIÊN DỊCH:" FontWeight="SemiBold" FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,6"/>
                         <ComboBox x:Name="CmbTargetCulture"
                                   Padding="10,6" FontSize="12"
                                   SelectionChanged="CmbTargetCulture_SelectionChanged"/>
@@ -55,7 +55,7 @@
 
                     <!-- Author Name -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="✍️ TÊN / NICKNAME TÁC GIẢ BẢN DỊCH:" FontWeight="SemiBold" FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="TxtAuthorLabel" Text="✍️ TÊN / NICKNAME TÁC GIẢ BẢN DỊCH:" FontWeight="SemiBold" FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,6"/>
                         <TextBox x:Name="TxtAuthor"
                                  Padding="10,6" FontSize="12"
                                  Background="{DynamicResource InputBackgroundBrush}"
@@ -86,8 +86,8 @@
                                 <ColumnDefinition Width="420"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="🔤 VĂN BẢN TIẾNG ANH GỐC (SOURCE EN-US)" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                            <TextBlock Grid.Column="1" Text="✏️ BẢN DỊCH NGÔN NGỮ ĐÍCH CỦA BẠN (TARGET TRANSLATION)" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="12,0,0,0"/>
+                            <TextBlock x:Name="TxtColSourceHeader" Grid.Column="0" Text="🔤 VĂN BẢN TIẾNG ANH GỐC (SOURCE EN-US)" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            <TextBlock x:Name="TxtColTargetHeader" Grid.Column="1" Text="✏️ BẢN DỊCH NGÔN NGỮ ĐÍCH CỦA BẠN (TARGET TRANSLATION)" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="12,0,0,0"/>
                         </Grid>
                     </Border>
 
@@ -163,7 +163,7 @@
                                 Margin="0,0,8,0" Click="BtnSaveAndApply_Click"/>
 
                         <!-- Close -->
-                        <Button Content="Đóng"
+                        <Button x:Name="BtnCloseTrans" Content="Đóng"
                                 Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                 Width="80" Click="BtnClose_Click"/>
                     </StackPanel>

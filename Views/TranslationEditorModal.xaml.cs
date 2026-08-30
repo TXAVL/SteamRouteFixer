@@ -70,6 +70,10 @@ namespace SteamRouteFixer.Views
             InitializeComponent();
             ItemsTranslationList.ItemsSource = TranslationItems;
 
+            ApplyLanguageTranslations();
+            TxaLanguageManager.OnLanguageChanged += ApplyLanguageTranslations;
+            Closed += (s, e) => TxaLanguageManager.OnLanguageChanged -= ApplyLanguageTranslations;
+
             _autoSaveTimer.Interval = TimeSpan.FromMilliseconds(700);
             _autoSaveTimer.Tick += (s, e) =>
             {
@@ -81,6 +85,23 @@ namespace SteamRouteFixer.Views
             EnsureDraftsDirectory();
             LoadAvailableCultures();
             LoadEnglishSourceTemplate();
+        }
+
+        private void ApplyLanguageTranslations()
+        {
+            Title = TxaLanguageManager.GetString("t_trans_title", "Biên dịch Ngôn ngữ - TXA Language Translator");
+            if (TxtTranslatorMainTitle != null) TxtTranslatorMainTitle.Text = TxaLanguageManager.GetString("t_trans_header", "TRÌNH BIÊN DỊCH NGÔN NGỮ (TXA TRANSLATOR)");
+            if (TxtTranslatorMainSub != null) TxtTranslatorMainSub.Text = TxaLanguageManager.GetString("t_trans_sub", "Biên dịch toàn bộ giao diện từ Tiếng Anh chuẩn sang ngôn ngữ mong muốn. Tiến độ nháp tự động lưu liên tục.");
+
+            if (TxtTargetLangLabel != null) TxtTargetLangLabel.Text = TxaLanguageManager.GetString("t_trans_target_lbl", "🎯 CHỌN NGÔN NGỮ ĐÍCH BIÊN DỊCH:");
+            if (TxtAuthorLabel != null) TxtAuthorLabel.Text = TxaLanguageManager.GetString("t_trans_author_lbl", "✍️ TÊN / NICKNAME TÁC GIẢ BẢN DỊCH:");
+
+            if (TxtColSourceHeader != null) TxtColSourceHeader.Text = TxaLanguageManager.GetString("t_trans_col_source", "🔤 VĂN BẢN TIẾNG ANH GỐC (SOURCE EN-US)");
+            if (TxtColTargetHeader != null) TxtColTargetHeader.Text = TxaLanguageManager.GetString("t_trans_col_target", "✏️ BẢN DỊCH NGÔN NGỮ ĐÍCH CỦA BẠN (TARGET TRANSLATION)");
+
+            if (BtnSaveAndApply != null) BtnSaveAndApply.Content = TxaLanguageManager.GetString("t_trans_btn_save", "💾 Lưu & Áp Dụng (.txal)");
+            if (BtnSubmitGithub != null) BtnSubmitGithub.Content = TxaLanguageManager.GetString("t_trans_btn_submit", "🚀 Gửi Lên GitHub (100%)");
+            if (BtnCloseTrans != null) BtnCloseTrans.Content = TxaLanguageManager.GetString("t_btn_close", "Đóng");
         }
 
         private void EnsureDraftsDirectory()

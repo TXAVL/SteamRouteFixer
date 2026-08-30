@@ -35,7 +35,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="🔍 THÔNG TIN CHI TIẾT REQUEST &amp; RESPONSE"
+                    <TextBlock x:Name="TxtHeaderTitle" Text="🔍 THÔNG TIN CHI TIẾT REQUEST &amp; RESPONSE"
                                FontWeight="Bold" FontSize="14"
                                Foreground="{DynamicResource PrimaryAccentBrush}"/>
                     <TextBlock x:Name="TxtFullUrl"
@@ -65,19 +65,19 @@
                 Padding="12,8"
                 Margin="0,0,0,12">
             <WrapPanel Orientation="Horizontal">
-                <TextBlock Text="📱 Tiến trình: " Foreground="{DynamicResource TextSecondaryBrush}"/>
+                <TextBlock x:Name="TxtMetaProcess" Text="📱 Tiến trình: " Foreground="{DynamicResource TextSecondaryBrush}"/>
                 <TextBlock x:Name="TxtProcess" Text="steam.exe (PID: 8420)" FontWeight="SemiBold" Margin="0,0,18,0"/>
 
-                <TextBlock Text="🌐 Remote: " Foreground="{DynamicResource TextSecondaryBrush}"/>
+                <TextBlock x:Name="TxtMetaRemote" Text="🌐 Remote: " Foreground="{DynamicResource TextSecondaryBrush}"/>
                 <TextBlock x:Name="TxtRemote" Text="118.68.82.144:443" FontWeight="SemiBold" Margin="0,0,18,0"/>
 
-                <TextBlock Text="⏱ Độ trễ: " Foreground="{DynamicResource TextSecondaryBrush}"/>
+                <TextBlock x:Name="TxtMetaDuration" Text="⏱ Độ trễ: " Foreground="{DynamicResource TextSecondaryBrush}"/>
                 <TextBlock x:Name="TxtDuration" Text="28 ms" FontWeight="SemiBold" Margin="0,0,18,0"/>
 
-                <TextBlock Text="📦 Request Size: " Foreground="{DynamicResource TextSecondaryBrush}"/>
+                <TextBlock x:Name="TxtMetaReqSize" Text="📦 Request Size: " Foreground="{DynamicResource TextSecondaryBrush}"/>
                 <TextBlock x:Name="TxtReqSize" Text="512 B" FontWeight="SemiBold" Margin="0,0,18,0"/>
 
-                <TextBlock Text="📥 Response Size: " Foreground="{DynamicResource TextSecondaryBrush}"/>
+                <TextBlock x:Name="TxtMetaRespSize" Text="📥 Response Size: " Foreground="{DynamicResource TextSecondaryBrush}"/>
                 <TextBlock x:Name="TxtRespSize" Text="1.84 KB" FontWeight="SemiBold"/>
             </WrapPanel>
         </Border>
@@ -85,14 +85,14 @@
         <!-- Tabs for Request & Response -->
         <TabControl Grid.Row="2" Background="Transparent" BorderThickness="0">
             <!-- Response Tab (Primary) -->
-            <TabItem Header="📤 RESPONSE (PHẢN HỒI)" FontWeight="SemiBold" FontSize="12">
+            <TabItem x:Name="TabItemResponse" Header="📤 RESPONSE (PHẢN HỒI)" FontWeight="SemiBold" FontSize="12">
                 <Grid Margin="0,8,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Response Headers &amp; Payload:"
+                    <TextBlock x:Name="TxtRespSub" Grid.Row="0" Text="Response Headers &amp; Payload:"
                                FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
 
                     <TextBox Grid.Row="1" x:Name="TxtResponseBody"
@@ -111,14 +111,14 @@
             </TabItem>
 
             <!-- Request Tab -->
-            <TabItem Header="📥 REQUEST (YÊU CẦU)" FontWeight="SemiBold" FontSize="12">
+            <TabItem x:Name="TabItemRequest" Header="📥 REQUEST (YÊU CẦU)" FontWeight="SemiBold" FontSize="12">
                 <Grid Margin="0,8,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Request Headers &amp; Body:"
+                    <TextBlock x:Name="TxtReqSub" Grid.Row="0" Text="Request Headers &amp; Body:"
                                FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
 
                     <TextBox Grid.Row="1" x:Name="TxtRequestBody"
@@ -195,7 +195,7 @@
                     </Button.RenderTransform>
                 </Button>
 
-                <Button Content="Đóng" Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                <Button x:Name="BtnCloseModal" Content="Đóng" Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                         Padding="14,7"
                         Margin="8,0,0,0" IsCancel="True"/>
             </StackPanel>

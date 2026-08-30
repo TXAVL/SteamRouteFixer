@@ -21,8 +21,8 @@
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                     <Image Source="pack://application:,,,/SteamRouteFixer;component/Assets/app.png" Width="44" Height="44" Margin="0,0,14,0" VerticalAlignment="Center"/>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Cập Nhật Phần Mềm" FontWeight="Bold" FontSize="18" Foreground="{DynamicResource PrimaryAccentBrush}"/>
-                        <TextBlock Text="Kiểm tra phiên bản mới từ GitHub TXAVL/SteamRouteFixer" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="TxtUpdateMainTitle" Text="Cập Nhật Phần Mềm" FontWeight="Bold" FontSize="18" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+                        <TextBlock x:Name="TxtUpdateMainSub" Text="Kiểm tra phiên bản mới từ GitHub TXAVL/SteamRouteFixer" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -63,7 +63,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="📋 Thông tin bản phát hành:" FontWeight="SemiBold" FontSize="12.5" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                    <TextBlock x:Name="TxtReleaseInfoTitle" Grid.Row="0" Text="📋 Thông tin bản phát hành:" FontWeight="SemiBold" FontSize="12.5" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,8"/>
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                         <TextBox x:Name="TxtChangelog"
@@ -89,10 +89,10 @@
                     <Button x:Name="BtnDownloadUpdate" Content="⬇ Tải Bản Cập Nhật Mới"
                             Style="{DynamicResource WinUI3PrimaryButtonStyle}"
                             Visibility="Collapsed" Margin="0,0,8,0" Click="BtnDownloadUpdate_Click"/>
-                    <Button Content="🌐 Mở GitHub Releases" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Click="BtnOpenGithub_Click"/>
+                    <Button x:Name="BtnOpenGithub" Content="🌐 Mở GitHub Releases" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Click="BtnOpenGithub_Click"/>
                 </StackPanel>
 
-                <Button Content="Đóng" Style="{DynamicResource WinUI3SecondaryButtonStyle}" HorizontalAlignment="Right" Width="80" Click="BtnClose_Click"/>
+                <Button x:Name="BtnCloseUpdate" Content="Đóng" Style="{DynamicResource WinUI3SecondaryButtonStyle}" HorizontalAlignment="Right" Width="80" Click="BtnClose_Click"/>
             </Grid>
         </Grid>
     </Border>

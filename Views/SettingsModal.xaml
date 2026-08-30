@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="⚙️ THIẾT LẬP CẤU HÌNH ỨNG DỤNG"
+        <TextBlock x:Name="TxtSettingsMainTitle" Grid.Row="0" Text="⚙️ THIẾT LẬP CẤU HÌNH ỨNG DỤNG"
                    FontSize="16" FontWeight="Bold" Foreground="{DynamicResource PrimaryAccentBrush}"
                    Margin="0,0,0,16"/>
 
@@ -32,9 +32,9 @@
                         CornerRadius="{DynamicResource CardCornerRadius}"
                         Padding="16" Margin="0,0,0,14">
                     <StackPanel>
-                        <TextBlock Text="🎨 GIAO DIỆN &amp; PHONG CÁCH (THEME)"
+                        <TextBlock x:Name="TxtThemeHeader" Text="🎨 GIAO DIỆN &amp; PHONG CÁCH (THEME)"
                                    FontWeight="Bold" FontSize="13" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,8"/>
-                        <TextBlock Text="Chọn giao diện hiển thị phù hợp với sở thích của bạn:"
+                        <TextBlock x:Name="TxtThemeDesc" Text="Chọn giao diện hiển thị phù hợp với sở thích của bạn:"
                                    FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12"/>
 
                         <StackPanel Orientation="Horizontal">
@@ -58,9 +58,9 @@
                         CornerRadius="{DynamicResource CardCornerRadius}"
                         Padding="16" Margin="0,0,0,14">
                     <StackPanel>
-                        <TextBlock Text="🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)"
+                        <TextBlock x:Name="TxtLangHeader" Text="🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)"
                                    FontWeight="Bold" FontSize="13" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,8"/>
-                        <TextBlock Text="Quét tự động các gói ngôn ngữ (.txal) trong %LocalAppData%\SteamRouteFixer\languages\:"
+                        <TextBlock x:Name="TxtLangDesc" Text="Quét tự động các gói ngôn ngữ (.txal) trong %LocalAppData%\SteamRouteFixer\languages\:"
                                    FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12"/>
 
                         <Grid>
@@ -74,16 +74,16 @@
                                       Padding="10,6" FontSize="12"
                                       SelectionChanged="CmbLanguage_SelectionChanged"/>
 
-                            <Button Grid.Column="1" Content="📂 Nạp File .txal"
+                            <Button x:Name="BtnImportTxa" Grid.Column="1" Content="📂 Nạp File .txal"
                                     Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                     Margin="8,0,0,0" Click="BtnImportTxa_Click"/>
 
-                            <Button Grid.Column="2" Content="📁 Mở Thư Mục Lang"
+                            <Button x:Name="BtnOpenLangFolder" Grid.Column="2" Content="📁 Mở Thư Mục Lang"
                                     Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                     Margin="8,0,0,0" Click="BtnOpenLangFolder_Click"/>
                         </Grid>
 
-                        <Button Content="🌐 Tự Tạo Bản Dịch Mới (Translate App...)"
+                        <Button x:Name="BtnTranslateApp" Content="🌐 Tự Tạo Bản Dịch Mới (Translate App...)"
                                 Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                 Margin="0,10,0,0" HorizontalAlignment="Left"
                                 Click="BtnTranslateApp_Click"/>
@@ -97,9 +97,9 @@
                         CornerRadius="{DynamicResource CardCornerRadius}"
                         Padding="16" Margin="0,0,0,14">
                     <StackPanel>
-                        <TextBlock Text="🎮 ĐƯỜNG DẪN STEAM TÙY CHỌN"
+                        <TextBlock x:Name="TxtSteamPathHeader" Text="🎮 ĐƯỜNG DẪN STEAM TÙY CHỌN"
                                    FontWeight="Bold" FontSize="13" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,8"/>
-                        <TextBlock Text="Nếu bạn cài Steam ở ổ đĩa khác và công cụ chưa tự nhận diện, hãy chọn file steam.exe:"
+                        <TextBlock x:Name="TxtSteamPathDesc" Text="Nếu bạn cài Steam ở ổ đĩa khác và công cụ chưa tự nhận diện, hãy chọn file steam.exe:"
                                    FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,10"/>
 
                         <Grid>
@@ -114,7 +114,7 @@
                                      BorderBrush="{DynamicResource CardBorderBrush}"
                                      Padding="8,6" FontSize="12"/>
 
-                            <Button Grid.Column="1" Content="📁 Chọn file steam.exe"
+                            <Button x:Name="BtnBrowseSteam" Grid.Column="1" Content="📁 Chọn file steam.exe"
                                     Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                     Margin="8,0,0,0" Click="BtnBrowseSteam_Click"/>
                         </Grid>
@@ -128,9 +128,9 @@
                         CornerRadius="{DynamicResource CardCornerRadius}"
                         Padding="16" Margin="0,0,0,14">
                     <StackPanel>
-                        <TextBlock Text="🛡️ SAO LƯU &amp; KHÔI PHỤC FILE HOSTS"
+                        <TextBlock x:Name="TxtHostsBackupHeader" Text="🛡️ SAO LƯU &amp; KHÔI PHỤC FILE HOSTS"
                                    FontWeight="Bold" FontSize="13" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,8"/>
-                        <TextBlock Text="Danh sách các bản sao lưu tự động trong %LocalAppData%\SteamRouteFixer\backups\:"
+                        <TextBlock x:Name="TxtHostsBackupDesc" Text="Danh sách các bản sao lưu tự động trong %LocalAppData%\SteamRouteFixer\backups\:"
                                    FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,10"/>
 
                         <ListBox x:Name="LstBackups" Height="90"
@@ -140,10 +140,10 @@
                                  Margin="0,0,0,8"/>
 
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="🔄 Khôi Phục Bản Chọn"
+                            <Button x:Name="BtnRestoreBackup" Content="🔄 Khôi Phục Bản Chọn"
                                     Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                     Margin="0,0,8,0" Click="BtnRestoreBackup_Click"/>
-                            <Button Content="📂 Mở Thư Mục AppData"
+                            <Button x:Name="BtnOpenAppData" Content="📂 Mở Thư Mục AppData"
                                     Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                     Click="BtnOpenAppData_Click"/>
                         </StackPanel>
@@ -154,9 +154,9 @@
 
         <!-- Footer Actions -->
         <Grid Grid.Row="2" Margin="0,12,0,0">
-            <Button Content="💾 Lưu Cấu Hình" Style="{DynamicResource WinUI3PrimaryButtonStyle}"
+            <Button x:Name="BtnSave" Content="💾 Lưu Cài Đặt" Style="{DynamicResource WinUI3PrimaryButtonStyle}"
                     HorizontalAlignment="Right" Click="BtnSave_Click"/>
-            <Button Content="Hủy" Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+            <Button x:Name="BtnCancel" Content="Đóng" Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                     HorizontalAlignment="Right" Margin="0,0,130,0" IsCancel="True"/>
         </Grid>
     </Grid>

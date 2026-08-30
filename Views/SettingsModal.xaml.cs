@@ -16,7 +16,37 @@ namespace SteamRouteFixer.Views
         {
             InitializeComponent();
             _config = StoragePathManager.LoadConfig();
+            ApplyLanguageTranslations();
+            TxaLanguageManager.OnLanguageChanged += ApplyLanguageTranslations;
+            Closed += (s, e) => TxaLanguageManager.OnLanguageChanged -= ApplyLanguageTranslations;
             LoadSettings();
+        }
+
+        private void ApplyLanguageTranslations()
+        {
+            Title = TxaLanguageManager.GetString("t_settings_title", "Cài Đặt Hệ Thống & Giao Diện");
+            if (TxtSettingsMainTitle != null) TxtSettingsMainTitle.Text = TxaLanguageManager.GetString("t_settings_title", "⚙️ THIẾT LẬP CẤU HÌNH ỨNG DỤNG");
+
+            if (TxtThemeHeader != null) TxtThemeHeader.Text = TxaLanguageManager.GetString("t_theme_header", "🎨 CHỦ ĐỀ GIAO DIỆN (THEME)");
+            if (TxtThemeDesc != null) TxtThemeDesc.Text = TxaLanguageManager.GetString("t_theme_desc", "Tùy biến phong cách hiển thị WinUI 3 Fluent, Steam Dark Gaming hoặc VS Code Studio Dark:");
+
+            if (TxtLangHeader != null) TxtLangHeader.Text = TxaLanguageManager.GetString("t_lang_header", "🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)");
+            if (TxtLangDesc != null) TxtLangDesc.Text = TxaLanguageManager.GetString("t_lang_desc", "Quét tự động các gói ngôn ngữ (.txal) trong %LocalAppData%\\SteamRouteFixer\\languages\\:");
+            if (BtnImportTxa != null) BtnImportTxa.Content = TxaLanguageManager.GetString("t_btn_import_txa", "📂 Nạp File .txal");
+            if (BtnOpenLangFolder != null) BtnOpenLangFolder.Content = TxaLanguageManager.GetString("t_btn_open_lang_dir", "📁 Mở Thư Mục Lang");
+            if (BtnTranslateApp != null) BtnTranslateApp.Content = TxaLanguageManager.GetString("t_btn_translate_app", "🌐 Tự Tạo Bản Dịch Mới (Translate App...)");
+
+            if (TxtSteamPathHeader != null) TxtSteamPathHeader.Text = TxaLanguageManager.GetString("t_steam_path_header", "🎮 ĐƯỜNG DẪN STEAM TÙY CHỌN");
+            if (TxtSteamPathDesc != null) TxtSteamPathDesc.Text = TxaLanguageManager.GetString("t_steam_path_desc", "Nếu bạn cài Steam ở ổ đĩa khác và công cụ chưa tự nhận diện, hãy chọn file steam.exe:");
+            if (BtnBrowseSteam != null) BtnBrowseSteam.Content = TxaLanguageManager.GetString("t_btn_browse", "📁 Chọn file steam.exe");
+
+            if (TxtHostsBackupHeader != null) TxtHostsBackupHeader.Text = TxaLanguageManager.GetString("t_hosts_backup_header", "🛡️ SAO LƯU & KHÔI PHỤC FILE HOSTS");
+            if (TxtHostsBackupDesc != null) TxtHostsBackupDesc.Text = TxaLanguageManager.GetString("t_hosts_backup_desc", "Danh sách các bản sao lưu tự động trong %LocalAppData%\\SteamRouteFixer\\backups\\:");
+            if (BtnRestoreBackup != null) BtnRestoreBackup.Content = TxaLanguageManager.GetString("t_btn_restore_backup", "🔄 Khôi Phục Bản Chọn");
+            if (BtnOpenAppData != null) BtnOpenAppData.Content = TxaLanguageManager.GetString("t_menu_appdata", "📂 Mở Thư Mục AppData");
+
+            if (BtnSave != null) BtnSave.Content = TxaLanguageManager.GetString("t_btn_save", "💾 Lưu Cài Đặt");
+            if (BtnCancel != null) BtnCancel.Content = TxaLanguageManager.GetString("t_btn_close", "Đóng");
         }
 
         private void LoadSettings()
