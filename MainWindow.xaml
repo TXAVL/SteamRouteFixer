@@ -724,7 +724,7 @@
                                                     Content="{Binding BlockActionBtnContent, Mode=OneWay}"
                                                     FontWeight="SemiBold" FontSize="11"
                                                     Padding="8,3" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                    ToolTip="Nhấp để Bật / Tắt chặn các Request tới API Host này"
+                                                    ToolTip="{Binding BlockActionTooltip, Mode=OneWay}"
                                                     Click="BtnToggleBlockApi_Click"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>

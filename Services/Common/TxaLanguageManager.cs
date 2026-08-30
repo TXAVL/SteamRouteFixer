@@ -364,6 +364,15 @@ namespace SteamRouteFixer.Services.Common
                     { "t_col_size", "Dung Lượng (↓/↑)" },
                     { "t_col_block_action", "Trạng Thái Chặn" },
                     { "t_search_placeholder", "🔍 Tìm kiếm URL, API, Domain, IP..." },
+                    { "t_search_tooltip", "Tìm kiếm theo URL, domain hoặc IP..." },
+                    { "t_filter_active", "Đang hoạt động" },
+                    { "t_tooltip_star_github", "Ghé thăm kho lưu trữ GitHub và tặng 1 Sao ⭐" },
+                    { "t_btn_unblock_api", "🚫 BỎ CHẶN" },
+                    { "t_btn_block_api", "🛡️ CHẶN API" },
+                    { "t_badge_blocked", "🛡️ Đang chặn" },
+                    { "t_badge_allowed", "✅ Cho phép" },
+                    { "t_tooltip_unblock_api", "Nhấp để Bỏ Chặn các Request tới API Host này" },
+                    { "t_tooltip_block_api", "Nhấp để Bật / Tắt chặn các Request tới API Host này" },
 
                     // Bottom Tips
                     { "t_tip_tab1", "💡 Mẹo: Nhấn '1-Click Auto Fix' để tự động ghim IP sạch & sửa lỗi Steam không cần VPN" },
@@ -591,6 +600,15 @@ namespace SteamRouteFixer.Services.Common
                     { "t_col_size", "Size (↓/↑)" },
                     { "t_col_block_action", "Block Status" },
                     { "t_search_placeholder", "🔍 Search URL, API, Domain, IP..." },
+                    { "t_search_tooltip", "Search by URL, domain or IP..." },
+                    { "t_filter_active", "Active" },
+                    { "t_tooltip_star_github", "Visit GitHub repository and Star ⭐" },
+                    { "t_btn_unblock_api", "🚫 UNBLOCK" },
+                    { "t_btn_block_api", "🛡️ BLOCK API" },
+                    { "t_badge_blocked", "🛡️ Blocked" },
+                    { "t_badge_allowed", "✅ Allowed" },
+                    { "t_tooltip_unblock_api", "Click to unblock requests to this API Host" },
+                    { "t_tooltip_block_api", "Click to toggle blocking requests to this API Host" },
 
                     // Bottom Tips
                     { "t_tip_tab1", "💡 Tip: Click '1-Click Auto Fix' to automatically pin clean IPs and fix Steam issues without a VPN" },

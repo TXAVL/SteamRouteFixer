@@ -264,11 +264,21 @@ namespace SteamRouteFixer.Models
             }
         }
 
-        public string BlockActionBtnContent => _isBlocked ? "🚫 BỎ CHẶN" : "🛡️ CHẶN API";
+        public string BlockActionBtnContent => _isBlocked
+            ? SteamRouteFixer.Services.Common.TxaLanguageManager.GetString("t_btn_unblock_api", "🚫 BỎ CHẶN")
+            : SteamRouteFixer.Services.Common.TxaLanguageManager.GetString("t_btn_block_api", "🛡️ CHẶN API");
+
         public string BlockActionBtnBg => _isBlocked ? "#30FF5252" : "#1A4CC2FF";
         public string BlockActionBtnBorder => _isBlocked ? "#FFFF5252" : "#354CC2FF";
         public string BlockActionBtnFg => _isBlocked ? "#FF6E6E" : "#4CC2FF";
-        public string BlockStatusBadgeText => _isBlocked ? "🛡️ Đang chặn" : "✅ Cho phép";
+
+        public string BlockStatusBadgeText => _isBlocked
+            ? SteamRouteFixer.Services.Common.TxaLanguageManager.GetString("t_badge_blocked", "🛡️ Đang chặn")
+            : SteamRouteFixer.Services.Common.TxaLanguageManager.GetString("t_badge_allowed", "✅ Cho phép");
+
+        public string BlockActionTooltip => _isBlocked
+            ? SteamRouteFixer.Services.Common.TxaLanguageManager.GetString("t_tooltip_unblock_api", "Nhấp để Bỏ Chặn các Request tới API Host này")
+            : SteamRouteFixer.Services.Common.TxaLanguageManager.GetString("t_tooltip_block_api", "Nhấp để Bật / Tắt chặn các Request tới API Host này");
 
         public string ResponseHeaders
         {

@@ -203,6 +203,9 @@ namespace SteamRouteFixer
                 if (ColReqStatus != null) ColReqStatus.Header = TxaLanguageManager.GetString("t_col_status", "Trạng Thái");
                 if (ColReqBlockAction != null) ColReqBlockAction.Header = TxaLanguageManager.GetString("t_col_block_action", "Trạng Thái Chặn");
                 if (TxtSearchWatermark != null) TxtSearchWatermark.Text = TxaLanguageManager.GetString("t_search_placeholder", "🔍 Tìm kiếm URL, API, Domain, IP...");
+                if (TxtSearchRequest != null) TxtSearchRequest.ToolTip = TxaLanguageManager.GetString("t_search_tooltip", "Tìm kiếm theo URL, domain hoặc IP...");
+                if (TxtFilterActive != null) TxtFilterActive.Text = TxaLanguageManager.GetString("t_filter_active", "Đang hoạt động");
+                if (BtnGithubTop != null) BtnGithubTop.ToolTip = TxaLanguageManager.GetString("t_tooltip_star_github", "Ghé thăm kho lưu trữ GitHub và tặng 1 Sao ⭐");
 
                 // Bottom Tip
                 if (TxtBottomTip != null)
