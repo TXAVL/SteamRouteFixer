@@ -16,10 +16,14 @@
     <SolidColorBrush x:Key="ErrorBrush" Color="#C33B3B"/>
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="#C7D5E0"/>
     <SolidColorBrush x:Key="TextSecondaryBrush" Color="#8F98A0"/>
+    <SolidColorBrush x:Key="TextMutedBrush" Color="#6A7A89"/>
     <SolidColorBrush x:Key="DataGridHeaderBackgroundBrush" Color="#101822"/>
     <SolidColorBrush x:Key="DataGridHeaderForegroundBrush" Color="#66C0F4"/>
     <SolidColorBrush x:Key="DataGridRowHoverBrush" Color="#21354A"/>
     <SolidColorBrush x:Key="DataGridRowSelectedBrush" Color="#2A475E"/>
+    <SolidColorBrush x:Key="DataGridRowBackgroundBrush" Color="#171A21"/>
+    <SolidColorBrush x:Key="DataGridRowAltBackgroundBrush" Color="#141E28"/>
+    <SolidColorBrush x:Key="DataGridGridLineBrush" Color="#2A475E"/>
     <SolidColorBrush x:Key="LogConsoleBackgroundBrush" Color="#0B0E13"/>
 
     <FontFamily x:Key="SegoeFluentFont">Segoe UI, sans-serif</FontFamily>
@@ -214,30 +218,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="DataGridColumnHeader">
-        <Setter Property="Background" Value="{StaticResource DataGridHeaderBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="#66C0F4"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="12,10"/>
-        <Setter Property="BorderBrush" Value="#2A475E"/>
-        <Setter Property="BorderThickness" Value="0,0,1,1"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="DataGridColumnHeader">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="DataGridRow">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#C7D5E0"/>
@@ -340,6 +320,17 @@
         <Setter Property="Background" Value="#4C1B1B"/>
         <Setter Property="BorderBrush" Value="#8A2A2A"/>
         <Setter Property="Foreground" Value="#FF8888"/>
+    </Style>
+
+    <Style x:Key="WinUI3SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource WinUI3SecondaryButtonStyle}">
+        <Setter Property="Background" Value="#1D3E20"/>
+        <Setter Property="BorderBrush" Value="#2D6A4F"/>
+        <Setter Property="Foreground" Value="#5C7E10"/>
+    </Style>
+
+    <Style x:Key="WinUI3GhostButtonStyle" TargetType="Button" BasedOn="{StaticResource WinUI3SecondaryButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
 
     <Style x:Key="FilterChipButtonStyle" TargetType="Button">
