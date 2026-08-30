@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using SteamRouteFixer.Models;
 
@@ -42,7 +43,7 @@ namespace SteamRouteFixer.Views
             try
             {
                 Clipboard.SetText(TxtFullUrl.Text);
-                ShowCopyNotice("✓ Đã copy URL!");
+                AnimateButtonFeedback(BtnCopyUrl, ScaleBtnCopyUrl, "📋 Copy URL", "✅ Đã Copy URL!", "📋 Đã sao chép liên kết URL vào Clipboard!");
             }
             catch { }
         }
@@ -52,7 +53,7 @@ namespace SteamRouteFixer.Views
             try
             {
                 Clipboard.SetText(TxtRequestBody.Text);
-                ShowCopyNotice("✓ Đã copy Request Content!");
+                AnimateButtonFeedback(BtnCopyRequest, ScaleBtnCopyRequest, "📋 Copy Request", "✅ Đã Copy Request!", "📥 Đã sao chép nội dung Request vào Clipboard!");
             }
             catch { }
         }
@@ -63,23 +64,54 @@ namespace SteamRouteFixer.Views
             {
                 string textToCopy = string.IsNullOrEmpty(_item.ResponseBody) ? TxtResponseBody.Text : _item.ResponseBody;
                 Clipboard.SetText(textToCopy);
-
-                // Play Animation
-                if (TryFindResource("CopySuccessAnimation") is Storyboard sb)
-                {
-                    sb.Begin(this);
-                }
-                ShowCopyNotice("✨ ✓ Đã copy toàn bộ Response Body!");
+                AnimateButtonFeedback(BtnCopyResponse, ScaleBtnCopyResponse, "✨ 📋 COPY RESPONSE (BODY)", "✨ ✅ ĐÃ COPY BODY!", "✨ 📤 Đã sao chép toàn bộ Response Body vào Clipboard!");
             }
             catch { }
+        }
+
+        private async void AnimateButtonFeedback(Button btn, System.Windows.Media.ScaleTransform scale, string originalText, string copiedText, string toastMsg)
+        {
+            try
+            {
+                // 1. Text change & scale bounce
+                btn.Content = copiedText;
+
+                var scaleAnim = new DoubleAnimation
+                {
+                    From = 1.0,
+                    To = 1.08,
+                    Duration = TimeSpan.FromMilliseconds(100),
+                    AutoReverse = true
+                };
+                scale.BeginAnimation(System.Windows.Media.ScaleTransform.ScaleXProperty, scaleAnim);
+                scale.BeginAnimation(System.Windows.Media.ScaleTransform.ScaleYProperty, scaleAnim);
+
+                // 2. Show toast
+                ShowCopyNotice(toastMsg);
+
+                // 3. Revert after 1.3 seconds
+                await Task.Delay(1300);
+                btn.Content = originalText;
+            }
+            catch
+            {
+                btn.Content = originalText;
+            }
         }
 
         private void ShowCopyNotice(string message)
         {
             TxtCopyNotice.Text = message;
-            TxtCopyNotice.Opacity = 1.0;
-            var anim = new DoubleAnimation(1.0, 0.0, TimeSpan.FromSeconds(2.0));
-            TxtCopyNotice.BeginAnimation(OpacityProperty, anim);
+            BorderCopyToast.Opacity = 1.0;
+
+            var fadeAnim = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                BeginTime = TimeSpan.FromMilliseconds(1400),
+                Duration = TimeSpan.FromMilliseconds(600)
+            };
+            BorderCopyToast.BeginAnimation(OpacityProperty, fadeAnim);
         }
     }
 }

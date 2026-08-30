@@ -12,23 +12,6 @@
         Foreground="{DynamicResource TextPrimaryBrush}"
         FontFamily="{DynamicResource SegoeFluentFont}">
 
-    <Window.Resources>
-        <Storyboard x:Key="CopySuccessAnimation">
-            <ColorAnimation Storyboard.TargetName="BtnCopyResponseBorder"
-                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                            To="#00CC6A" Duration="0:0:0.15" AutoReverse="True"/>
-            <DoubleAnimation Storyboard.TargetName="BtnCopyResponseScale"
-                             Storyboard.TargetProperty="ScaleX"
-                             To="1.08" Duration="0:0:0.1" AutoReverse="True"/>
-            <DoubleAnimation Storyboard.TargetName="BtnCopyResponseScale"
-                             Storyboard.TargetProperty="ScaleY"
-                             To="1.08" Duration="0:0:0.1" AutoReverse="True"/>
-            <DoubleAnimation Storyboard.TargetName="TxtCopyNotice"
-                             Storyboard.TargetProperty="Opacity"
-                             From="1.0" To="0.0" Duration="0:0:1.8"/>
-        </Storyboard>
-    </Window.Resources>
-
     <Grid Margin="18">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -154,62 +137,66 @@
             </TabItem>
         </TabControl>
 
-        <!-- Bottom Action Bar with Animated Copy Response Button -->
+        <!-- Bottom Action Bar with Micro-interactions for all Copy Buttons -->
         <Grid Grid.Row="3" Margin="0,14,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Copy Success Toast Notification -->
-            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock x:Name="TxtCopyNotice"
-                           Text="✨ Đã sao chép vào Clipboard thành công!"
-                           Foreground="#00CC6A"
-                           FontWeight="SemiBold"
-                           Opacity="0.0"
-                           Margin="4,0,0,0"/>
-            </StackPanel>
+            <!-- Copy Success Toast Notification Badge -->
+            <Border Grid.Column="0" x:Name="BorderCopyToast"
+                    Background="#1B3A24" BorderBrush="#00CC6A" BorderThickness="1"
+                    CornerRadius="6" Padding="10,6" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Opacity="0.0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="✅" FontSize="12" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtCopyNotice"
+                               Text="Đã sao chép thành công vào Clipboard!"
+                               Foreground="#57AB5A"
+                               FontWeight="SemiBold"
+                               FontSize="12"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <!-- 1. Copy URL Button -->
                 <Button x:Name="BtnCopyUrl" Content="📋 Copy URL"
                         Style="{DynamicResource WinUI3SecondaryButtonStyle}"
-                        Margin="0,0,8,0" Click="BtnCopyUrl_Click"/>
+                        Padding="14,7"
+                        Margin="0,0,8,0" Click="BtnCopyUrl_Click"
+                        RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform>
+                        <ScaleTransform x:Name="ScaleBtnCopyUrl" ScaleX="1.0" ScaleY="1.0"/>
+                    </Button.RenderTransform>
+                </Button>
 
+                <!-- 2. Copy Request Button -->
                 <Button x:Name="BtnCopyRequest" Content="📋 Copy Request"
                         Style="{DynamicResource WinUI3SecondaryButtonStyle}"
-                        Margin="0,0,8,0" Click="BtnCopyRequest_Click"/>
+                        Padding="14,7"
+                        Margin="0,0,8,0" Click="BtnCopyRequest_Click"
+                        RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform>
+                        <ScaleTransform x:Name="ScaleBtnCopyRequest" ScaleX="1.0" ScaleY="1.0"/>
+                    </Button.RenderTransform>
+                </Button>
 
-                <!-- Special Animated Glowing Copy Response Button -->
-                <Button x:Name="BtnCopyResponse"
-                        Cursor="Hand"
+                <!-- 3. Glowing Copy Response Body Button -->
+                <Button x:Name="BtnCopyResponse" Content="✨ 📋 COPY RESPONSE (BODY)"
+                        Style="{DynamicResource WinUI3PrimaryButtonStyle}"
+                        FontWeight="Bold"
+                        Padding="16,7"
                         Click="BtnCopyResponse_Click"
-                        Padding="16,8"
-                        Background="#0E639C"
-                        BorderBrush="#4CC2FF"
-                        BorderThickness="1">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="BtnCopyResponseBorder"
-                                    Background="#0E639C"
-                                    BorderBrush="#4CC2FF"
-                                    BorderThickness="1"
-                                    CornerRadius="6"
-                                    Padding="16,8"
-                                    RenderTransformOrigin="0.5,0.5">
-                                <Border.RenderTransform>
-                                    <ScaleTransform x:Name="BtnCopyResponseScale" ScaleX="1.0" ScaleY="1.0"/>
-                                </Border.RenderTransform>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Name="TxtCopyIcon" Text="✨ 📋 " FontSize="12" Foreground="#FFFFFF"/>
-                                    <TextBlock x:Name="TxtCopyButtonLabel" Text="COPY RESPONSE (BODY)" FontWeight="Bold" FontSize="12" Foreground="#FFFFFF"/>
-                                </StackPanel>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
+                        RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform>
+                        <ScaleTransform x:Name="ScaleBtnCopyResponse" ScaleX="1.0" ScaleY="1.0"/>
+                    </Button.RenderTransform>
                 </Button>
 
                 <Button Content="Đóng" Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                        Padding="14,7"
                         Margin="8,0,0,0" IsCancel="True"/>
             </StackPanel>
         </Grid>
