@@ -1006,6 +1006,19 @@ namespace SteamRouteFixer
             modal.ShowDialog();
         }
 
+        private void BtnGithubTop_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://github.com/TXAVL/SteamRouteFixer",
+                    UseShellExecute = true
+                });
+            }
+            catch { }
+        }
+
         #endregion
     }
 }

@@ -70,6 +70,16 @@ namespace SteamRouteFixer.Services.Common
                     {
                         changelog = bodyProp.GetString() ?? string.Empty;
                     }
+
+                    if (root.TryGetProperty("published_at", out var pubProp) && DateTime.TryParse(pubProp.GetString(), out var pubDate))
+                    {
+                        result.ReleaseDate = pubDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm");
+                    }
+                    else if (root.TryGetProperty("created_at", out var createProp) && DateTime.TryParse(createProp.GetString(), out var createDate))
+                    {
+                        result.ReleaseDate = createDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm");
+                    }
+
                     if (root.TryGetProperty("assets", out var assetsProp) && assetsProp.ValueKind == JsonValueKind.Array && assetsProp.GetArrayLength() > 0)
                     {
                         var firstAsset = assetsProp[0];
@@ -87,6 +97,10 @@ namespace SteamRouteFixer.Services.Common
                     {
                         changelog = bodyProp.GetString() ?? string.Empty;
                     }
+                    if (root.TryGetProperty("release_date", out var dateProp))
+                    {
+                        result.ReleaseDate = dateProp.GetString() ?? DateTime.Now.ToString("yyyy-MM-dd");
+                    }
                     if (root.TryGetProperty("download_url", out var dlProp))
                     {
                         downloadUrl = dlProp.GetString() ?? string.Empty;
@@ -94,7 +108,7 @@ namespace SteamRouteFixer.Services.Common
                 }
 
                 result.Version = latestVersion;
-                result.Changelog = string.IsNullOrWhiteSpace(changelog) ? "Có phiên bản cập nhật mới với nhiều cải tiến." : changelog;
+                result.Changelog = string.IsNullOrWhiteSpace(changelog) ? "Bản phát hành chính thức từ TXA Studio." : changelog;
                 result.DownloadUrl = downloadUrl;
 
                 if (IsNewerVersion(latestVersion, CurrentVersion))

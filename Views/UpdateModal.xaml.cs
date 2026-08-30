@@ -19,6 +19,7 @@ namespace SteamRouteFixer.Views
             ApplyLanguageTranslations();
             TxaLanguageManager.OnLanguageChanged += ApplyLanguageTranslations;
             Closed += (s, e) => TxaLanguageManager.OnLanguageChanged -= ApplyLanguageTranslations;
+            Loaded += (s, e) => BtnCheckUpdate_Click(this, new RoutedEventArgs());
             TxtCurrentVersion.Text = $"Phiên bản hiện tại: v{UpdateChecker.CurrentVersion}";
         }
 
@@ -49,7 +50,7 @@ namespace SteamRouteFixer.Views
                     TxtUpdateStatus.Text = $"🚀 Phát hiện phiên bản mới: v{_latestUpdate.Version} (Phát hành: {_latestUpdate.ReleaseDate})!";
                     TxtUpdateStatus.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 200, 50));
 
-                    TxtChangelog.Text = $"=== BẢN CẬP NHẬT V{_latestUpdate.Version} ===\r\nNgày phát hành: {_latestUpdate.ReleaseDate}\r\n\r\nNội dung thay đổi:\r\n{_latestUpdate.Changelog}";
+                    TxtChangelog.Text = $"=== BẢN CẬP NHẬT MỚI: v{_latestUpdate.Version} ===\r\nNgày phát hành: {_latestUpdate.ReleaseDate}\r\n\r\nNội dung thay đổi:\r\n{_latestUpdate.Changelog}";
 
                     if (!string.IsNullOrEmpty(_latestUpdate.DownloadUrl))
                     {
@@ -66,7 +67,12 @@ namespace SteamRouteFixer.Views
                 {
                     TxtUpdateStatus.Text = $"✅ Bạn đang sử dụng phiên bản v{UpdateChecker.CurrentVersion} mới nhất từ TXA Studio!";
                     TxtUpdateStatus.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(38, 224, 127));
-                    TxtChangelog.Text = $"Phiên bản hiện tại: v{UpdateChecker.CurrentVersion}\r\nTrạng thái: Mới nhất trên GitHub Release.\r\nKhông có bản cập nhật nào cần tải về.";
+
+                    string changelogContent = !string.IsNullOrWhiteSpace(_latestUpdate.Changelog)
+                        ? _latestUpdate.Changelog
+                        : "Bản phát hành chính thức ổn định từ TXA Studio.";
+
+                    TxtChangelog.Text = $"=== NHẬT KÝ BẢN PHÁT HÀNH v{_latestUpdate.Version} (MỚI NHẤT) ===\r\nNgày phát hành: {_latestUpdate.ReleaseDate}\r\n\r\n{changelogContent}";
                 }
             }
             catch (Exception ex)
