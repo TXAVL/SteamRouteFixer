@@ -99,7 +99,7 @@
             <!-- ========================================== -->
             <!-- TAB 1: 🎮 STEAM ROUTE FIXER                -->
             <!-- ========================================== -->
-            <TabItem Header="🎮 STEAM ROUTE FIXER" FontWeight="Bold" FontSize="13">
+            <TabItem x:Name="TabSteamItem" Header="🎮 STEAM ROUTE FIXER" FontWeight="Bold" FontSize="13">
                 <Grid Margin="4,8,4,4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/> <!-- Steam Sentinel Banner -->
@@ -129,7 +129,7 @@
 
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="BẢO VỆ STEAM SENTINEL: " FontWeight="Bold" FontSize="12.5" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+                                    <TextBlock x:Name="TxtSentinelHeader" Text="BẢO VỆ STEAM SENTINEL: " FontWeight="Bold" FontSize="12.5" Foreground="{DynamicResource PrimaryAccentBrush}"/>
                                     <TextBlock x:Name="TxtSteamStatusSummary" Text="Đang phát hiện cài đặt và tiến trình Steam..." FontSize="12.5" FontWeight="SemiBold"/>
                                 </StackPanel>
                                 <TextBlock x:Name="TxtSteamPathDisplay" Text="Đường dẫn: C:\Program Files (x86)\Steam\steam.exe" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
@@ -376,7 +376,7 @@
             <!-- ======================================================= -->
             <!-- TAB 2: 🌐 HTTP/HTTPS TRAFFIC & PROCESS INSPECTOR        -->
             <!-- ======================================================= -->
-            <TabItem Header="🌐 HTTP/HTTPS TRAFFIC &amp; PROCESS INSPECTOR" FontWeight="Bold" FontSize="13">
+            <TabItem x:Name="TabTrafficItem" Header="🌐 HTTP/HTTPS TRAFFIC &amp; PROCESS INSPECTOR" FontWeight="Bold" FontSize="13">
                 <Grid Margin="4,8,4,4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/> <!-- Filter by App Dropdown & Toolbar -->
@@ -401,7 +401,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="📱 LỌC THEO APP: " FontWeight="Bold" FontSize="12.5"
+                            <TextBlock x:Name="TxtFilterAppLabel" Grid.Column="0" Text="📱 LỌC THEO APP: " FontWeight="Bold" FontSize="12.5"
                                        Foreground="{DynamicResource PrimaryAccentBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
 
                             <!-- Real-time Process ComboBox -->
@@ -420,7 +420,7 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
 
-                            <Button Grid.Column="2" Content="🔄 Quét App"
+                            <Button x:Name="BtnRefreshProcesses" Grid.Column="2" Content="🔄 Quét App"
                                     Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                     Margin="8,0,0,0" VerticalAlignment="Center" Click="BtnRefreshProcesses_Click"/>
 
@@ -438,7 +438,7 @@
                                 <Button x:Name="BtnToggleCapture" Content="⏸ Tạm Dừng"
                                         Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                         Margin="0,0,8,0" Click="BtnToggleCapture_Click"/>
-                                <Button Content="🧹 Xóa Bảng"
+                                <Button x:Name="BtnClearRequests" Content="🧹 Xóa Bảng"
                                         Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                         Click="BtnClearRequests_Click"/>
                             </StackPanel>

@@ -38,6 +38,10 @@ namespace SteamRouteFixer
             StoragePathManager.EnsureDirectories();
             var config = StoragePathManager.LoadConfig();
 
+            // Initialize TxaLanguage (support .txa file double click)
+            string? startupTxaFile = e.Args.Length > 0 ? e.Args[0] : null;
+            TxaLanguageManager.Initialize(startupTxaFile);
+
             splash.SetStatus($"Đang áp dụng giao diện ({config.Theme})...");
             ThemeManager.ApplyTheme(config.Theme);
 

@@ -51,6 +51,40 @@
                     </StackPanel>
                 </Border>
 
+                <!-- Language Selection Card (TxaLanguage) -->
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource CardBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource CardCornerRadius}"
+                        Padding="16" Margin="0,0,0,14">
+                    <StackPanel>
+                        <TextBlock Text="🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)"
+                                   FontWeight="Bold" FontSize="13" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,8"/>
+                        <TextBlock Text="Quét tự động các gói ngôn ngữ (.txa) trong %LocalAppData%\SteamRouteFixer\languages\:"
+                                   FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ComboBox x:Name="CmbLanguage" Grid.Column="0"
+                                      Padding="10,6" FontSize="12"
+                                      SelectionChanged="CmbLanguage_SelectionChanged"/>
+
+                            <Button Grid.Column="1" Content="📂 Nạp File .txa"
+                                    Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                    Margin="8,0,0,0" Click="BtnImportTxa_Click"/>
+
+                            <Button Grid.Column="2" Content="📁 Mở Thư Mục Lang"
+                                    Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                    Margin="8,0,0,0" Click="BtnOpenLangFolder_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
                 <!-- Steam Path Card -->
                 <Border Background="{DynamicResource CardBackgroundBrush}"
                         BorderBrush="{DynamicResource CardBorderBrush}"

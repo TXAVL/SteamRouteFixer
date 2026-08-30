@@ -3,6 +3,7 @@ namespace SteamRouteFixer.Models
     public class AppConfig
     {
         public string Theme { get; set; } = "WinUI3"; // "WinUI3", "SteamDark", "VSCode"
+        public string LanguageCode { get; set; } = "vi-VN"; // "vi-VN", "en-US", etc.
         public string CustomSteamPath { get; set; } = string.Empty;
         public string UpdateCheckUrl { get; set; } = "https://api.github.com/repos/TXAVL/SteamRouteFixer/releases/latest";
         public string PrimaryNet10DownloadUrl { get; set; } = "https://www.mediafire.com/file/jj8pfqovpm30fw2/dotnet+10.exe/file";

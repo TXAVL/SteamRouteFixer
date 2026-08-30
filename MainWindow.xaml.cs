@@ -60,7 +60,7 @@ namespace SteamRouteFixer
             // Connect TxaLogger to UI Log Stream
             TxaLogger.OnLogEmitted += (entry) =>
             {
-                Dispatcher.Invoke(() =>
+                Dispatcher.InvokeAsync(() =>
                 {
                     _logEntries.Add(entry);
                     if (_logEntries.Count > 500) _logEntries.RemoveAt(0);
@@ -68,12 +68,36 @@ namespace SteamRouteFixer
                 });
             };
 
+            TxaLanguageManager.OnLanguageChanged += ApplyLanguageTranslations;
+            ApplyLanguageTranslations();
+
+            InitTimers();
             CheckAdminRights();
             InitSteamPresets();
-            InitTimers();
 
             Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
+        }
+
+        private void ApplyLanguageTranslations()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Title = TxaLanguageManager.GetString("t_app_title", "Steam Route Fixer & Traffic Inspector");
+                if (TabSteamItem != null) TabSteamItem.Header = TxaLanguageManager.GetString("t_tab_steam", "🎮 STEAM ROUTE FIXER");
+                if (TabTrafficItem != null) TabTrafficItem.Header = TxaLanguageManager.GetString("t_tab_traffic", "🌐 HTTP/HTTPS TRAFFIC & PROCESS INSPECTOR");
+
+                if (BtnAutoFix != null) BtnAutoFix.Content = TxaLanguageManager.GetString("t_btn_autofix", "⚡ 1-Click Auto Fix Steam");
+                if (BtnDiagnose != null) BtnDiagnose.Content = TxaLanguageManager.GetString("t_btn_diagnose", "🔍 Kiểm Tra (Diagnose)");
+                if (BtnRevertHosts != null) BtnRevertHosts.Content = TxaLanguageManager.GetString("t_btn_revert_hosts", "🧹 Khôi Phục Hosts");
+                if (BtnFlushDns != null) BtnFlushDns.Content = TxaLanguageManager.GetString("t_btn_flush_dns", "🔄 Flush DNS");
+                if (BtnLaunchSteam != null) BtnLaunchSteam.Content = TxaLanguageManager.GetString("t_btn_open_steam", "🚀 Mở Steam");
+
+                if (TxtSentinelHeader != null) TxtSentinelHeader.Text = TxaLanguageManager.GetString("t_sentinel_title", "BẢO VỆ STEAM SENTINEL: ");
+                if (TxtFilterAppLabel != null) TxtFilterAppLabel.Text = TxaLanguageManager.GetString("t_filter_app", "📱 LỌC THEO APP: ");
+                if (BtnRefreshProcesses != null) BtnRefreshProcesses.Content = TxaLanguageManager.GetString("t_btn_scan_app", "🔄 Quét App");
+                if (BtnClearRequests != null) BtnClearRequests.Content = TxaLanguageManager.GetString("t_btn_clear_table", "🧹 Xóa Bảng");
+            });
         }
 
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

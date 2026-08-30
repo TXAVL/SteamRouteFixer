@@ -27,7 +27,77 @@ namespace SteamRouteFixer.Views
 
             TxtSteamPath.Text = _config.CustomSteamPath;
 
+            LoadLanguagesList();
             RefreshBackupsList();
+        }
+
+        private void LoadLanguagesList()
+        {
+            TxaLanguageManager.ScanAvailableLanguages();
+            CmbLanguage.Items.Clear();
+
+            int selectedIndex = 0;
+            for (int i = 0; i < TxaLanguageManager.AvailableLanguages.Count; i++)
+            {
+                var lang = TxaLanguageManager.AvailableLanguages[i];
+                CmbLanguage.Items.Add($"{lang.lang_name} ({lang.lang_code})");
+
+                if (lang.lang_code.Equals(_config.LanguageCode, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedIndex = i;
+                }
+            }
+
+            if (CmbLanguage.Items.Count > 0)
+            {
+                CmbLanguage.SelectedIndex = selectedIndex;
+            }
+        }
+
+        private void CmbLanguage_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (CmbLanguage.SelectedIndex >= 0 && CmbLanguage.SelectedIndex < TxaLanguageManager.AvailableLanguages.Count)
+            {
+                var selected = TxaLanguageManager.AvailableLanguages[CmbLanguage.SelectedIndex];
+                _config.LanguageCode = selected.lang_code;
+                TxaLanguageManager.ApplyLanguageByCode(selected.lang_code, saveToConfig: true);
+            }
+        }
+
+        private void BtnImportTxa_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFileDialog
+            {
+                Title = "Chọn gói ngôn ngữ TXA Language (*.txa)",
+                Filter = "TXA Language Package (*.txa)|*.txa|All files (*.*)|*.*"
+            };
+
+            if (dlg.ShowDialog() == true)
+            {
+                if (TxaLanguageManager.ImportAndApplyLanguageFile(dlg.FileName, showSuccessModal: true))
+                {
+                    _config.LanguageCode = TxaLanguageManager.CurrentLanguage.lang_code;
+                    LoadLanguagesList();
+                }
+            }
+        }
+
+        private void BtnOpenLangFolder_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!Directory.Exists(TxaLanguageManager.LanguagesDirectory))
+                {
+                    Directory.CreateDirectory(TxaLanguageManager.LanguagesDirectory);
+                }
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "explorer.exe",
+                    Arguments = $"\"{TxaLanguageManager.LanguagesDirectory}\"",
+                    UseShellExecute = true
+                });
+            }
+            catch { }
         }
 
         private void RefreshBackupsList()
