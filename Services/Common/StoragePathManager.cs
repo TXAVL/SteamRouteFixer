@@ -42,7 +42,16 @@ namespace SteamRouteFixer.Services.Common
                 {
                     string json = File.ReadAllText(targetPath);
                     var cfg = JsonSerializer.Deserialize<AppConfig>(json);
-                    if (cfg != null) return cfg;
+                    if (cfg != null)
+                    {
+                        // Auto-heal legacy or invalid update URL
+                        if (string.IsNullOrWhiteSpace(cfg.UpdateCheckUrl) || cfg.UpdateCheckUrl.Contains("txa-fix-steam"))
+                        {
+                            cfg.UpdateCheckUrl = "https://api.github.com/repos/TXAVL/SteamRouteFixer/releases/latest";
+                            SaveConfig(cfg);
+                        }
+                        return cfg;
+                    }
                 }
             }
             catch { }

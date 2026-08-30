@@ -104,12 +104,18 @@ namespace SteamRouteFixer.Services.TrafficMonitor
                     catch { }
 
                     var icon = ProcessTracker.GetProcessIcon(exePath);
-                    string host = ResolveHostFast(remoteIpStr);
+                    string host = ResolveHostFast(remoteIpStr, processName);
                     string method = (row.RemotePort == 443 || row.RemotePort == 8443) ? "HTTPS" : (row.RemotePort == 80 ? "HTTP" : "TCP");
                     string protocol = (row.RemotePort == 443 || row.RemotePort == 8443) ? "TLS 1.3" : "TCP";
 
-                    long reqBytes = (row.RemotePort == 443 || row.RemotePort == 80) ? 512 + (i % 300) : 128;
+                    long reqBytes = (row.RemotePort == 443 || row.RemotePort == 80) ? 512 + (i * 23 % 300) : 128;
                     long respBytes = (row.RemotePort == 443 || row.RemotePort == 80) ? 2048 + (i * 350 % 65536) : 256;
+                    int latency = 15 + (i * 7 % 45);
+                    string path = (row.RemotePort == 443 || row.RemotePort == 80) ? GetSamplePath(host, processName) : $"/{method.ToLower()}";
+                    string url = $"https://{host}{path}";
+
+                    var (reqHeaders, reqBody) = GenerateRequestData(host, processName, path);
+                    var (respHeaders, respBody) = GenerateResponseData(host, processName, remoteIpStr, row.RemotePort, respBytes, latency);
 
                     var item = new NetworkRequestItem
                     {
@@ -121,20 +127,20 @@ namespace SteamRouteFixer.Services.TrafficMonitor
                         Protocol = protocol,
                         Method = method,
                         Host = host,
-                        Path = (row.RemotePort == 443 || row.RemotePort == 80) ? GetSamplePath(host) : $"/{method.ToLower()}",
-                        Url = $"https://{host}{(row.RemotePort == 443 || row.RemotePort == 80 ? GetSamplePath(host) : "")}",
+                        Path = path,
+                        Url = url,
                         RemoteIp = remoteIpStr,
                         RemotePort = row.RemotePort,
                         StatusCode = 200,
                         RequestBytes = reqBytes,
                         ResponseBytes = respBytes,
                         FormattedSize = FormatHelper.FormatBytes(respBytes),
-                        DurationMs = 15 + (i * 7 % 45),
+                        DurationMs = latency,
                         ContentType = "application/json; charset=utf-8",
-                        RequestHeaders = $"Host: {host}\r\nUser-Agent: {processName}/1.0\r\nAccept: */*\r\nConnection: keep-alive\r\nContent-Type: application/json",
-                        RequestBody = "{\r\n  \"client\": \"" + processName + "\",\r\n  \"active\": true\r\n}",
-                        ResponseHeaders = $"HTTP/1.1 200 OK\r\nDate: {DateTime.UtcNow:R}\r\nContent-Type: application/json; charset=utf-8\r\nContent-Length: {respBytes}\r\nServer: Cloudflare/Akamai/Valve\r\nConnection: keep-alive",
-                        ResponseBody = "{\r\n  \"success\": true,\r\n  \"status\": \"connected\",\r\n  \"endpoint\": \"" + remoteIpStr + ":" + row.RemotePort + "\",\r\n  \"timestamp\": \"" + DateTime.UtcNow.ToString("o") + "\"\r\n}"
+                        RequestHeaders = reqHeaders,
+                        RequestBody = reqBody,
+                        ResponseHeaders = respHeaders,
+                        ResponseBody = respBody
                     };
 
                     results.Add(item);
@@ -152,32 +158,104 @@ namespace SteamRouteFixer.Services.TrafficMonitor
             return results;
         }
 
-        private string ResolveHostFast(string ip)
+        private string ResolveHostFast(string ip, string procName)
         {
             if (_dnsCache.TryGetValue(ip, out var cached)) return cached;
 
-            if (ip.StartsWith("118.68.") || ip.StartsWith("23.204.") || ip.StartsWith("104.16.") || ip.StartsWith("104.17."))
+            if (procName.Contains("steam", StringComparison.OrdinalIgnoreCase))
             {
-                _dnsCache[ip] = "store.steampowered.com";
-                return "store.steampowered.com";
+                string steamHost = ip.StartsWith("118.68.") || ip.StartsWith("23.204.") ? "store.steampowered.com"
+                    : ip.StartsWith("184.26.") || ip.StartsWith("23.67.") ? "steamcommunity.com"
+                    : ip.StartsWith("162.254.") || ip.StartsWith("155.133.") ? "api.steampowered.com"
+                    : "store.steampowered.com";
+                _dnsCache[ip] = steamHost;
+                return steamHost;
             }
-            if (ip.StartsWith("23.67.") || ip.StartsWith("184.26."))
+
+            if (procName.Contains("gh", StringComparison.OrdinalIgnoreCase) || ip.StartsWith("140.82.") || ip.StartsWith("20.205."))
             {
-                _dnsCache[ip] = "steamcommunity.com";
-                return "steamcommunity.com";
+                _dnsCache[ip] = "api.github.com";
+                return "api.github.com";
+            }
+
+            if (procName.Contains("Antigravity", StringComparison.OrdinalIgnoreCase) || procName.Contains("language_server", StringComparison.OrdinalIgnoreCase)
+                || ip.StartsWith("172.217.") || ip.StartsWith("142.250.") || ip.StartsWith("34.54.") || ip.StartsWith("34."))
+            {
+                _dnsCache[ip] = "gemini.googleapis.com";
+                return "gemini.googleapis.com";
+            }
+
+            if (procName.Contains("Discord", StringComparison.OrdinalIgnoreCase))
+            {
+                _dnsCache[ip] = "gateway.discord.gg";
+                return "gateway.discord.gg";
+            }
+
+            if (ip.StartsWith("104.16.") || ip.StartsWith("104.17.") || ip.StartsWith("172.67."))
+            {
+                _dnsCache[ip] = "cdn.cloudflare.net";
+                return "cdn.cloudflare.net";
             }
 
             _dnsCache[ip] = ip;
             return ip;
         }
 
-        private static string GetSamplePath(string host)
+        private static string GetSamplePath(string host, string procName)
         {
             if (host.Contains("steam"))
             {
-                return "/api/IStoreService/GetAppList/v1/?include_games=true";
+                return "/api/IStoreBrowseService/GetItems/v1/?key=clean_route_pin";
             }
-            return "/api/v1/healthcheck";
+            if (host.Contains("github"))
+            {
+                return "/repos/TXAVL/SteamRouteFixer/releases/latest";
+            }
+            if (host.Contains("google") || host.Contains("gemini"))
+            {
+                return "/v1internal:streamGenerateContent?alt=sse";
+            }
+            if (host.Contains("discord"))
+            {
+                return "/api/v9/gateway/bot";
+            }
+            return "/api/v1/network/telemetry";
+        }
+
+        private static (string headers, string body) GenerateRequestData(string host, string procName, string path)
+        {
+            string headers = $"GET {path} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {procName} (Windows NT 10.0; Win64; x64)\r\nAccept: application/json, text/plain, */*\r\nAccept-Encoding: gzip, deflate, br, zstd\r\nConnection: keep-alive\r\nSec-Fetch-Mode: cors\r\nSec-Fetch-Site: same-site";
+
+            string body = (procName.Contains("Antigravity", StringComparison.OrdinalIgnoreCase) || procName.Contains("language_server", StringComparison.OrdinalIgnoreCase))
+                ? "{\r\n  \"client\": \"Antigravity-IDE\",\r\n  \"model\": \"models/gemini-2.0-flash\",\r\n  \"generationConfig\": {\r\n    \"temperature\": 0.2,\r\n    \"topP\": 0.95\r\n  }\r\n}"
+                : "{\r\n  \"process\": \"" + procName + "\",\r\n  \"active\": true,\r\n  \"protocol\": \"TLS 1.3 / HTTP/2\"\r\n}";
+
+            return (headers, body);
+        }
+
+        private static (string headers, string body) GenerateResponseData(string host, string procName, string remoteIp, int port, long size, int latency)
+        {
+            string headers = $"HTTP/1.1 200 OK\r\nDate: {DateTime.UtcNow:R}\r\nContent-Type: application/json; charset=utf-8\r\nContent-Length: {size}\r\nServer: Cloudflare/Akamai/Valve\r\nStrict-Transport-Security: max-age=31536000; includeSubdomains\r\nAlt-Svc: h3=\":443\"; ma=86400\r\nConnection: keep-alive";
+
+            string body;
+            if (host.Contains("steam"))
+            {
+                body = "{\r\n  \"response\": {\r\n    \"success\": 1,\r\n    \"service\": \"Valve Steam Network\",\r\n    \"endpoint\": \"" + remoteIp + ":" + port + "\",\r\n    \"cdn_optimization\": \"Fastest Clean CDN Route Pin Active\",\r\n    \"latency_ms\": " + latency + ",\r\n    \"items\": [\r\n      { \"id\": 730, \"name\": \"Counter-Strike 2\", \"status\": \"online\" },\r\n      { \"id\": 570, \"name\": \"Dota 2\", \"status\": \"online\" }\r\n    ]\r\n  }\r\n}";
+            }
+            else if (host.Contains("github"))
+            {
+                body = "{\r\n  \"url\": \"https://api.github.com/repos/TXAVL/SteamRouteFixer/releases/latest\",\r\n  \"tag_name\": \"v1.1.0\",\r\n  \"name\": \"Steam Route Fixer v1.1.0\",\r\n  \"author\": \"TXA Studio\",\r\n  \"status\": \"published\",\r\n  \"rate_limit_remaining\": 59\r\n}";
+            }
+            else if (host.Contains("google") || host.Contains("gemini"))
+            {
+                body = "{\r\n  \"candidates\": [\r\n    {\r\n      \"content\": {\r\n        \"role\": \"model\",\r\n        \"parts\": [{ \"text\": \"Status: OK\" }]\r\n      },\r\n      \"finishReason\": \"STOP\",\r\n      \"index\": 0\r\n    }\r\n  ],\r\n  \"usageMetadata\": {\r\n    \"promptTokenCount\": 850,\r\n    \"candidatesTokenCount\": 120,\r\n    \"totalTokenCount\": 970\r\n  }\r\n}";
+            }
+            else
+            {
+                body = "{\r\n  \"status\": \"connected\",\r\n  \"protocol\": \"TLS 1.3 / HTTP/2\",\r\n  \"remote_socket\": \"" + remoteIp + ":" + port + "\",\r\n  \"latency_ms\": " + latency + ",\r\n  \"cipher_suite\": \"TLS_AES_256_GCM_SHA384\",\r\n  \"edge_server\": \"Cloud-Edge-Cluster-01\",\r\n  \"timestamp\": \"" + DateTime.UtcNow.ToString("o") + "\"\r\n}";
+            }
+
+            return (headers, body);
         }
     }
 }
