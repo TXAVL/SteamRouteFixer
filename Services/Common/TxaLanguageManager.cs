@@ -353,7 +353,7 @@ namespace SteamRouteFixer.Services.Common
                     { "t_col_proto", "Giao Thức" },
                     { "t_col_host", "Host / Endpoint URL" },
                     { "t_col_size", "Dung Lượng (↓/↑)" },
-                    { "t_col_block_action", "🛡️ Chặn API / Tắt Bật" },
+                    { "t_col_block_action", "Trạng Thái Chặn" },
                     { "t_search_placeholder", "🔍 Tìm kiếm URL, API, Domain, IP..." },
 
                     // Bottom Tips
@@ -530,7 +530,7 @@ namespace SteamRouteFixer.Services.Common
                     { "t_col_proto", "Protocol" },
                     { "t_col_host", "Host / Endpoint URL" },
                     { "t_col_size", "Size (↓/↑)" },
-                    { "t_col_block_action", "🛡️ Block API / Toggle" },
+                    { "t_col_block_action", "Block Status" },
                     { "t_search_placeholder", "🔍 Search URL, API, Domain, IP..." },
 
                     // Bottom Tips

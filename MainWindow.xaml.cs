@@ -202,7 +202,7 @@ namespace SteamRouteFixer
                 if (ColReqSize != null) ColReqSize.Header = TxaLanguageManager.GetString("t_col_size", "Dung Lượng (↓/↑)");
                 if (ColReqLatency != null) ColReqLatency.Header = TxaLanguageManager.GetString("t_col_latency", "Độ Trễ");
                 if (ColReqStatus != null) ColReqStatus.Header = TxaLanguageManager.GetString("t_col_status", "Trạng Thái");
-                if (ColReqBlockAction != null) ColReqBlockAction.Header = TxaLanguageManager.GetString("t_col_block_action", "🛡️ Chặn API / Tắt Bật");
+                if (ColReqBlockAction != null) ColReqBlockAction.Header = TxaLanguageManager.GetString("t_col_block_action", "Trạng Thái Chặn");
                 if (TxtSearchWatermark != null) TxtSearchWatermark.Text = TxaLanguageManager.GetString("t_search_placeholder", "🔍 Tìm kiếm URL, API, Domain, IP...");
 
                 // Bottom Tip
