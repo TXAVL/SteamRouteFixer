@@ -204,7 +204,7 @@ namespace SteamRouteFixer.Views
                             }
                         }
 
-                        TxtDraftStatus.Text = " • Đã nạp bản nháp tự động";
+                        TxtDraftStatus.Text = " • " + TxaLanguageManager.GetString("t_draft_loaded", "Đã nạp bản nháp tự động");
                     }
                 }
                 else
@@ -214,7 +214,7 @@ namespace SteamRouteFixer.Views
                     {
                         item.TranslatedText = string.Empty;
                     }
-                    TxtDraftStatus.Text = " • Bản dịch mới";
+                    TxtDraftStatus.Text = " • " + TxaLanguageManager.GetString("t_draft_new", "Bản dịch mới");
                 }
             }
             catch { }
@@ -230,7 +230,7 @@ namespace SteamRouteFixer.Views
             if (_isLoadingData) return;
 
             UpdateProgress();
-            TxtDraftStatus.Text = " • Đang lưu nháp...";
+            TxtDraftStatus.Text = " • " + TxaLanguageManager.GetString("t_draft_saving", "Đang lưu nháp...");
             _autoSaveTimer.Stop();
             _autoSaveTimer.Start();
         }
@@ -250,7 +250,8 @@ namespace SteamRouteFixer.Views
             int translated = TranslationItems.Count(t => !string.IsNullOrWhiteSpace(t.TranslatedText));
             double percent = (double)translated / total * 100.0;
 
-            TxtProgressSummary.Text = $"Tiến độ dịch: {translated} / {total} chuỗi ({percent:F1}%)";
+            string progressFormat = TxaLanguageManager.GetString("t_trans_progress_fmt", "Tiến độ dịch: {0} / {1} chuỗi ({2:F1}%)");
+            TxtProgressSummary.Text = string.Format(progressFormat, translated, total, percent);
             PbTranslationProgress.Value = percent;
 
             bool isComplete = (translated == total && total > 0);
@@ -276,7 +277,7 @@ namespace SteamRouteFixer.Views
                 string json = JsonSerializer.Serialize(draft, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(draftFile, json);
 
-                TxtDraftStatus.Text = " • Đã lưu nháp tự động";
+                TxtDraftStatus.Text = " • " + TxaLanguageManager.GetString("t_draft_saved", "Đã lưu nháp tự động");
             }
             catch { }
         }
@@ -285,14 +286,18 @@ namespace SteamRouteFixer.Views
         {
             if (CmbTargetCulture.SelectedItem is not CultureOption selected)
             {
-                TxaMessageBox.Show(this, "Vui lòng chọn một ngôn ngữ đích để lưu.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                string warnMsg = TxaLanguageManager.GetString("t_trans_select_lang_warning", "Vui lòng chọn một ngôn ngữ đích để lưu.");
+                string warnTitle = TxaLanguageManager.GetString("t_dialog_notice", "Thông báo");
+                TxaMessageBox.Show(this, warnMsg, warnTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             int translatedCount = TranslationItems.Count(t => !string.IsNullOrWhiteSpace(t.TranslatedText));
             if (translatedCount == 0)
             {
-                TxaMessageBox.Show(this, "Vui lòng dịch ít nhất một vài câu trước khi lưu & áp dụng.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                string warnMsg = TxaLanguageManager.GetString("t_trans_need_translation_warning", "Vui lòng dịch ít nhất một vài câu trước khi lưu & áp dụng.");
+                string warnTitle = TxaLanguageManager.GetString("t_dialog_notice", "Thông báo");
+                TxaMessageBox.Show(this, warnMsg, warnTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -323,10 +328,12 @@ namespace SteamRouteFixer.Views
                 TxaLanguageManager.ScanAvailableLanguages();
                 TxaLanguageManager.ApplyLanguageByCode(selected.Code, saveToConfig: true);
 
+                string successFmt = TxaLanguageManager.GetString("t_trans_save_success_fmt", "Đã lưu thành công gói ngôn ngữ {0} ({1}) và áp dụng ngay lập tức vào Steam Route Fixer!");
+                string successTitle = TxaLanguageManager.GetString("t_trans_save_success_title", "Hoàn tất biên dịch");
                 TxaMessageBox.Show(
                     this,
-                    $"Đã lưu thành công gói ngôn ngữ {pkg.lang_name} ({pkg.lang_code}) và áp dụng ngay lập tức vào Steam Route Fixer!",
-                    "Hoàn tất biên dịch",
+                    string.Format(successFmt, pkg.lang_name, pkg.lang_code),
+                    successTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Information
                 );
@@ -336,7 +343,8 @@ namespace SteamRouteFixer.Views
             }
             catch (Exception ex)
             {
-                TxaMessageBox.Show(this, $"Lỗi khi lưu gói ngôn ngữ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                string errFmt = TxaLanguageManager.GetString("t_trans_save_error_fmt", "Lỗi khi lưu gói ngôn ngữ: {0}");
+                TxaMessageBox.Show(this, string.Format(errFmt, ex.Message), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

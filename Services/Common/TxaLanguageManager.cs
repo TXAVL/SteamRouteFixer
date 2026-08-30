@@ -430,7 +430,18 @@ namespace SteamRouteFixer.Services.Common
                     { "t_trans_col_source", "🔤 VĂN BẢN TIẾNG ANH GỐC (SOURCE EN-US)" },
                     { "t_trans_col_target", "✏️ BẢN DỊCH NGÔN NGỮ ĐÍCH CỦA BẠN (TARGET TRANSLATION)" },
                     { "t_trans_btn_save", "💾 Lưu & Áp Dụng (.txal)" },
-                    { "t_trans_btn_submit", "🚀 Gửi Lên GitHub (100%)" }
+                    { "t_trans_btn_submit", "🚀 Gửi Lên GitHub (100%)" },
+                    { "t_draft_saved", "Đã lưu nháp tự động" },
+                    { "t_draft_saving", "Đang lưu nháp..." },
+                    { "t_draft_loaded", "Đã nạp bản nháp tự động" },
+                    { "t_draft_new", "Bản dịch mới" },
+                    { "t_trans_progress_fmt", "Tiến độ dịch: {0} / {1} chuỗi ({2:F1}%)" },
+                    { "t_trans_select_lang_warning", "Vui lòng chọn một ngôn ngữ đích để lưu." },
+                    { "t_trans_need_translation_warning", "Vui lòng dịch ít nhất một vài câu trước khi lưu & áp dụng." },
+                    { "t_trans_save_success_fmt", "Đã lưu thành công gói ngôn ngữ {0} ({1}) và áp dụng ngay lập tức vào Steam Route Fixer!" },
+                    { "t_trans_save_success_title", "Hoàn tất biên dịch" },
+                    { "t_trans_save_error_fmt", "Lỗi khi lưu gói ngôn ngữ: {0}" },
+                    { "t_trans_browser_error_fmt", "Không thể mở trình duyệt: {0}" }
                 }
             };
         }
@@ -607,7 +618,18 @@ namespace SteamRouteFixer.Services.Common
                     { "t_trans_col_source", "🔤 ORIGINAL ENGLISH SOURCE TEXT (EN-US)" },
                     { "t_trans_col_target", "✏️ YOUR TARGET TRANSLATION TEXT" },
                     { "t_trans_btn_save", "💾 Save & Apply (.txal)" },
-                    { "t_trans_btn_submit", "🚀 Submit to GitHub (100%)" }
+                    { "t_trans_btn_submit", "🚀 Submit to GitHub (100%)" },
+                    { "t_draft_saved", "Draft auto-saved" },
+                    { "t_draft_saving", "Saving draft..." },
+                    { "t_draft_loaded", "Draft auto-loaded" },
+                    { "t_draft_new", "New translation" },
+                    { "t_trans_progress_fmt", "Progress: {0} / {1} strings ({2:F1}%)" },
+                    { "t_trans_select_lang_warning", "Please select a target language to save." },
+                    { "t_trans_need_translation_warning", "Please translate at least some strings before saving." },
+                    { "t_trans_save_success_fmt", "Successfully saved language package {0} ({1}) and applied immediately!" },
+                    { "t_trans_save_success_title", "Compilation Complete" },
+                    { "t_trans_save_error_fmt", "Error saving language package: {0}" },
+                    { "t_trans_browser_error_fmt", "Cannot open browser: {0}" }
                 }
             };
         }
