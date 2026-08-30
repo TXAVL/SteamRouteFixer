@@ -113,7 +113,7 @@ namespace SteamRouteFixer.Views
         {
             var dlg = new OpenFileDialog
             {
-                Title = "Chọn gói ngôn ngữ TXA Language (*.txal, *.txa)",
+                Title = TxaLanguageManager.GetString("t_dialog_import_txa_title", "Chọn gói ngôn ngữ TXA Language (*.txal, *.txa)"),
                 Filter = "TXA Language Package (*.txal;*.txa)|*.txal;*.txa|All files (*.*)|*.*"
             };
 
@@ -182,7 +182,7 @@ namespace SteamRouteFixer.Views
         {
             var dlg = new OpenFileDialog
             {
-                Title = "Chọn file steam.exe",
+                Title = TxaLanguageManager.GetString("t_dialog_browse_steam_title", "Chọn file steam.exe"),
                 Filter = "Steam Executable (steam.exe)|steam.exe|All files (*.*)|*.*"
             };
 

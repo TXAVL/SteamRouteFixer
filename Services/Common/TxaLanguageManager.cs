@@ -452,7 +452,35 @@ namespace SteamRouteFixer.Services.Common
                     { "t_trans_save_error_fmt", "Lỗi khi lưu gói ngôn ngữ: {0}" },
                     { "t_trans_browser_error_fmt", "Không thể mở trình duyệt: {0}" },
                     { "t_trans_var_error_msg", "Phát hiện {0} chuỗi dịch chưa nhập đúng hoặc còn thiếu các biến định dạng:\n\n{1}\n\nVui lòng kiểm tra và điền đầy đủ các biến trước khi lưu để tránh gây lỗi hiển thị trong ứng dụng!" },
-                    { "t_trans_var_error_title", "Cảnh Báo Biến Định Dạng" }
+                    { "t_trans_var_error_title", "Cảnh Báo Biến Định Dạng" },
+
+                    // Settings Modal
+                    { "t_settings_title", "⚙️ THIẾT LẬP CẤU HÌNH ỨNG DỤNG" },
+                    { "t_theme_header", "🎨 GIAO DIỆN & PHONG CÁCH (THEME)" },
+                    { "t_theme_desc", "Chọn giao diện hiển thị phù hợp với sở thích của bạn:" },
+                    { "t_theme_winui3", "WinUI 3 (Windows 11 Fluent Mica)" },
+                    { "t_theme_steam", "Steam Dark (Cyberpunk Glow)" },
+                    { "t_theme_vscode", "VS Code Studio Dark" },
+                    { "t_lang_header", "🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)" },
+                    { "t_lang_desc", "Quét tự động các gói ngôn ngữ (.txal) trong %LocalAppData%\\SteamRouteFixer\\languages\\:" },
+                    { "t_btn_import_txa", "📂 Nạp File .txal" },
+                    { "t_btn_open_lang_dir", "📁 Mở Thư Mục Lang" },
+                    { "t_btn_translate_app", "🌐 Tự Tạo Bản Dịch Mới (Translate App...)" },
+                    { "t_steam_path_header", "🎮 ĐƯỜNG DẪN STEAM TÙY CHỌN" },
+                    { "t_steam_path_desc", "Nếu bạn cài Steam ở ổ đĩa khác và công cụ chưa tự nhận diện, hãy chọn file steam.exe:" },
+                    { "t_btn_browse", "📁 Chọn file steam.exe" },
+                    { "t_hosts_backup_header", "🛡️ SAO LƯU & KHÔI PHỤC FILE HOSTS" },
+                    { "t_hosts_backup_desc", "Danh sách các bản sao lưu tự động trong %LocalAppData%\\SteamRouteFixer\\backups\\:" },
+                    { "t_btn_restore_backup", "🔄 Khôi Phục Bản Chọn" },
+                    { "t_backup_select_warning", "Vui lòng chọn 1 bản sao lưu trong danh sách!" },
+                    { "t_backup_confirm_restore_fmt", "Bạn có chắc chắn muốn khôi phục file hosts từ bản sao lưu:\n{0}?" },
+                    { "t_backup_restore_title", "Xác nhận khôi phục" },
+                    { "t_backup_restore_success", "Khôi phục file hosts thành công và đã Flush DNS!" },
+                    { "t_backup_restore_error", "Không thể khôi phục file hosts. Vui lòng chạy phần mềm với quyền Administrator." },
+                    { "t_btn_save", "💾 Lưu Cài Đặt" },
+                    { "t_btn_close", "Đóng" },
+                    { "t_dialog_import_txa_title", "Chọn gói ngôn ngữ TXA Language (*.txal, *.txa)" },
+                    { "t_dialog_browse_steam_title", "Chọn file steam.exe" }
                 }
             };
         }
@@ -651,7 +679,35 @@ namespace SteamRouteFixer.Services.Common
                     { "t_trans_save_error_fmt", "Error saving language package: {0}" },
                     { "t_trans_browser_error_fmt", "Cannot open browser: {0}" },
                     { "t_trans_var_error_msg", "Detected {0} translation strings with missing or invalid format variables:\n\n{1}\n\nPlease provide all required variables before saving to prevent runtime UI errors!" },
-                    { "t_trans_var_error_title", "Variable Format Warning" }
+                    { "t_trans_var_error_title", "Variable Format Warning" },
+
+                    // Settings Modal
+                    { "t_settings_title", "⚙️ APPLICATION CONFIGURATION & SETTINGS" },
+                    { "t_theme_header", "🎨 THEME & APPEARANCE" },
+                    { "t_theme_desc", "Customize the application visual style according to your preference:" },
+                    { "t_theme_winui3", "WinUI 3 (Windows 11 Fluent Mica)" },
+                    { "t_theme_steam", "Steam Dark (Cyberpunk Glow)" },
+                    { "t_theme_vscode", "VS Code Studio Dark" },
+                    { "t_lang_header", "🌐 APPLICATION LANGUAGE (TXA LANGUAGE)" },
+                    { "t_lang_desc", "Auto-scanned language packages (.txal) in %LocalAppData%\\SteamRouteFixer\\languages\\:" },
+                    { "t_btn_import_txa", "📂 Load .txal File" },
+                    { "t_btn_open_lang_dir", "📁 Open Lang Folder" },
+                    { "t_btn_translate_app", "🌐 Create New Translation (Translate App...)" },
+                    { "t_steam_path_header", "🎮 CUSTOM STEAM INSTALLATION PATH" },
+                    { "t_steam_path_desc", "If Steam is installed on another drive and not detected, locate steam.exe:" },
+                    { "t_btn_browse", "📁 Browse steam.exe" },
+                    { "t_hosts_backup_header", "🛡️ HOSTS FILE BACKUP & RESTORE" },
+                    { "t_hosts_backup_desc", "List of automated backup snapshots in %LocalAppData%\\SteamRouteFixer\\backups\\:" },
+                    { "t_btn_restore_backup", "🔄 Restore Selected" },
+                    { "t_backup_select_warning", "Please select a backup from the list!" },
+                    { "t_backup_confirm_restore_fmt", "Are you sure you want to restore the hosts file from backup:\n{0}?" },
+                    { "t_backup_restore_title", "Confirm Restore" },
+                    { "t_backup_restore_success", "Hosts file restored successfully and DNS cache flushed!" },
+                    { "t_backup_restore_error", "Failed to restore hosts file. Please run with Administrator privileges." },
+                    { "t_btn_save", "💾 Save Settings" },
+                    { "t_btn_close", "Close" },
+                    { "t_dialog_import_txa_title", "Select TXA Language Package (*.txal, *.txa)" },
+                    { "t_dialog_browse_steam_title", "Select steam.exe file" }
                 }
             };
         }
