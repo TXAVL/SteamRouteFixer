@@ -28,10 +28,29 @@ namespace SteamRouteFixer.Services.Common
 
             try
             {
-                if (string.IsNullOrWhiteSpace(updateUrl)) return result;
+                if (string.IsNullOrWhiteSpace(updateUrl))
+                {
+                    result.IsError = true;
+                    result.ErrorMessage = "Chưa cấu hình URL kiểm tra cập nhật.";
+                    return result;
+                }
 
                 var response = await _httpClient.GetAsync(updateUrl);
-                if (!response.IsSuccessStatusCode) return result;
+                if (!response.IsSuccessStatusCode)
+                {
+                    result.IsError = true;
+                    if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        result.ErrorMessage = "Chưa có bản Release nào được xuất bản trên repo GitHub TXAVL/SteamRouteFixer.";
+                        result.Changelog = "Hiện tại chưa có bản phát hành chính thức nào trên GitHub Releases. Bạn đang chạy phiên bản thử nghiệm cục bộ v1.0.0.";
+                    }
+                    else
+                    {
+                        result.ErrorMessage = $"Máy chủ GitHub trả về mã {(int)response.StatusCode} ({response.ReasonPhrase}).";
+                        result.Changelog = $"Không thể lấy thông tin release từ {updateUrl}";
+                    }
+                    return result;
+                }
 
                 string json = await response.Content.ReadAsStringAsync();
                 using var doc = JsonDocument.Parse(json);

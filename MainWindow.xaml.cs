@@ -796,13 +796,13 @@ namespace SteamRouteFixer
 
         private void MenuCheckUpdate_Click(object sender, RoutedEventArgs e)
         {
-            var modal = new AboutUpdateModal { Owner = this };
+            var modal = new UpdateModal { Owner = this };
             modal.ShowDialog();
         }
 
         private void MenuAbout_Click(object sender, RoutedEventArgs e)
         {
-            var modal = new AboutUpdateModal { Owner = this };
+            var modal = new AboutModal { Owner = this };
             modal.ShowDialog();
         }
 
