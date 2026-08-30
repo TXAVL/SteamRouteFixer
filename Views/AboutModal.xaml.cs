@@ -18,7 +18,7 @@ namespace SteamRouteFixer.Views
         {
             Title = TxaLanguageManager.GetString("t_about_title", "Giới thiệu - Steam Route Fixer");
             if (TxtAboutSubtitle != null) TxtAboutSubtitle.Text = TxaLanguageManager.GetString("t_about_subtitle", "Tool Steam Route Fixer & HTTP/HTTPS Traffic Inspector");
-            if (TxtAboutDev != null) TxtAboutDev.Text = TxaLanguageManager.GetString("t_about_dev", "Phát triển bởi TXA Studio • Version 1.0 (Build 2026.08)");
+            if (TxtAboutDev != null) TxtAboutDev.Text = TxaLanguageManager.GetString("t_about_dev", "Phát triển bởi TXA Studio • Version 1.1 (Build 2026.08)");
             if (TxtAboutAppHeader != null) TxtAboutAppHeader.Text = TxaLanguageManager.GetString("t_about_app_header", "🎮 Về ứng dụng Steam Route Fixer");
             if (TxtAboutAppDesc != null) TxtAboutAppDesc.Text = TxaLanguageManager.GetString("t_about_app_desc", "Ứng dụng chuyên nghiệp giúp game thủ Việt Nam tự động quét, chẩn đoán và khắc phục triệt để tình trạng lỗi kết nối mạng Steam (Steam Store, Community, Friends, Cloud Sync) bằng kỹ thuật tối ưu hóa định tuyến IP sạch chuẩn xác, hoàn toàn không cần cài đặt VPN hay phần mềm bên thứ 3.");
             if (TxtAboutFeaturesHeader != null) TxtAboutFeaturesHeader.Text = TxaLanguageManager.GetString("t_about_features_header", "⚡ Các tính năng cốt lõi");

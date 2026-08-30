@@ -23,7 +23,7 @@
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="Steam Route Fixer" FontWeight="Bold" FontSize="20" Foreground="{DynamicResource PrimaryAccentBrush}"/>
                         <TextBlock x:Name="TxtAboutSubtitle" Text="Tool Steam Route Fixer &amp; HTTP/HTTPS Traffic Inspector" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        <TextBlock x:Name="TxtAboutDev" Text="Phát triển bởi TXA Studio • Version 1.0 (Build 2026.08)" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" Margin="0,2,0,0"/>
+                        <TextBlock x:Name="TxtAboutDev" Text="Phát triển bởi TXA Studio • Version 1.1 (Build 2026.08)" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" Margin="0,2,0,0"/>
                     </StackPanel>
                 </StackPanel>
                 <Separator Background="{DynamicResource CardBorderBrush}" Height="1"/>

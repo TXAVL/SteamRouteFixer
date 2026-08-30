@@ -30,11 +30,11 @@
 ## 📥 Cài Đặt & Sử Dụng
 
 ### Cách 1: Sử Dụng Bộ Cài Đặt Tự Động (Setup Installer - Khuyên dùng)
-1. Tải file **`SteamRouteFixer_Setup_v1.0.0.exe`** từ mục [Releases](https://github.com/TXAVL/SteamRouteFixer/releases).
+1. Tải file **`SteamRouteFixer_Setup_v1.1.0.exe`** từ mục [Releases](https://github.com/TXAVL/SteamRouteFixer/releases).
 2. Chạy file cài đặt, chọn ngôn ngữ và tiến hành cài đặt. Trình cài đặt sẽ tự động kiểm tra, tắt ứng dụng cũ đang chạy (nếu có) và gỡ cài đặt phiên bản cũ trước khi cập nhật.
 
 ### Cách 2: Bản Portable (Không cần cài đặt)
-1. Tải file **`SteamRouteFixer_Portable_v1.0.0.exe`**.
+1. Tải file **`SteamRouteFixer_Portable_v1.1.0.exe`**.
 2. Nhấp đúp chuột và chạy trực tiếp ngay lập tức.
 
 ---

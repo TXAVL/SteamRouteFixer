@@ -17,7 +17,7 @@ namespace SteamRouteFixer.Models
 
     public class AppUpdateInfo
     {
-        public string Version { get; set; } = "1.0.0";
+        public string Version { get; set; } = "1.1.0";
         public string ReleaseDate { get; set; } = DateTime.Now.ToString("yyyy-MM-dd");
         public string Changelog { get; set; } = string.Empty;
         public string DownloadUrl { get; set; } = string.Empty;

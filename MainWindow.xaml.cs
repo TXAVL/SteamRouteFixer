@@ -247,7 +247,7 @@ namespace SteamRouteFixer
             ThemeManager.ApplyDwmBackdrop(this, _config.Theme == "WinUI3");
             RefreshSteamSentinel();
             RefreshProcessesList();
-            TxaLogger.Info($"Giao diện Steam Route Fixer v1.0.0 đã sẵn sàng trên .NET 10.");
+            TxaLogger.Info($"Giao diện Steam Route Fixer v1.1.0 đã sẵn sàng trên .NET 10.");
             TxaLogger.Info($"Thư mục làm việc: {StoragePathManager.AppDataRoot}");
         }
 
