@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 
 namespace SteamRouteFixer.Models
 {
@@ -19,6 +20,7 @@ namespace SteamRouteFixer.Models
         private DateTime _timestamp = DateTime.Now;
         private string _processName = "System";
         private int _pid;
+        private ImageSource? _processIcon;
         private string _protocol = "HTTPS";
         private string _method = "GET";
         private string _url = string.Empty;
@@ -70,6 +72,12 @@ namespace SteamRouteFixer.Models
             set { _pid = value; OnPropertyChanged(); }
         }
 
+        public ImageSource? ProcessIcon
+        {
+            get => _processIcon;
+            set { _processIcon = value; OnPropertyChanged(); }
+        }
+
         public string Protocol
         {
             get => _protocol;
@@ -79,8 +87,32 @@ namespace SteamRouteFixer.Models
         public string Method
         {
             get => _method;
-            set { _method = value; OnPropertyChanged(); }
+            set
+            {
+                _method = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(MethodBadgeBg));
+                OnPropertyChanged(nameof(MethodBadgeFg));
+            }
         }
+
+        public string MethodBadgeBg => _method switch
+        {
+            "GET" => "#180078D4",
+            "POST" => "#1800E676",
+            "HTTPS" => "#18E040FB",
+            "CONNECT" => "#18FFB900",
+            _ => "#188F98A0"
+        };
+
+        public string MethodBadgeFg => _method switch
+        {
+            "GET" => "#4CC2FF",
+            "POST" => "#26E07F",
+            "HTTPS" => "#E040FB",
+            "CONNECT" => "#FFD54F",
+            _ => "#CCCCCC"
+        };
 
         public string Url
         {
@@ -164,13 +196,13 @@ namespace SteamRouteFixer.Models
         public long RequestBytes
         {
             get => _requestBytes;
-            set { _requestBytes = value; OnPropertyChanged(); }
+            set { _requestBytes = value; OnPropertyChanged(); OnPropertyChanged(nameof(TrafficSizeBreakdown)); }
         }
 
         public long ResponseBytes
         {
             get => _responseBytes;
-            set { _responseBytes = value; OnPropertyChanged(); }
+            set { _responseBytes = value; OnPropertyChanged(); OnPropertyChanged(nameof(TrafficSizeBreakdown)); }
         }
 
         public string FormattedSize
@@ -178,6 +210,8 @@ namespace SteamRouteFixer.Models
             get => _formattedSize;
             set { _formattedSize = value; OnPropertyChanged(); }
         }
+
+        public string TrafficSizeBreakdown => $"↓ {_formattedSize} / ↑ {(RequestBytes < 1024 ? $"{RequestBytes} B" : $"{RequestBytes / 1024.0:F1} KB")}";
 
         public int DurationMs
         {

@@ -578,65 +578,94 @@
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                   MouseDoubleClick="GridRequests_MouseDoubleClick">
                             <DataGrid.Columns>
+                                <!-- ID -->
+                                <DataGridTemplateColumn Header="#" Width="45">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Id, Mode=OneWay}" Foreground="#8A8886" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
                                 <!-- Time -->
-                                <DataGridTemplateColumn Header="Thời Gian" Width="105">
+                                <DataGridTemplateColumn Header="Thời Gian" Width="95">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding TimeString, Mode=OneWay}" Foreground="#8A8886" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding TimeString, Mode=OneWay}" Foreground="#9E9E9E" FontSize="11.5" VerticalAlignment="Center"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <!-- App -->
-                                <DataGridTemplateColumn Header="Ứng Dụng" Width="140">
+                                <!-- App (Icon + Name + PID Pill) -->
+                                <DataGridTemplateColumn Header="Ứng Dụng" Width="180">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding ProcessName, Mode=OneWay}" Foreground="#FFFFFF" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Image Source="{Binding ProcessIcon, Mode=OneWay}" Width="16" Height="16" Margin="0,0,7,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding ProcessName, Mode=OneWay}" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="12" VerticalAlignment="Center"/>
+                                                <Border Background="#1A4CC2FF" CornerRadius="3" Padding="4,1" Margin="6,0,0,0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Pid, Mode=OneWay}" Foreground="#4CC2FF" FontSize="10.5" FontWeight="Bold"/>
+                                                </Border>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <!-- PID -->
-                                <DataGridTemplateColumn Header="PID" Width="65">
+                                <!-- Method (Color Badge) -->
+                                <DataGridTemplateColumn Header="Method" Width="80">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Pid, Mode=OneWay}" Foreground="#4CC2FF" VerticalAlignment="Center"/>
+                                            <Border Background="{Binding MethodBadgeBg, Mode=OneWay}" CornerRadius="4" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Method, Mode=OneWay}" Foreground="{Binding MethodBadgeFg, Mode=OneWay}" FontWeight="Bold" FontSize="11"/>
+                                            </Border>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <!-- Method -->
-                                <DataGridTemplateColumn Header="Method" Width="75">
+                                <!-- Protocol -->
+                                <DataGridTemplateColumn Header="Giao Thức" Width="75">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Method, Mode=OneWay}" Foreground="#FFB900" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Protocol, Mode=OneWay}" Foreground="#CCCCCC" FontSize="11.5" VerticalAlignment="Center"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <!-- Host / URL -->
-                                <DataGridTemplateColumn Header="Host / URL (Rút gọn)" Width="*">
+                                <!-- Host / URL (With Path breakdown) -->
+                                <DataGridTemplateColumn Header="Host / Endpoint URL" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding CompactDisplayUrl, Mode=OneWay}" Foreground="#E0E0E0" VerticalAlignment="Center"/>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Host, Mode=OneWay}" Foreground="#4CC2FF" FontWeight="SemiBold" FontSize="12"/>
+                                                <TextBlock Text="{Binding Path, Mode=OneWay}" Foreground="#8F98A0" FontSize="11" TextTrimming="CharacterEllipsis" Margin="0,1,0,0"/>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <!-- Endpoint -->
-                                <DataGridTemplateColumn Header="Remote Endpoint" Width="160">
+                                <!-- Remote Endpoint -->
+                                <DataGridTemplateColumn Header="Remote Socket" Width="150">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding RemoteEndpoint, Mode=OneWay}" Foreground="#B0B0B0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding RemoteEndpoint, Mode=OneWay}" Foreground="#C8C8C8" FontFamily="{DynamicResource ConsolasFont}" FontSize="11.5" VerticalAlignment="Center"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <!-- Size -->
-                                <DataGridTemplateColumn Header="Dung Lượng" Width="95">
+                                <!-- Size (Down / Up) -->
+                                <DataGridTemplateColumn Header="Dung Lượng (↓/↑)" Width="130">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding FormattedSize, Mode=OneWay}" Foreground="#26E07F" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding TrafficSizeBreakdown, Mode=OneWay}" Foreground="#26E07F" FontWeight="SemiBold" FontSize="11.5" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Latency -->
+                                <DataGridTemplateColumn Header="Độ Trễ" Width="70">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DurationDisplay, Mode=OneWay}" Foreground="#FFD54F" FontSize="11.5" VerticalAlignment="Center"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -645,7 +674,7 @@
                                 <DataGridTemplateColumn Header="Status" Width="105">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Border Background="{Binding StatusBadgeColor, Mode=OneWay}" CornerRadius="4" Padding="8,3" HorizontalAlignment="Left">
+                                            <Border Background="{Binding StatusBadgeColor, Mode=OneWay}" CornerRadius="4" Padding="8,3" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                 <TextBlock Text="{Binding StatusText, Mode=OneWay}" Foreground="#FFFFFF" FontWeight="Bold" FontSize="11"/>
                                             </Border>
                                         </DataTemplate>

@@ -469,7 +469,8 @@ namespace SteamRouteFixer
 
         private void RefreshProcessesList(bool silent = false)
         {
-            var procs = _processTracker.ScanActiveProcesses();
+            var activePids = _allRequests.Select(r => r.Pid).Where(p => p > 0).ToHashSet();
+            var procs = _processTracker.ScanActiveNetworkProcesses(activePids);
 
             int prevPid = _selectedFilterPid;
             CmbProcesses.ItemsSource = procs;
@@ -482,7 +483,7 @@ namespace SteamRouteFixer
 
             if (!silent)
             {
-                TxaLogger.Info($"Đã quét và cập nhật {procs.Count} ứng dụng đang hoạt động.");
+                TxaLogger.Info($"Đã quét và phát hiện {procs.Count - 1} ứng dụng có hoạt động mạng kết nối.");
             }
         }
 

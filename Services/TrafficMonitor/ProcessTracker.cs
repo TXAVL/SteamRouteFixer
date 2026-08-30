@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -16,7 +17,39 @@ namespace SteamRouteFixer.Services.TrafficMonitor
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool DestroyIcon(IntPtr hIcon);
 
-        public List<ProcessItem> ScanActiveProcesses()
+        private static readonly ConcurrentDictionary<string, ImageSource> _iconCache = new(StringComparer.OrdinalIgnoreCase);
+
+        public static ImageSource? GetProcessIcon(string exePath)
+        {
+            if (string.IsNullOrEmpty(exePath) || !File.Exists(exePath)) return null;
+
+            if (_iconCache.TryGetValue(exePath, out var cached))
+            {
+                return cached;
+            }
+
+            try
+            {
+                IntPtr hIcon = ExtractIcon(IntPtr.Zero, exePath, 0);
+                if (hIcon != IntPtr.Zero && hIcon != (IntPtr)1)
+                {
+                    var bitmapSource = Imaging.CreateBitmapSourceFromHIcon(
+                        hIcon,
+                        System.Windows.Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions()
+                    );
+                    bitmapSource.Freeze();
+                    _iconCache[exePath] = bitmapSource;
+                    DestroyIcon(hIcon);
+                    return bitmapSource;
+                }
+            }
+            catch { }
+
+            return null;
+        }
+
+        public List<ProcessItem> ScanActiveNetworkProcesses(HashSet<int>? activeNetworkPids = null)
         {
             var list = new List<ProcessItem>();
             var allProcs = Process.GetProcesses();
@@ -41,45 +74,28 @@ namespace SteamRouteFixer.Services.TrafficMonitor
 
                     try { exePath = p.MainModule?.FileName ?? string.Empty; } catch { }
 
-                    bool isNetworkApp = name.Contains("steam", StringComparison.OrdinalIgnoreCase) ||
-                                       name.Contains("chrome", StringComparison.OrdinalIgnoreCase) ||
-                                       name.Contains("edge", StringComparison.OrdinalIgnoreCase) ||
-                                       name.Contains("firefox", StringComparison.OrdinalIgnoreCase) ||
-                                       name.Contains("discord", StringComparison.OrdinalIgnoreCase) ||
-                                       name.Contains("epic", StringComparison.OrdinalIgnoreCase) ||
-                                       name.Contains("spotify", StringComparison.OrdinalIgnoreCase) ||
-                                       name.Contains("game", StringComparison.OrdinalIgnoreCase) ||
-                                       !string.IsNullOrWhiteSpace(title);
+                    // Only include processes that actively send/receive network traffic or known network clients
+                    bool hasActiveSockets = activeNetworkPids != null && activeNetworkPids.Contains(p.Id);
+                    bool isKnownNetworkClient = name.Contains("steam", StringComparison.OrdinalIgnoreCase) ||
+                                                name.Contains("chrome", StringComparison.OrdinalIgnoreCase) ||
+                                                name.Contains("msedge", StringComparison.OrdinalIgnoreCase) ||
+                                                name.Contains("firefox", StringComparison.OrdinalIgnoreCase) ||
+                                                name.Contains("discord", StringComparison.OrdinalIgnoreCase) ||
+                                                name.Contains("epic", StringComparison.OrdinalIgnoreCase) ||
+                                                name.Contains("spotify", StringComparison.OrdinalIgnoreCase);
 
-                    if (isNetworkApp)
+                    if (hasActiveSockets || isKnownNetworkClient)
                     {
+                        var icon = GetProcessIcon(exePath);
+
                         var item = new ProcessItem
                         {
                             Pid = p.Id,
                             Name = $"{name}.exe",
-                            WindowTitle = title,
-                            ExecutablePath = exePath
+                            WindowTitle = !string.IsNullOrWhiteSpace(title) ? title : (hasActiveSockets ? "Đang kết nối mạng" : ""),
+                            ExecutablePath = exePath,
+                            Icon = icon
                         };
-
-                        if (!string.IsNullOrEmpty(exePath) && File.Exists(exePath))
-                        {
-                            try
-                            {
-                                IntPtr hIcon = ExtractIcon(IntPtr.Zero, exePath, 0);
-                                if (hIcon != IntPtr.Zero && hIcon != (IntPtr)1)
-                                {
-                                    var bitmapSource = Imaging.CreateBitmapSourceFromHIcon(
-                                        hIcon,
-                                        System.Windows.Int32Rect.Empty,
-                                        BitmapSizeOptions.FromEmptyOptions()
-                                    );
-                                    bitmapSource.Freeze();
-                                    item.Icon = bitmapSource;
-                                    DestroyIcon(hIcon);
-                                }
-                            }
-                            catch { }
-                        }
 
                         list.Add(item);
                     }

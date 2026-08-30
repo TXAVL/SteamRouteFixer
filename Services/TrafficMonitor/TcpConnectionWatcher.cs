@@ -94,13 +94,16 @@ namespace SteamRouteFixer.Services.TrafficMonitor
                     _seenEndpoints.Add(endpointKey);
 
                     string processName = "App.exe";
+                    string exePath = string.Empty;
                     try
                     {
                         var proc = Process.GetProcessById(row.owningPid);
                         processName = $"{proc.ProcessName}.exe";
+                        exePath = proc.MainModule?.FileName ?? string.Empty;
                     }
                     catch { }
 
+                    var icon = ProcessTracker.GetProcessIcon(exePath);
                     string host = ResolveHostFast(remoteIpStr);
                     string method = (row.RemotePort == 443 || row.RemotePort == 8443) ? "HTTPS" : (row.RemotePort == 80 ? "HTTP" : "TCP");
                     string protocol = (row.RemotePort == 443 || row.RemotePort == 8443) ? "TLS 1.3" : "TCP";
@@ -114,6 +117,7 @@ namespace SteamRouteFixer.Services.TrafficMonitor
                         Timestamp = DateTime.Now,
                         Pid = row.owningPid,
                         ProcessName = processName,
+                        ProcessIcon = icon,
                         Protocol = protocol,
                         Method = method,
                         Host = host,
