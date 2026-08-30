@@ -52,16 +52,25 @@ Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\Assets\app.ico"
 
 [Registry]
-; Register .txa file association
-Root: HKA; Subkey: "Software\Classes\.txa"; ValueType: string; ValueName: ""; ValueData: "TxaLanguagePackageFile"; Flags: uninsdeletevalue
+; Register .txal and legacy .txa file associations
+Root: HKA; Subkey: "Software\Classes\.txal"; ValueType: string; ValueName: ""; ValueData: "TxaLanguagePackageFile"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\.txa"; ValueType: string; ValueName: ""; ValueData: "TxaLanguagePackageFile"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\TxaLanguagePackageFile"; ValueType: string; ValueName: ""; ValueData: "TXA Language Package File"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\TxaLanguagePackageFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"",0"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\TxaLanguagePackageFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\Applications\{#MyAppExeName}"; Flags: uninsdeletekey
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
+const
+  SHCNE_ASSOCCHANGED = $08000000;
+  SHCNF_IDLIST = 0;
+
+procedure SHChangeNotify(wEventId: LongInt; uFlags: Cardinal; dwItem1: Cardinal; dwItem2: Cardinal);
+external 'SHChangeNotify@shell32.dll stdcall';
+
 // Function to check if a process is running using tasklist
 function IsProcessRunning(const FileName: string): Boolean;
 var
@@ -123,5 +132,28 @@ begin
       Exec(OldUninstallString, '/SILENT /VERYSILENT /SUPPRESSMSGBOXES /NORESTART', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       Sleep(1000);
     end;
+  end;
+end;
+
+// Clean up registry and file association completely upon uninstall
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usPostUninstall then
+  begin
+    // Clean up .txal and .txa from HKCU and HKLM explicitly
+    RegDeleteKeyIncludingSubkeys(HKCU, 'Software\Classes\.txal');
+    RegDeleteKeyIncludingSubkeys(HKCU, 'Software\Classes\.txa');
+    RegDeleteKeyIncludingSubkeys(HKCU, 'Software\Classes\TxaLanguagePackageFile');
+    RegDeleteKeyIncludingSubkeys(HKCU, 'Software\Classes\Applications\' + '{#MyAppExeName}');
+    RegDeleteKeyIncludingSubkeys(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.txal');
+    RegDeleteKeyIncludingSubkeys(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.txa');
+
+    RegDeleteKeyIncludingSubkeys(HKLM, 'Software\Classes\.txal');
+    RegDeleteKeyIncludingSubkeys(HKLM, 'Software\Classes\.txa');
+    RegDeleteKeyIncludingSubkeys(HKLM, 'Software\Classes\TxaLanguagePackageFile');
+    RegDeleteKeyIncludingSubkeys(HKLM, 'Software\Classes\Applications\' + '{#MyAppExeName}');
+
+    // Notify Windows Explorer immediately that file associations have changed
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
   end;
 end;

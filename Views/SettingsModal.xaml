@@ -60,7 +60,7 @@
                     <StackPanel>
                         <TextBlock Text="🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)"
                                    FontWeight="Bold" FontSize="13" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,8"/>
-                        <TextBlock Text="Quét tự động các gói ngôn ngữ (.txa) trong %LocalAppData%\SteamRouteFixer\languages\:"
+                        <TextBlock Text="Quét tự động các gói ngôn ngữ (.txal) trong %LocalAppData%\SteamRouteFixer\languages\:"
                                    FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12"/>
 
                         <Grid>
@@ -74,7 +74,7 @@
                                       Padding="10,6" FontSize="12"
                                       SelectionChanged="CmbLanguage_SelectionChanged"/>
 
-                            <Button Grid.Column="1" Content="📂 Nạp File .txa"
+                            <Button Grid.Column="1" Content="📂 Nạp File .txal"
                                     Style="{DynamicResource WinUI3SecondaryButtonStyle}"
                                     Margin="8,0,0,0" Click="BtnImportTxa_Click"/>
 

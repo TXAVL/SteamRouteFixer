@@ -98,7 +98,10 @@ namespace SteamRouteFixer.Services.Common
             AvailableLanguages.Clear();
             if (!Directory.Exists(LanguagesDirectory)) return;
 
-            var files = Directory.GetFiles(LanguagesDirectory, "*.txa");
+            // Scan both .txal and legacy .txa files
+            var files = Directory.GetFiles(LanguagesDirectory, "*.*")
+                .Where(f => f.EndsWith(".txal", StringComparison.OrdinalIgnoreCase) || f.EndsWith(".txa", StringComparison.OrdinalIgnoreCase));
+
             foreach (var file in files)
             {
                 var pkg = DecryptLanguageFile(file);
@@ -150,8 +153,8 @@ namespace SteamRouteFixer.Services.Common
                     return false;
                 }
 
-                // Copy to local languages directory
-                string destFile = Path.Combine(LanguagesDirectory, $"{pkg.lang_code}.txa");
+                // Copy to local languages directory with .txal extension
+                string destFile = Path.Combine(LanguagesDirectory, $"{pkg.lang_code}.txal");
                 File.Copy(filePath, destFile, true);
 
                 ScanAvailableLanguages();
@@ -173,7 +176,7 @@ namespace SteamRouteFixer.Services.Common
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi nạp file .txa: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Lỗi nạp file .txal: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -239,14 +242,14 @@ namespace SteamRouteFixer.Services.Common
 
         private static void GenerateDefaultPackages()
         {
-            string viPath = Path.Combine(LanguagesDirectory, "vi-VN.txa");
+            string viPath = Path.Combine(LanguagesDirectory, "vi-VN.txal");
             if (!File.Exists(viPath))
             {
                 var vi = CreateVietnamesePackage();
                 File.WriteAllBytes(viPath, EncryptLanguagePackage(vi));
             }
 
-            string enPath = Path.Combine(LanguagesDirectory, "en-US.txa");
+            string enPath = Path.Combine(LanguagesDirectory, "en-US.txal");
             if (!File.Exists(enPath))
             {
                 var en = CreateEnglishPackage();
@@ -405,7 +408,13 @@ namespace SteamRouteFixer.Services.Common
                 string exePath = Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
                 if (string.IsNullOrEmpty(exePath) || !File.Exists(exePath)) return;
 
-                // HKCU\Software\Classes\.txa
+                // HKCU\Software\Classes\.txal
+                using (var key = Registry.CurrentUser.CreateSubKey(@"Software\Classes\.txal"))
+                {
+                    key.SetValue("", "TxaLanguagePackageFile");
+                }
+
+                // Legacy HKCU\Software\Classes\.txa
                 using (var key = Registry.CurrentUser.CreateSubKey(@"Software\Classes\.txa"))
                 {
                     key.SetValue("", "TxaLanguagePackageFile");
@@ -424,6 +433,17 @@ namespace SteamRouteFixer.Services.Common
                         shellKey.SetValue("", $"\"{exePath}\" \"%1\"");
                     }
                 }
+            }
+            catch { }
+        }
+
+        public static void UnregisterFileAssociation()
+        {
+            try
+            {
+                Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\.txal", false);
+                Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\.txa", false);
+                Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\TxaLanguagePackageFile", false);
             }
             catch { }
         }

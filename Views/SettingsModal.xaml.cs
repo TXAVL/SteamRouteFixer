@@ -68,8 +68,8 @@ namespace SteamRouteFixer.Views
         {
             var dlg = new OpenFileDialog
             {
-                Title = "Chọn gói ngôn ngữ TXA Language (*.txa)",
-                Filter = "TXA Language Package (*.txa)|*.txa|All files (*.*)|*.*"
+                Title = "Chọn gói ngôn ngữ TXA Language (*.txal, *.txa)",
+                Filter = "TXA Language Package (*.txal;*.txa)|*.txal;*.txa|All files (*.*)|*.*"
             };
 
             if (dlg.ShowDialog() == true)
