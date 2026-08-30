@@ -13,6 +13,7 @@ namespace SteamRouteFixer.Services.Common
     {
         public string lang_name { get; set; } = "Tiếng Việt";
         public string lang_code { get; set; } = "vi-VN";
+        public string author { get; set; } = "TXAVL";
         public Dictionary<string, string> txa_key { get; set; } = new();
     }
 
@@ -263,6 +264,7 @@ namespace SteamRouteFixer.Services.Common
             {
                 lang_name = "Tiếng Việt",
                 lang_code = "vi-VN",
+                author = "TXAVL",
                 txa_key = new Dictionary<string, string>
                 {
                     { "t_app_title", "Steam Route Fixer & Traffic Inspector" },
@@ -329,32 +331,33 @@ namespace SteamRouteFixer.Services.Common
             };
         }
 
-        private static TxaLanguagePackage CreateEnglishPackage()
+        public static TxaLanguagePackage CreateEnglishPackage()
         {
             return new TxaLanguagePackage
             {
                 lang_name = "English",
                 lang_code = "en-US",
+                author = "TXAVL",
                 txa_key = new Dictionary<string, string>
                 {
                     { "t_app_title", "Steam Route Fixer & Traffic Inspector" },
                     { "t_tab_steam", "🎮 STEAM ROUTE FIXER" },
                     { "t_tab_traffic", "🌐 HTTP/HTTPS TRAFFIC & PROCESS INSPECTOR" },
                     { "t_menu_file", "_File" },
-                    { "t_menu_steam_dir", "🎮 Open Steam Directory" },
-                    { "t_menu_hosts_file", "📝 Open Windows Hosts File (Notepad)" },
-                    { "t_menu_export_logs", "💾 Export Logs to file..." },
+                    { "t_menu_steam_dir", "🎮 Open Steam Installation Directory" },
+                    { "t_menu_hosts_file", "📝 Open Windows hosts File (Notepad)" },
+                    { "t_menu_export_logs", "💾 Export Logs to File..." },
                     { "t_menu_exit", "❌ Exit" },
                     { "t_menu_edit", "_Edit" },
                     { "t_menu_copy_domains", "📋 Copy Domain List" },
-                    { "t_menu_copy_logs", "📋 Copy All Console Logs" },
+                    { "t_menu_copy_logs", "📋 Copy Console Logs" },
                     { "t_menu_clear_log", "🧹 Clear Console Log" },
-                    { "t_menu_refresh", "🔄 Refresh All Data" },
+                    { "t_menu_refresh", "🔄 Refresh Data" },
                     { "t_menu_view", "_View" },
                     { "t_menu_tools", "_Tools" },
                     { "t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam" },
-                    { "t_menu_diagnose", "🔍 Diagnose Connection Now" },
-                    { "t_menu_revert", "🧹 Restore Original Hosts File" },
+                    { "t_menu_diagnose", "🔍 Diagnose Connections Now" },
+                    { "t_menu_revert", "🧹 Revert Original Hosts File" },
                     { "t_menu_flush_dns", "🔄 Flush Windows DNS Cache" },
                     { "t_menu_appdata", "📂 Open AppData Folder (%LocalAppData%)" },
                     { "t_menu_settings", "⚙️ System Settings..." },
@@ -362,7 +365,7 @@ namespace SteamRouteFixer.Services.Common
                     { "t_menu_check_update", "🔄 Check for Updates..." },
                     { "t_menu_about", "ℹ️ About SteamRouteFixer..." },
                     { "t_btn_autofix", "⚡ 1-Click Auto Fix Steam" },
-                    { "t_btn_diagnose", "🔍 Check (Diagnose)" },
+                    { "t_btn_diagnose", "🔍 Diagnose Connections" },
                     { "t_btn_revert_hosts", "🧹 Revert Hosts" },
                     { "t_btn_flush_dns", "🔄 Flush DNS" },
                     { "t_btn_open_steam", "🚀 Launch Steam" },
@@ -371,15 +374,15 @@ namespace SteamRouteFixer.Services.Common
                     { "t_filter_open", "Open" },
                     { "t_filter_poisoned", "Poisoned" },
                     { "t_filter_blocked", "Blocked" },
-                    { "t_sentinel_title", "STEAM SENTINEL SHIELD:" },
+                    { "t_sentinel_title", "STEAM SENTINEL PROTECTION:" },
                     { "t_sentinel_installed", "Steam Installed" },
                     { "t_sentinel_running", "Running" },
                     { "t_sentinel_stopped", "Stopped" },
-                    { "t_progress_ready", "Ready to diagnose and fix Steam connection routes." },
+                    { "t_progress_ready", "Ready to diagnose and fix Steam routing issues." },
                     { "t_eta_ready", "ETA: Ready" },
                     { "t_col_domain", "Domain (Steam Hostname)" },
-                    { "t_col_dns_ip", "Current DNS IP" },
-                    { "t_col_clean_ip", "Clean Optimized IP" },
+                    { "t_col_dns_ip", "Current ISP IP" },
+                    { "t_col_clean_ip", "Clean IP (Optimized)" },
                     { "t_col_latency", "Latency" },
                     { "t_col_status", "Status" },
                     { "t_col_action", "Action" },
@@ -399,6 +402,11 @@ namespace SteamRouteFixer.Services.Common
                     { "t_star_github", "⭐ Star on GitHub" }
                 }
             };
+        }
+
+        public static Dictionary<string, string> GetDefaultEnglishDictionary()
+        {
+            return CreateEnglishPackage().txa_key;
         }
 
         public static void RegisterFileAssociation()

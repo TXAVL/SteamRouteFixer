@@ -51,6 +51,17 @@
                             <TextBlock Text="• Giao diện Microsoft WinUI 3 Fluent Dark sắc nét, độ tương phản cao." FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2"/>
                         </StackPanel>
 
+                        <!-- Language & Translator Info (Matching User Screenshot) -->
+                        <Border Background="{DynamicResource WindowBackgroundBrush}"
+                                BorderBrush="{DynamicResource CardBorderBrush}"
+                                BorderThickness="1" CornerRadius="6"
+                                Padding="12,10" Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock x:Name="TxtLangVersionName" Text="Phiên bản Tiếng Việt" FontWeight="SemiBold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                <TextBlock x:Name="TxtLangTranslatorAuthor" Text="Dịch bởi TXAVL" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </Border>
+
                         <TextBlock Text="🛠️ Thông tin kỹ thuật &amp; Mã nguồn" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
                         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" LineHeight="16">
                             Framework: .NET 10 (Desktop Runtime) • Windows Native Win32 API&#x0a;

@@ -76,7 +76,27 @@ namespace SteamRouteFixer
             InitSteamPresets();
 
             Loaded += MainWindow_Loaded;
+            Closing += MainWindow_Closing;
             Closed += MainWindow_Closed;
+        }
+
+        private bool _isExplicitExitConfirmed = false;
+
+        private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (_isExplicitExitConfirmed) return;
+
+            string title = TxaLanguageManager.GetString("t_confirm_exit_title", "Xác nhận đóng ứng dụng");
+            string msg = TxaLanguageManager.GetString("t_confirm_exit_msg", "Bạn có chắc chắn muốn thoát khỏi Steam Route Fixer?");
+
+            var result = MessageBox.Show(this, msg, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            _isExplicitExitConfirmed = true;
         }
 
         private void ApplyLanguageTranslations()
@@ -274,6 +294,15 @@ namespace SteamRouteFixer
             SteamSentinelBorder.BorderBrush = _steamStatus.IsRunning
                 ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(216, 59, 1))
                 : (System.Windows.Media.Brush)FindResource("CardBorderBrush");
+
+            // Dim action buttons and display notice banner if steam is running
+            bool isRunning = _steamStatus.IsRunning;
+            SteamRunningNoticeBanner.Visibility = isRunning ? Visibility.Visible : Visibility.Collapsed;
+            StackActionButtons.Opacity = isRunning ? 0.45 : 1.0;
+            BtnAutoFix.IsEnabled = !isRunning;
+            BtnDiagnose.IsEnabled = !isRunning;
+            BtnRevertHosts.IsEnabled = !isRunning;
+            BtnFlushDns.IsEnabled = !isRunning;
         }
 
         private void BtnCloseSteam_Click(object sender, RoutedEventArgs e)
@@ -760,7 +789,7 @@ namespace SteamRouteFixer
 
         private void MenuExit_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            Close();
         }
 
         private void MenuCopyDomains_Click(object sender, RoutedEventArgs e)

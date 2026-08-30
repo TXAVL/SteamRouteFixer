@@ -8,7 +8,9 @@
         Title="Steam Route Fixer &amp; Traffic Inspector"
         Icon="Assets/app.png"
         Height="780" Width="1180"
-        MinHeight="680" MinWidth="980"
+        MinHeight="780" MinWidth="1180"
+        MaxHeight="780" MaxWidth="1180"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource WindowBackgroundBrush}"
         Foreground="{DynamicResource TextPrimaryBrush}"
@@ -95,7 +97,6 @@
         <!-- MAIN TWO TABS -->
         <TabControl x:Name="MainTabControl" Grid.Row="1" Background="Transparent" BorderThickness="0" Margin="12,8,12,6"
                     SelectionChanged="MainTabControl_SelectionChanged">
-            
             <!-- ========================================== -->
             <!-- TAB 1: 🎮 STEAM ROUTE FIXER                -->
             <!-- ========================================== -->
@@ -103,6 +104,7 @@
                 <Grid Margin="4,8,4,4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/> <!-- Steam Sentinel Banner -->
+                        <RowDefinition Height="Auto"/> <!-- Warning when Steam is Running -->
                         <RowDefinition Height="Auto"/> <!-- Action Buttons & Filters -->
                         <RowDefinition Height="Auto"/> <!-- Progress Bar & ETA -->
                         <RowDefinition Height="*"/>    <!-- Domains Grid -->
@@ -146,8 +148,32 @@
                         </Grid>
                     </Border>
 
+                    <!-- 1.5 Steam Running Notice Banner (Centered Top Warning) -->
+                    <Border Grid.Row="1" x:Name="SteamRunningNoticeBanner"
+                            Background="#262208" BorderBrush="#FFD600" BorderThickness="1.5"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
+                            Padding="14,10" Margin="0,0,0,10" Visibility="Collapsed">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="⚠️" FontSize="18" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="PHÁT HIỆN TIẾN TRÌNH STEAM ĐANG CHẠY - CÁC TÁC VỤ SỬA ROUTE ĐÃ ĐƯỢC TẠM KHÓA"
+                                           FontWeight="Bold" FontSize="12" Foreground="#FFE600"/>
+                                <TextBlock Text="Vui lòng nhấn 'Đóng Steam Ngay' để giải phóng Socket và ghi file hosts an toàn trước khi thao tác."
+                                           FontSize="11" Foreground="#DDD0A0" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <Button Grid.Column="2" Content="🛑 Đóng Steam Ngay"
+                                    Style="{DynamicResource WinUI3DangerButtonStyle}"
+                                    Padding="12,5" Click="BtnCloseSteam_Click" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
                     <!-- 2. Action Controls & Quick Status Filters -->
-                    <Grid Grid.Row="1" Margin="0,0,0,10">
+                    <Grid Grid.Row="2" Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -155,7 +181,7 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Main Action Buttons -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <StackPanel x:Name="StackActionButtons" Grid.Column="0" Orientation="Horizontal">
                             <Button x:Name="BtnAutoFix" Content="⚡ 1-Click Auto Fix Steam"
                                     Style="{DynamicResource WinUI3PrimaryButtonStyle}"
                                     Margin="0,0,8,0" Click="BtnAutoFix_Click"/>
@@ -216,7 +242,7 @@
                     </Grid>
 
                     <!-- 3. Progress Bar & Real-time ETA Display -->
-                    <Border Grid.Row="2"
+                    <Border Grid.Row="3"
                             Background="{DynamicResource SubCardBackgroundBrush}"
                             BorderBrush="{DynamicResource CardBorderBrush}"
                             BorderThickness="1"
@@ -249,7 +275,7 @@
                     </Border>
 
                     <!-- 4. Domains DataGrid (High Contrast WinUI 3 Table) -->
-                    <Border Grid.Row="3"
+                    <Border Grid.Row="4"
                             Background="{DynamicResource CardBackgroundBrush}"
                             BorderBrush="{DynamicResource CardBorderBrush}"
                             BorderThickness="1"
@@ -330,7 +356,7 @@
                     </Border>
 
                     <!-- 5. Real-Time Color Log Console -->
-                    <Border Grid.Row="4"
+                    <Border Grid.Row="5"
                             Background="{DynamicResource LogConsoleBackgroundBrush}"
                             BorderBrush="{DynamicResource CardBorderBrush}"
                             BorderThickness="1"

@@ -100,6 +100,20 @@ namespace SteamRouteFixer.Views
             catch { }
         }
 
+        private void BtnTranslateApp_Click(object sender, RoutedEventArgs e)
+        {
+            var modal = new TranslationEditorModal
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+
+            if (modal.ShowDialog() == true)
+            {
+                LoadLanguagesList();
+            }
+        }
+
         private void RefreshBackupsList()
         {
             LstBackups.Items.Clear();

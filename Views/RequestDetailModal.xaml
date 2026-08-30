@@ -7,6 +7,7 @@
         Title="Chi Tiết HTTP Request &amp; Response"
         Height="620" Width="850"
         WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
         Background="{DynamicResource WindowBackgroundBrush}"
         Foreground="{DynamicResource TextPrimaryBrush}"
         FontFamily="{DynamicResource SegoeFluentFont}">

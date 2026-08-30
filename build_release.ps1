@@ -28,6 +28,9 @@ if (-not (Test-Path $isccPath)) {
 
 if (Test-Path $isccPath) {
     & $isccPath "installer.iss"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Inno Setup compilation failed with exit code $LASTEXITCODE"
+    }
     Write-Host "Trinh cai dat da bien dich thanh cong!" -ForegroundColor Green
 } else {
     Write-Warning "Khong tim thay ISCC.exe! Vui long kiem tra Inno Setup."
