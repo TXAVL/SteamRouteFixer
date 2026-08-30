@@ -147,16 +147,24 @@ namespace SteamRouteFixer.Views
 
         private void BtnTranslateApp_Click(object sender, RoutedEventArgs e)
         {
+            var ownerWin = this.Owner ?? Application.Current.MainWindow;
+            this.Close();
+
             var modal = new TranslationEditorModal
             {
-                Owner = this,
+                Owner = ownerWin,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
 
-            if (modal.ShowDialog() == true)
+            modal.ShowDialog();
+
+            // Re-open SettingsModal after TranslationEditorModal finishes
+            var newSettings = new SettingsModal
             {
-                LoadLanguagesList();
-            }
+                Owner = ownerWin,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            newSettings.ShowDialog();
         }
 
         private void RefreshBackupsList()
