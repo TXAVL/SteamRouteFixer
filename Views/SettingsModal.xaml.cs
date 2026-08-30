@@ -27,7 +27,7 @@ namespace SteamRouteFixer.Views
         private void ApplyLanguageTranslations()
         {
             Title = TxaLanguageManager.GetString("t_settings_title", "Cài Đặt Hệ Thống & Giao Diện");
-            if (TxtSettingsMainTitle != null) TxtSettingsMainTitle.Text = TxaLanguageManager.GetString("t_settings_title", "⚙️ THIẾT LẬP CẤU HÌNH ỨNG DỤNG");
+            if (TxtSettingsMainTitle != null) TxtSettingsMainTitle.Text = TxaLanguageManager.GetString("t_settings_header", "⚙️ THIẾT LẬP CẤU HÌNH ỨNG DỤNG");
 
             if (TxtThemeHeader != null) TxtThemeHeader.Text = TxaLanguageManager.GetString("t_theme_header", "🎨 CHỦ ĐỀ GIAO DIỆN (THEME)");
             if (TxtThemeDesc != null) TxtThemeDesc.Text = TxaLanguageManager.GetString("t_theme_desc", "Tùy biến phong cách hiển thị WinUI 3 Fluent, Steam Dark Gaming hoặc VS Code Studio Dark:");

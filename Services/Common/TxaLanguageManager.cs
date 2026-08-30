@@ -388,6 +388,7 @@ namespace SteamRouteFixer.Services.Common
 
                     // Settings Modal
                     { "t_settings_title", "Cài Đặt Hệ Thống & Giao Diện" },
+                    { "t_settings_header", "⚙️ THIẾT LẬP CẤU HÌNH ỨNG DỤNG" },
                     { "t_theme_header", "🎨 CHỦ ĐỀ GIAO DIỆN (THEME)" },
                     { "t_theme_desc", "Tùy biến phong cách hiển thị WinUI 3 Fluent, Steam Dark Gaming hoặc VS Code Studio Dark:" },
                     { "t_lang_header", "🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)" },
@@ -596,6 +597,7 @@ namespace SteamRouteFixer.Services.Common
 
                     // Settings Modal
                     { "t_settings_title", "System Settings & Appearance" },
+                    { "t_settings_header", "⚙️ APPLICATION CONFIGURATION & SETTINGS" },
                     { "t_theme_header", "🎨 APP THEME" },
                     { "t_theme_desc", "Customize display style: WinUI 3 Fluent, Steam Dark Gaming, or VS Code Studio Dark:" },
                     { "t_lang_header", "🌐 APP LANGUAGE (TXA LANGUAGE)" },
