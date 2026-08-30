@@ -450,7 +450,9 @@ namespace SteamRouteFixer.Services.Common
                     { "t_trans_save_success_fmt", "Đã lưu thành công gói ngôn ngữ {0} ({1}) và áp dụng ngay lập tức vào Steam Route Fixer!" },
                     { "t_trans_save_success_title", "Hoàn tất biên dịch" },
                     { "t_trans_save_error_fmt", "Lỗi khi lưu gói ngôn ngữ: {0}" },
-                    { "t_trans_browser_error_fmt", "Không thể mở trình duyệt: {0}" }
+                    { "t_trans_browser_error_fmt", "Không thể mở trình duyệt: {0}" },
+                    { "t_trans_var_error_msg", "Phát hiện {0} chuỗi dịch chưa nhập đúng hoặc còn thiếu các biến định dạng:\n\n{1}\n\nVui lòng kiểm tra và điền đầy đủ các biến trước khi lưu để tránh gây lỗi hiển thị trong ứng dụng!" },
+                    { "t_trans_var_error_title", "Cảnh Báo Biến Định Dạng" }
                 }
             };
         }
@@ -647,7 +649,9 @@ namespace SteamRouteFixer.Services.Common
                     { "t_trans_save_success_fmt", "Successfully saved language package {0} ({1}) and applied immediately!" },
                     { "t_trans_save_success_title", "Compilation Complete" },
                     { "t_trans_save_error_fmt", "Error saving language package: {0}" },
-                    { "t_trans_browser_error_fmt", "Cannot open browser: {0}" }
+                    { "t_trans_browser_error_fmt", "Cannot open browser: {0}" },
+                    { "t_trans_var_error_msg", "Detected {0} translation strings with missing or invalid format variables:\n\n{1}\n\nPlease provide all required variables before saving to prevent runtime UI errors!" },
+                    { "t_trans_var_error_title", "Variable Format Warning" }
                 }
             };
         }

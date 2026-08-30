@@ -6,8 +6,10 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 using SteamRouteFixer.Services.Common;
 
@@ -15,8 +17,23 @@ namespace SteamRouteFixer.Views
 {
     public class TranslationItemViewModel : INotifyPropertyChanged
     {
+        private static readonly Regex FormatVarRegex = new(@"\{(\d+)(:[^}]+)?\}", RegexOptions.Compiled);
+        private static readonly Regex EnvVarRegex = new(@"%[A-Za-z0-9_]+%", RegexOptions.Compiled);
+
         public string Key { get; set; } = string.Empty;
-        public string EnglishText { get; set; } = string.Empty;
+
+        private string _englishText = string.Empty;
+        public string EnglishText
+        {
+            get => _englishText;
+            set
+            {
+                _englishText = value;
+                ExtractVariables();
+                ValidateTranslation();
+                OnPropertyChanged();
+            }
+        }
 
         private string _translatedText = string.Empty;
         public string TranslatedText
@@ -27,8 +44,119 @@ namespace SteamRouteFixer.Views
                 if (_translatedText != value)
                 {
                     _translatedText = value;
+                    ValidateTranslation();
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        public List<string> RequiredVariables { get; } = new();
+        public bool HasVariables => RequiredVariables.Count > 0;
+        public Visibility VariableBadgeVisibility => HasVariables ? Visibility.Visible : Visibility.Collapsed;
+        public string VariablesHint => HasVariables ? $"⚠️ Biến cần có: {string.Join(", ", RequiredVariables)}" : string.Empty;
+
+        private bool _hasPlaceholderError = false;
+        public bool HasPlaceholderError
+        {
+            get => _hasPlaceholderError;
+            set
+            {
+                _hasPlaceholderError = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ValidationWarningVisibility));
+                OnPropertyChanged(nameof(InputBorderBrushColor));
+            }
+        }
+
+        private string _validationErrorMessage = string.Empty;
+        public string ValidationErrorMessage
+        {
+            get => _validationErrorMessage;
+            set
+            {
+                _validationErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility ValidationWarningVisibility => (HasPlaceholderError && !string.IsNullOrWhiteSpace(TranslatedText)) ? Visibility.Visible : Visibility.Collapsed;
+
+        public Brush InputBorderBrushColor
+        {
+            get
+            {
+                if (HasPlaceholderError && !string.IsNullOrWhiteSpace(_translatedText))
+                {
+                    return new SolidColorBrush(Color.FromRgb(255, 82, 82)); // #FF5252 Red
+                }
+                if (Application.Current?.Resources["CardBorderBrush"] is Brush b)
+                {
+                    return b;
+                }
+                return new SolidColorBrush(Color.FromRgb(56, 56, 56));
+            }
+        }
+
+        private void ExtractVariables()
+        {
+            RequiredVariables.Clear();
+            if (string.IsNullOrEmpty(_englishText)) return;
+
+            foreach (Match m in FormatVarRegex.Matches(_englishText))
+            {
+                if (!RequiredVariables.Contains(m.Value))
+                    RequiredVariables.Add(m.Value);
+            }
+            foreach (Match m in EnvVarRegex.Matches(_englishText))
+            {
+                if (!RequiredVariables.Contains(m.Value))
+                    RequiredVariables.Add(m.Value);
+            }
+            OnPropertyChanged(nameof(HasVariables));
+            OnPropertyChanged(nameof(VariableBadgeVisibility));
+            OnPropertyChanged(nameof(VariablesHint));
+        }
+
+        public void ValidateTranslation()
+        {
+            if (string.IsNullOrWhiteSpace(_translatedText) || RequiredVariables.Count == 0)
+            {
+                HasPlaceholderError = false;
+                ValidationErrorMessage = string.Empty;
+                return;
+            }
+
+            var missing = new List<string>();
+            foreach (var reqVar in RequiredVariables)
+            {
+                var formatMatch = FormatVarRegex.Match(reqVar);
+                if (formatMatch.Success)
+                {
+                    string idx = formatMatch.Groups[1].Value;
+                    var transMatch = Regex.Match(_translatedText, @"\{" + idx + @"(:[^}]+)?\}");
+                    if (!transMatch.Success)
+                    {
+                        missing.Add(reqVar);
+                    }
+                }
+                else
+                {
+                    if (!_translatedText.Contains(reqVar, StringComparison.OrdinalIgnoreCase))
+                    {
+                        missing.Add(reqVar);
+                    }
+                }
+            }
+
+            if (missing.Count > 0)
+            {
+                HasPlaceholderError = true;
+                ValidationErrorMessage = $"⚠️ Chưa nhập hoặc thiếu biến: {string.Join(", ", missing)}";
+            }
+            else
+            {
+                HasPlaceholderError = false;
+                ValidationErrorMessage = string.Empty;
             }
         }
 
@@ -248,13 +376,16 @@ namespace SteamRouteFixer.Views
             if (total == 0) return;
 
             int translated = TranslationItems.Count(t => !string.IsNullOrWhiteSpace(t.TranslatedText));
+            int validTranslated = TranslationItems.Count(t => !string.IsNullOrWhiteSpace(t.TranslatedText) && !t.HasPlaceholderError);
+            bool hasErrors = TranslationItems.Any(t => !string.IsNullOrWhiteSpace(t.TranslatedText) && t.HasPlaceholderError);
+
             double percent = (double)translated / total * 100.0;
 
             string progressFormat = TxaLanguageManager.GetString("t_trans_progress_fmt", "Tiến độ dịch: {0} / {1} chuỗi ({2:F1}%)");
             TxtProgressSummary.Text = string.Format(progressFormat, translated, total, percent);
             PbTranslationProgress.Value = percent;
 
-            bool isComplete = (translated == total && total > 0);
+            bool isComplete = (validTranslated == total && total > 0 && !hasErrors);
             BtnSubmitGithub.IsEnabled = isComplete;
         }
 
@@ -297,6 +428,23 @@ namespace SteamRouteFixer.Views
             {
                 string warnMsg = TxaLanguageManager.GetString("t_trans_need_translation_warning", "Vui lòng dịch ít nhất một vài câu trước khi lưu & áp dụng.");
                 string warnTitle = TxaLanguageManager.GetString("t_dialog_notice", "Thông báo");
+                TxaMessageBox.Show(this, warnMsg, warnTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Validate all required placeholder variables
+            var errorItems = TranslationItems.Where(t => !string.IsNullOrWhiteSpace(t.TranslatedText) && t.HasPlaceholderError).ToList();
+            if (errorItems.Count > 0)
+            {
+                string keysList = string.Join("\n", errorItems.Take(6).Select(t => $"• [{t.Key}]: {t.ValidationErrorMessage}"));
+                if (errorItems.Count > 6) keysList += $"\n... và {errorItems.Count - 6} chuỗi khác.";
+
+                string warnMsg = string.Format(
+                    TxaLanguageManager.GetString("t_trans_var_error_msg", "Phát hiện {0} chuỗi dịch chưa nhập đúng hoặc còn thiếu các biến định dạng:\n\n{1}\n\nVui lòng kiểm tra và điền đầy đủ các biến trước khi lưu để tránh gây lỗi hiển thị trong ứng dụng!"),
+                    errorItems.Count,
+                    keysList
+                );
+                string warnTitle = TxaLanguageManager.GetString("t_trans_var_error_title", "Cảnh Báo Biến Định Dạng");
                 TxaMessageBox.Show(this, warnMsg, warnTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -351,6 +499,22 @@ namespace SteamRouteFixer.Views
         private void BtnSubmitGithub_Click(object sender, RoutedEventArgs e)
         {
             if (CmbTargetCulture.SelectedItem is not CultureOption selected) return;
+
+            var errorItems = TranslationItems.Where(t => !string.IsNullOrWhiteSpace(t.TranslatedText) && t.HasPlaceholderError).ToList();
+            if (errorItems.Count > 0)
+            {
+                string keysList = string.Join("\n", errorItems.Take(6).Select(t => $"• [{t.Key}]: {t.ValidationErrorMessage}"));
+                if (errorItems.Count > 6) keysList += $"\n... và {errorItems.Count - 6} chuỗi khác.";
+
+                string warnMsg = string.Format(
+                    TxaLanguageManager.GetString("t_trans_var_error_msg", "Phát hiện {0} chuỗi dịch chưa nhập đúng hoặc còn thiếu các biến định dạng:\n\n{1}\n\nVui lòng kiểm tra và điền đầy đủ các biến trước khi lưu để tránh gây lỗi hiển thị trong ứng dụng!"),
+                    errorItems.Count,
+                    keysList
+                );
+                string warnTitle = TxaLanguageManager.GetString("t_trans_var_error_title", "Cảnh Báo Biến Định Dạng");
+                TxaMessageBox.Show(this, warnMsg, warnTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             string jsonBody = JsonSerializer.Serialize(new
             {

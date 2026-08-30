@@ -104,22 +104,30 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <!-- Left: Key & English Source -->
+                                            <!-- Left: Key & English Source & Variable Notice Badge -->
                                             <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0">
                                                 <TextBlock Text="{Binding Key}" FontSize="10" Foreground="{DynamicResource TextMutedBrush}" FontFamily="Consolas"/>
                                                 <TextBlock Text="{Binding EnglishText}" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                                                <Border Background="#20FFA500" BorderBrush="#66FFA500" BorderThickness="1" CornerRadius="3" Padding="6,2" Margin="0,4,0,0" HorizontalAlignment="Left" Visibility="{Binding VariableBadgeVisibility}">
+                                                    <TextBlock Text="{Binding VariablesHint}" Foreground="#FFB900" FontSize="11" FontWeight="SemiBold"/>
+                                                </Border>
                                             </StackPanel>
 
-                                            <!-- Right: Target Translation TextBox -->
-                                            <TextBox Grid.Column="1"
-                                                     Text="{Binding TranslatedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     Padding="10,6" FontSize="12"
-                                                     Background="{DynamicResource SubCardBackgroundBrush}"
-                                                     Foreground="{DynamicResource TextPrimaryBrush}"
-                                                     BorderBrush="{DynamicResource CardBorderBrush}"
-                                                     CaretBrush="{DynamicResource PrimaryAccentBrush}"
-                                                     VerticalAlignment="Center"
-                                                     TextChanged="TranslationTextBox_TextChanged"/>
+                                            <!-- Right: Target Translation TextBox & Error Alert -->
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBox Text="{Binding TranslatedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         Padding="10,6" FontSize="12"
+                                                         Background="{DynamicResource SubCardBackgroundBrush}"
+                                                         Foreground="{DynamicResource TextPrimaryBrush}"
+                                                         BorderBrush="{Binding InputBorderBrushColor, Mode=OneWay}"
+                                                         BorderThickness="1.5"
+                                                         CaretBrush="{DynamicResource PrimaryAccentBrush}"
+                                                         TextChanged="TranslationTextBox_TextChanged"/>
+                                                <TextBlock Text="{Binding ValidationErrorMessage}"
+                                                           Foreground="#FF5252" FontSize="11" FontWeight="SemiBold"
+                                                           Margin="2,4,0,0"
+                                                           Visibility="{Binding ValidationWarningVisibility}"/>
+                                            </StackPanel>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
