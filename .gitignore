@@ -1,0 +1,25 @@
+## Build Results
+[Bb]in/
+[Oo]bj/
+publish_portable/
+
+## Visual Studio & Rider Cache
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.idea/
+
+## Temp & Backup
+*_wpftmp.csproj
+*.tmp
+*.log
+*.bak
+
+## OS Generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

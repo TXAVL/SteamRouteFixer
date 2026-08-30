@@ -1,0 +1,682 @@
+<Window x:Class="SteamRouteFixer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:SteamRouteFixer.Models"
+        mc:Ignorable="d"
+        Title="Steam Route Fixer &amp; Traffic Inspector"
+        Icon="Assets/app.png"
+        Height="780" Width="1180"
+        MinHeight="680" MinWidth="980"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Foreground="{DynamicResource TextPrimaryBrush}"
+        FontFamily="{DynamicResource SegoeFluentFont}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Top Title & Menu Bar -->
+            <RowDefinition Height="*"/>    <!-- Main Content Tabs -->
+            <RowDefinition Height="Auto"/> <!-- Bottom Status Bar -->
+        </Grid.RowDefinitions>
+
+        <!-- TOP CUSTOM TITLE & MENU BAR -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource TitleBarBackgroundBrush}"
+                BorderBrush="{DynamicResource CardBorderBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="10,6">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/> <!-- Logo Icon -->
+                    <ColumnDefinition Width="Auto"/> <!-- MenuBar Items -->
+                    <ColumnDefinition Width="*"/>    <!-- Title / Drag Area -->
+                    <ColumnDefinition Width="Auto"/> <!-- Right Actions -->
+                </Grid.ColumnDefinitions>
+
+                <!-- App Icon & Title -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="4,0,16,0">
+                    <Image Source="Assets/app.png" Width="22" Height="22" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="SteamRouteFixer" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource PrimaryAccentBrush}" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Top Menu Bar (File, Edit, View, Tools, Help) -->
+                <Menu Grid.Column="1" Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" FontSize="12">
+                    <MenuItem Header="_File" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem Header="🎮 Mở thư mục cài đặt Steam" Click="MenuOpenSteamDir_Click"/>
+                        <MenuItem Header="📝 Mở file hosts Windows (Notepad)" Click="MenuOpenHostsFile_Click"/>
+                        <MenuItem Header="💾 Xuất nhật ký Logs ra file..." Click="MenuExportLogs_Click"/>
+                        <Separator/>
+                        <MenuItem Header="❌ Thoát" Click="MenuExit_Click"/>
+                    </MenuItem>
+
+                    <MenuItem Header="_Edit" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem Header="📋 Copy danh sách Domain" Click="MenuCopyDomains_Click"/>
+                        <MenuItem Header="📋 Copy toàn bộ Console Logs" Click="MenuCopyLogs_Click"/>
+                        <MenuItem Header="🧹 Xóa sạch Console Log" Click="MenuClearLog_Click"/>
+                        <Separator/>
+                        <MenuItem Header="🔄 Làm mới dữ liệu" Click="MenuRefreshAll_Click"/>
+                    </MenuItem>
+
+                    <MenuItem Header="_View" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem Header="🎨 Theme: WinUI 3 (Windows 11 Fluent)" Click="MenuThemeWinUI3_Click"/>
+                        <MenuItem Header="🎨 Theme: Steam Dark Gaming (Cyberpunk)" Click="MenuThemeSteamDark_Click"/>
+                        <MenuItem Header="🎨 Theme: VS Code Studio Dark" Click="MenuThemeVSCode_Click"/>
+                    </MenuItem>
+
+                    <MenuItem Header="_Tools" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem Header="⚡ 1-Click Auto Fix Steam" Click="BtnAutoFix_Click"/>
+                        <MenuItem Header="🔍 Chẩn đoán kết nối ngay" Click="BtnDiagnose_Click"/>
+                        <MenuItem Header="🧹 Khôi phục file Hosts gốc" Click="BtnRevertHosts_Click"/>
+                        <Separator/>
+                        <MenuItem Header="🔄 Flush DNS Cache Windows" Click="BtnFlushDns_Click"/>
+                        <MenuItem Header="📂 Mở thư mục dữ liệu AppData (%LocalAppData%)" Click="MenuOpenAppData_Click"/>
+                        <Separator/>
+                        <MenuItem Header="⚙️ Cài đặt hệ thống..." Click="MenuSettings_Click"/>
+                    </MenuItem>
+
+                    <MenuItem Header="_Help" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <MenuItem Header="🔄 Kiểm tra cập nhật (Check Update...)" Click="MenuCheckUpdate_Click"/>
+                        <MenuItem Header="ℹ️ Giới thiệu (About SteamRouteFixer...)" Click="MenuAbout_Click"/>
+                    </MenuItem>
+                </Menu>
+
+                <!-- Right Top Quick Status Badges -->
+                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,4,0">
+                    <Border x:Name="BadgeAdmin" Background="#163820" BorderBrush="#2D6A4F" BorderThickness="1" CornerRadius="5" Padding="8,3" Margin="0,0,10,0">
+                        <TextBlock x:Name="TxtAdminStatus" Text="🛡️ Administrator" FontSize="11" FontWeight="SemiBold" Foreground="#26E07F"/>
+                    </Border>
+                    <Button Content="⚙️ Cài Đặt" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="10,3" FontSize="11.5" Click="MenuSettings_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- MAIN TWO TABS -->
+        <TabControl x:Name="MainTabControl" Grid.Row="1" Background="Transparent" BorderThickness="0" Margin="12,8,12,6"
+                    SelectionChanged="MainTabControl_SelectionChanged">
+            
+            <!-- ========================================== -->
+            <!-- TAB 1: 🎮 STEAM ROUTE FIXER                -->
+            <!-- ========================================== -->
+            <TabItem Header="🎮 STEAM ROUTE FIXER" FontWeight="Bold" FontSize="13">
+                <Grid Margin="4,8,4,4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> <!-- Steam Sentinel Banner -->
+                        <RowDefinition Height="Auto"/> <!-- Action Buttons & Filters -->
+                        <RowDefinition Height="Auto"/> <!-- Progress Bar & ETA -->
+                        <RowDefinition Height="*"/>    <!-- Domains Grid -->
+                        <RowDefinition Height="180"/>  <!-- Live Color Log Stream -->
+                    </Grid.RowDefinitions>
+
+                    <!-- 1. Steam Sentinel Banner (WinUI 3 InfoBar Card) -->
+                    <Border Grid.Row="0" x:Name="SteamSentinelBorder"
+                            Background="{DynamicResource CardBackgroundBrush}"
+                            BorderBrush="{DynamicResource CardBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
+                            Padding="14,12" Margin="0,0,0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" Width="36" Height="36" Background="#1F3D5C" CornerRadius="8" Margin="0,0,12,0" VerticalAlignment="Center">
+                                <TextBlock Text="🛡️" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="BẢO VỆ STEAM SENTINEL: " FontWeight="Bold" FontSize="12.5" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+                                    <TextBlock x:Name="TxtSteamStatusSummary" Text="Đang phát hiện cài đặt và tiến trình Steam..." FontSize="12.5" FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <TextBlock x:Name="TxtSteamPathDisplay" Text="Đường dẫn: C:\Program Files (x86)\Steam\steam.exe" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button x:Name="BtnCloseSteam" Content="🛑 Đóng Steam Ngay"
+                                        Style="{DynamicResource WinUI3DangerButtonStyle}"
+                                        Margin="0,0,8,0" Click="BtnCloseSteam_Click"/>
+                                <Button x:Name="BtnLaunchSteam" Content="🚀 Mở Steam"
+                                        Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                        Click="BtnLaunchSteam_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- 2. Action Controls & Quick Status Filters -->
+                    <Grid Grid.Row="1" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Main Action Buttons -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Button x:Name="BtnAutoFix" Content="⚡ 1-Click Auto Fix Steam"
+                                    Style="{DynamicResource WinUI3PrimaryButtonStyle}"
+                                    Margin="0,0,8,0" Click="BtnAutoFix_Click"/>
+
+                            <Button x:Name="BtnDiagnose" Content="🔍 Kiểm Tra (Diagnose)"
+                                    Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                    Margin="0,0,8,0" Click="BtnDiagnose_Click"/>
+
+                            <Button x:Name="BtnRevertHosts" Content="🧹 Khôi Phục Hosts"
+                                    Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                    Margin="0,0,8,0" Click="BtnRevertHosts_Click"/>
+
+                            <Button x:Name="BtnFlushDns" Content="🔄 Flush DNS"
+                                    Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                    Click="BtnFlushDns_Click"/>
+                        </StackPanel>
+
+                        <!-- Quick Filter Chips (Tab 1) -->
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="Lọc trạng thái: " Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,6,0" FontSize="11.5"/>
+                            
+                            <!-- All -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab1_All_Click"
+                                    Background="#1A4CC2FF" BorderBrush="#354CC2FF">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#4CC2FF" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Tất cả" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Open -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab1_Open_Click"
+                                    Background="#1800E676" BorderBrush="#3500E676">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#00E676" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Open" Foreground="#26E07F" FontWeight="Bold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Poisoned -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab1_Poisoned_Click"
+                                    Background="#18FFB900" BorderBrush="#35FFB900">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#FFB900" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Poisoned" Foreground="#FFD54F" FontWeight="Bold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Blocked -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Click="FilterTab1_Blocked_Click"
+                                    Background="#18FF5252" BorderBrush="#35FF5252">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#FF5252" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Blocked" Foreground="#FF6E6E" FontWeight="Bold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- 3. Progress Bar & Real-time ETA Display -->
+                    <Border Grid.Row="2"
+                            Background="{DynamicResource SubCardBackgroundBrush}"
+                            BorderBrush="{DynamicResource CardBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            Padding="14,10" Margin="0,0,0,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock x:Name="TxtProgressStatus" Text="Sẵn sàng kiểm tra và sửa lỗi kết nối Steam."
+                                           FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"/>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock x:Name="TxtEtaCountdown" Text="ETA: Sẵn sàng" FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,14,0"/>
+                                    <TextBlock x:Name="TxtProgressPercent" Text="0%" FontSize="11.5" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <ProgressBar Grid.Row="1" x:Name="MainProgressBar" Height="6" Value="0" Maximum="100"
+                                         Background="#252525" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- 4. Domains DataGrid (High Contrast WinUI 3 Table) -->
+                    <Border Grid.Row="3"
+                            Background="{DynamicResource CardBackgroundBrush}"
+                            BorderBrush="{DynamicResource CardBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
+                            Margin="0,0,0,10">
+                        <DataGrid x:Name="GridDomains"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="{DynamicResource DataGridGridLineBrush}"
+                                  Background="Transparent"
+                                  RowBackground="{DynamicResource DataGridRowBackgroundBrush}"
+                                  AlternatingRowBackground="{DynamicResource DataGridRowAltBackgroundBrush}"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"
+                                  FontSize="12"
+                                  BorderThickness="0">
+                            <DataGrid.Columns>
+                                <!-- Category -->
+                                <DataGridTemplateColumn Header="Mục Đích" Width="140">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Category, Mode=OneWay}" Foreground="#A8A8A8" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Domain -->
+                                <DataGridTemplateColumn Header="Tên Miền (Domain)" Width="250">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Domain, Mode=OneWay}" Foreground="#4CC2FF" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- System IP -->
+                                <DataGridTemplateColumn Header="IP Máy / ISP" Width="140">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding SystemIp, Mode=OneWay}" Foreground="#C8C8C8" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Clean IP -->
+                                <DataGridTemplateColumn Header="IP Sạch Nhanh Nhất" Width="160">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding BestIp, Mode=OneWay}" Foreground="#26E07F" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Ping -->
+                                <DataGridTemplateColumn Header="Ping" Width="85">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding LatencyDisplay, Mode=OneWay}" Foreground="#FFD54F" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Status Badge -->
+                                <DataGridTemplateColumn Header="Trạng Thái" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{Binding StatusBadgeColor, Mode=OneWay}" CornerRadius="4" Padding="8,3" HorizontalAlignment="Left">
+                                                <TextBlock Text="{Binding StatusText, Mode=OneWay}" Foreground="#FFFFFF" FontWeight="Bold" FontSize="11"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <!-- 5. Real-Time Color Log Console -->
+                    <Border Grid.Row="4"
+                            Background="{DynamicResource LogConsoleBackgroundBrush}"
+                            BorderBrush="{DynamicResource CardBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
+                            Padding="10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" Margin="4,0,4,6">
+                                <TextBlock Text="📜 NHẬT KÝ HOẠT ĐỘNG (REAL-TIME LOGS)"
+                                           FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Content="📋 Copy Logs" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="8,2" FontSize="10.5" Margin="0,0,6,0" Click="MenuCopyLogs_Click"/>
+                                    <Button Content="🧹 Clear" Style="{DynamicResource WinUI3SecondaryButtonStyle}" Padding="8,2" FontSize="10.5" Click="MenuClearLog_Click"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <ScrollViewer Grid.Row="1" x:Name="LogScrollViewer" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="LogItemsControl">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock FontFamily="{DynamicResource ConsolasFont}" FontSize="11.5" Margin="2,1.5">
+                                                <Run Text="{Binding TimeString, Mode=OneWay}" Foreground="#757575"/>
+                                                <Run Text=" "/>
+                                                <Run Text="{Binding LevelPrefix, Mode=OneWay}" Foreground="{Binding LevelColor, Mode=OneWay}" FontWeight="Bold"/>
+                                                <Run Text=" "/>
+                                                <Run Text="{Binding Message, Mode=OneWay}" Foreground="#E0E0E0"/>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+
+            <!-- ======================================================= -->
+            <!-- TAB 2: 🌐 HTTP/HTTPS TRAFFIC & PROCESS INSPECTOR        -->
+            <!-- ======================================================= -->
+            <TabItem Header="🌐 HTTP/HTTPS TRAFFIC &amp; PROCESS INSPECTOR" FontWeight="Bold" FontSize="13">
+                <Grid Margin="4,8,4,4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> <!-- Filter by App Dropdown & Toolbar -->
+                        <RowDefinition Height="Auto"/> <!-- Statistics Summary Cards -->
+                        <RowDefinition Height="Auto"/> <!-- Quick Status Filter Chips -->
+                        <RowDefinition Height="*"/>    <!-- Compact Requests DataGrid -->
+                    </Grid.RowDefinitions>
+
+                    <!-- 1. Filter by App Selector & Controls -->
+                    <Border Grid.Row="0"
+                            Background="{DynamicResource CardBackgroundBrush}"
+                            BorderBrush="{DynamicResource CardBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource CardCornerRadius}"
+                            Padding="14,12" Margin="0,0,0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="320"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="📱 LỌC THEO APP: " FontWeight="Bold" FontSize="12.5"
+                                       Foreground="{DynamicResource PrimaryAccentBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+
+                            <!-- Real-time Process ComboBox -->
+                            <ComboBox Grid.Column="1" x:Name="CmbProcesses"
+                                      Background="{DynamicResource SubCardBackgroundBrush}"
+                                      Foreground="{DynamicResource TextPrimaryBrush}"
+                                      BorderBrush="{DynamicResource CardBorderBrush}"
+                                      FontSize="12" VerticalAlignment="Center"
+                                      SelectionChanged="CmbProcesses_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{Binding Icon, Mode=OneWay}" Width="16" Height="16" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding DisplayName, Mode=OneWay}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <Button Grid.Column="2" Content="🔄 Quét App"
+                                    Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                    Margin="8,0,0,0" VerticalAlignment="Center" Click="BtnRefreshProcesses_Click"/>
+
+                            <!-- Search Filter -->
+                            <TextBox Grid.Column="3" x:Name="TxtSearchRequest"
+                                     Background="{DynamicResource SubCardBackgroundBrush}"
+                                     Foreground="{DynamicResource TextPrimaryBrush}"
+                                     BorderBrush="{DynamicResource CardBorderBrush}"
+                                     Padding="10,6" FontSize="12" Margin="16,0,12,0"
+                                     ToolTip="Tìm kiếm theo URL, domain hoặc IP..."
+                                     TextChanged="TxtSearchRequest_TextChanged"/>
+
+                            <!-- Action Toolbar -->
+                            <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button x:Name="BtnToggleCapture" Content="⏸ Tạm Dừng"
+                                        Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="BtnToggleCapture_Click"/>
+                                <Button Content="🧹 Xóa Bảng"
+                                        Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                                        Click="BtnClearRequests_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- 2. Detailed Statistics Card (Dynamic Size Auto-Format & Network Speed) -->
+                    <Border Grid.Row="1"
+                            Background="{DynamicResource SubCardBackgroundBrush}"
+                            BorderBrush="{DynamicResource CardBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            Padding="14,10" Margin="0,0,0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="📊 Tổng Requests" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="TxtStatRequests" Text="0 reqs" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="📥 Đã Tải Về (Download)" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="TxtStatDownload" Text="0 B" FontSize="15" FontWeight="Bold" Foreground="#26E07F"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="📤 Đã Tải Lên (Upload)" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="TxtStatUpload" Text="0 B" FontSize="15" FontWeight="Bold" Foreground="#0078D4"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="⚡ Tốc Độ Mạng Hiện Tại" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="TxtStatSpeed" Text="0 B/s" FontSize="15" FontWeight="Bold" Foreground="#FFB900"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- 3. Quick Status Filter Chips (2xx, 3xx, 4xx, 5xx, Active) -->
+                    <Grid Grid.Row="2" Margin="0,0,0,8">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Lọc trạng thái: " Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="11.5"/>
+                            
+                            <!-- All -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab2_All_Click"
+                                    Background="#1A4CC2FF" BorderBrush="#354CC2FF">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#4CC2FF" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Tất cả" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- 2xx -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab2_2xx_Click"
+                                    Background="#1800E676" BorderBrush="#3500E676">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#00E676" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="2xx Success" Foreground="#26E07F" FontWeight="Bold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- 3xx -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab2_3xx_Click"
+                                    Background="#180078D4" BorderBrush="#350078D4">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#0078D4" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="3xx Redirect" Foreground="#4CC2FF" FontWeight="Bold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- 4xx -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab2_4xx_Click"
+                                    Background="#18FF8C00" BorderBrush="#35FF8C00">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#FF8C00" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="4xx Client Err" Foreground="#FFA500" FontWeight="Bold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- 5xx -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Margin="0,0,5,0" Click="FilterTab2_5xx_Click"
+                                    Background="#18FF5252" BorderBrush="#35FF5252">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#FF5252" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="5xx Server Err" Foreground="#FF6E6E" FontWeight="Bold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Active -->
+                            <Button Style="{DynamicResource FilterChipButtonStyle}" Click="FilterTab2_Active_Click"
+                                    Background="#18E040FB" BorderBrush="#35E040FB">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" Fill="#E040FB" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Đang hoạt động" Foreground="#E040FB" FontWeight="Bold" FontSize="11.5"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                        <Border HorizontalAlignment="Right" Background="#154CC2FF" BorderBrush="#254CC2FF" BorderThickness="1" CornerRadius="5" Padding="8,3">
+                            <TextBlock Text="💡 Nhấp đúp vào dòng Request để mở Modal &amp; Copy Response"
+                                       FontSize="11" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- 4. Compact Requests Table (Click to open Detail Modal) -->
+                    <Border Grid.Row="3"
+                            Background="{DynamicResource CardBackgroundBrush}"
+                            BorderBrush="{DynamicResource CardBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource CardCornerRadius}">
+                        <DataGrid x:Name="GridRequests"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="{DynamicResource DataGridGridLineBrush}"
+                                  Background="Transparent"
+                                  RowBackground="{DynamicResource DataGridRowBackgroundBrush}"
+                                  AlternatingRowBackground="{DynamicResource DataGridRowAltBackgroundBrush}"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"
+                                  FontSize="12"
+                                  BorderThickness="0"
+                                  EnableRowVirtualization="True"
+                                  EnableColumnVirtualization="True"
+                                  VirtualizingPanel.IsVirtualizing="True"
+                                  VirtualizingPanel.VirtualizationMode="Recycling"
+                                  VirtualizingPanel.ScrollUnit="Pixel"
+                                  ScrollViewer.CanContentScroll="True"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                  MouseDoubleClick="GridRequests_MouseDoubleClick">
+                            <DataGrid.Columns>
+                                <!-- Time -->
+                                <DataGridTemplateColumn Header="Thời Gian" Width="105">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TimeString, Mode=OneWay}" Foreground="#8A8886" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- App -->
+                                <DataGridTemplateColumn Header="Ứng Dụng" Width="140">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ProcessName, Mode=OneWay}" Foreground="#FFFFFF" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- PID -->
+                                <DataGridTemplateColumn Header="PID" Width="65">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Pid, Mode=OneWay}" Foreground="#4CC2FF" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Method -->
+                                <DataGridTemplateColumn Header="Method" Width="75">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Method, Mode=OneWay}" Foreground="#FFB900" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Host / URL -->
+                                <DataGridTemplateColumn Header="Host / URL (Rút gọn)" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CompactDisplayUrl, Mode=OneWay}" Foreground="#E0E0E0" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Endpoint -->
+                                <DataGridTemplateColumn Header="Remote Endpoint" Width="160">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding RemoteEndpoint, Mode=OneWay}" Foreground="#B0B0B0" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Size -->
+                                <DataGridTemplateColumn Header="Dung Lượng" Width="95">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding FormattedSize, Mode=OneWay}" Foreground="#26E07F" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Status Badge -->
+                                <DataGridTemplateColumn Header="Status" Width="105">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{Binding StatusBadgeColor, Mode=OneWay}" CornerRadius="4" Padding="8,3" HorizontalAlignment="Left">
+                                                <TextBlock Text="{Binding StatusText, Mode=OneWay}" Foreground="#FFFFFF" FontWeight="Bold" FontSize="11"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- BOTTOM STATUS BAR -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource TitleBarBackgroundBrush}"
+                BorderBrush="{DynamicResource CardBorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="12,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="TxtGlobalStatus" Text="Steam Route Fixer v1.0.0 (.NET 10) - Sẵn sàng."
+                           FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+
+                <TextBlock x:Name="TxtBottomTip" Grid.Column="1" Text="💡 Mẹo: Nhấn '1-Click Auto Fix' để tự động ghim IP sạch &amp; sửa lỗi Steam không cần VPN"
+                           FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

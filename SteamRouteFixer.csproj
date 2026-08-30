@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <AssemblyName>SteamRouteFixer</AssemblyName>
+    <RootNamespace>SteamRouteFixer</RootNamespace>
+    
+    <!-- TXA Studio Assembly Metadata -->
+    <Title>Steam Route Fixer</Title>
+    <Product>Steam Route Fixer</Product>
+    <Company>TXA Studio</Company>
+    <Authors>TXA Studio</Authors>
+    <Description>Tool Steam Route Fixer &amp; HTTP/HTTPS Traffic Inspector by TXA</Description>
+    <Copyright>Copyright © 2026 TXA Studio. All rights reserved.</Copyright>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\app.png" />
+    <Resource Include="Assets\app.ico" />
+  </ItemGroup>
+
+</Project>
