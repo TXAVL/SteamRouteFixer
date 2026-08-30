@@ -1,0 +1,96 @@
+<Window x:Class="SteamRouteFixer.Views.CustomMessageModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Thông báo"
+        Height="250" Width="480"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Foreground="{DynamicResource TextPrimaryBrush}"
+        FontFamily="{DynamicResource SegoeFluentFont}">
+
+    <Border Background="{DynamicResource CardBackgroundBrush}"
+            BorderBrush="{DynamicResource CardBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="10"
+            Padding="22"
+            Margin="6">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="4" Opacity="0.65" Color="#000000"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- Title & Icon -->
+                <RowDefinition Height="*"/>    <!-- Message Body -->
+                <RowDefinition Height="Auto"/> <!-- Action Buttons -->
+            </Grid.RowDefinitions>
+
+            <!-- 1. Header with Colored Icon Badge & Title -->
+            <Grid Grid.Row="0" Margin="0,0,0,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Icon Badge -->
+                <Border Grid.Column="0" x:Name="BorderIconBadge" Width="36" Height="36" Background="#1A4CC2FF" CornerRadius="8" Margin="0,0,12,0" VerticalAlignment="Center">
+                    <TextBlock x:Name="TxtIconEmoji" Text="ℹ️" FontFamily="Segoe UI Emoji" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+
+                <!-- Title Text -->
+                <TextBlock Grid.Column="1" x:Name="TxtTitle" Text="Thông báo"
+                           FontWeight="Bold" FontSize="15" Foreground="{DynamicResource PrimaryAccentBrush}"
+                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+
+                <!-- Close 'X' Button -->
+                <Button Grid.Column="2" Content="✕" Width="28" Height="28"
+                        Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                        FontSize="11" Padding="0" Click="BtnClose_Click" VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- 2. Message Body -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,16">
+                <TextBlock x:Name="TxtMessage"
+                           Text="Nội dung thông báo chi tiết..."
+                           TextWrapping="Wrap"
+                           FontSize="12.5"
+                           LineHeight="18"
+                           Foreground="{DynamicResource TextPrimaryBrush}"/>
+            </ScrollViewer>
+
+            <!-- 3. Bottom Action Buttons -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <!-- Yes Button (for Yes/No) -->
+                <Button x:Name="BtnYes" Content="Đồng Ý"
+                        Style="{DynamicResource WinUI3PrimaryButtonStyle}"
+                        FontWeight="SemiBold"
+                        Padding="18,6" Margin="0,0,8,0"
+                        Click="BtnYes_Click"/>
+
+                <!-- No Button (for Yes/No) -->
+                <Button x:Name="BtnNo" Content="Không"
+                        Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                        Padding="18,6" Margin="0,0,8,0"
+                        Click="BtnNo_Click"/>
+
+                <!-- OK Button (for OK only) -->
+                <Button x:Name="BtnOk" Content="OK"
+                        Style="{DynamicResource WinUI3PrimaryButtonStyle}"
+                        FontWeight="SemiBold"
+                        Padding="24,6" Margin="0,0,8,0"
+                        Click="BtnOk_Click"/>
+
+                <!-- Cancel Button -->
+                <Button x:Name="BtnCancel" Content="Hủy"
+                        Style="{DynamicResource WinUI3SecondaryButtonStyle}"
+                        Padding="18,6"
+                        Click="BtnCancel_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
