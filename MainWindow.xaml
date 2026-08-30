@@ -406,16 +406,15 @@
 
                             <!-- Real-time Process ComboBox -->
                             <ComboBox Grid.Column="1" x:Name="CmbProcesses"
-                                      Background="{DynamicResource SubCardBackgroundBrush}"
-                                      Foreground="{DynamicResource TextPrimaryBrush}"
-                                      BorderBrush="{DynamicResource CardBorderBrush}"
                                       FontSize="12" VerticalAlignment="Center"
                                       SelectionChanged="CmbProcesses_SelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{Binding Icon, Mode=OneWay}" Width="16" Height="16" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="{Binding DisplayName, Mode=OneWay}" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding DisplayName, Mode=OneWay}"
+                                                       Foreground="{DynamicResource TextPrimaryBrush}"
+                                                       VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
