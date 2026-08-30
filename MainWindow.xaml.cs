@@ -42,6 +42,9 @@ namespace SteamRouteFixer
         private string _tab1StatusFilter = "All";
         private string _tab2StatusFilter = "All";
 
+        // Blocklist for API / Host endpoints
+        private readonly HashSet<string> _blockedApiHosts = new(StringComparer.OrdinalIgnoreCase);
+
         // Statistics
         private long _totalDownloadedBytes = 0;
         private long _totalUploadedBytes = 0;
@@ -198,6 +201,9 @@ namespace SteamRouteFixer
                 if (ColReqHost != null) ColReqHost.Header = TxaLanguageManager.GetString("t_col_host", "Host / Endpoint URL");
                 if (ColReqSize != null) ColReqSize.Header = TxaLanguageManager.GetString("t_col_size", "Dung Lượng (↓/↑)");
                 if (ColReqLatency != null) ColReqLatency.Header = TxaLanguageManager.GetString("t_col_latency", "Độ Trễ");
+                if (ColReqStatus != null) ColReqStatus.Header = TxaLanguageManager.GetString("t_col_status", "Trạng Thái");
+                if (ColReqBlockAction != null) ColReqBlockAction.Header = TxaLanguageManager.GetString("t_col_block_action", "🛡️ Chặn API / Tắt Bật");
+                if (TxtSearchWatermark != null) TxtSearchWatermark.Text = TxaLanguageManager.GetString("t_search_placeholder", "🔍 Tìm kiếm URL, API, Domain, IP...");
 
                 // Bottom Tip
                 if (TxtBottomTip != null)
@@ -688,6 +694,15 @@ namespace SteamRouteFixer
 
         private void AddCapturedRequest(NetworkRequestItem item)
         {
+            if (!string.IsNullOrEmpty(item.Host) && _blockedApiHosts.Contains(item.Host))
+            {
+                item.IsBlocked = true;
+            }
+            else if (!string.IsNullOrEmpty(item.RemoteIp) && _blockedApiHosts.Contains(item.RemoteIp))
+            {
+                item.IsBlocked = true;
+            }
+
             _allRequests.Insert(0, item);
             if (_allRequests.Count > 300) _allRequests.RemoveAt(_allRequests.Count - 1);
 
@@ -754,7 +769,46 @@ namespace SteamRouteFixer
 
         private void TxtSearchRequest_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (TxtSearchWatermark != null)
+            {
+                TxtSearchWatermark.Visibility = string.IsNullOrEmpty(TxtSearchRequest.Text) ? Visibility.Visible : Visibility.Collapsed;
+            }
             ApplyTab2Filter();
+        }
+
+        private void BtnToggleBlockApi_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement fe && fe.DataContext is NetworkRequestItem req)
+            {
+                string targetHost = !string.IsNullOrEmpty(req.Host) ? req.Host : req.RemoteIp;
+                if (string.IsNullOrEmpty(targetHost)) return;
+
+                bool isCurrentlyBlocked = _blockedApiHosts.Contains(targetHost);
+                bool willBeBlocked = !isCurrentlyBlocked;
+
+                if (willBeBlocked)
+                {
+                    _blockedApiHosts.Add(targetHost);
+                    _httpSniffer.BlockedHosts.Add(targetHost);
+                    TxaLogger.Error($"🛡️ [CHẶN API] Đã KÍCH HOẠT chặn toàn bộ các Request kết nối tới: {targetHost}");
+                }
+                else
+                {
+                    _blockedApiHosts.Remove(targetHost);
+                    _httpSniffer.BlockedHosts.Remove(targetHost);
+                    TxaLogger.Success($"🔓 [BỎ CHẶN] Đã HỦY chặn các Request kết nối tới: {targetHost}");
+                }
+
+                // Update all items in active memory with matching host
+                foreach (var item in _allRequests)
+                {
+                    if (string.Equals(item.Host, targetHost, StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(item.RemoteIp, targetHost, StringComparison.OrdinalIgnoreCase))
+                    {
+                        item.IsBlocked = willBeBlocked;
+                    }
+                }
+            }
         }
 
         private void FilterTab2_All_Click(object sender, RoutedEventArgs e) { _tab2StatusFilter = "All"; ApplyTab2Filter(); }

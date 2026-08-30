@@ -237,6 +237,39 @@ namespace SteamRouteFixer.Models
             set { _requestBody = value; OnPropertyChanged(); }
         }
 
+        private bool _isBlocked = false;
+
+        public bool IsBlocked
+        {
+            get => _isBlocked;
+            set
+            {
+                _isBlocked = value;
+                if (_isBlocked)
+                {
+                    _statusCode = 403;
+                    _statusText = "403 BLOCKED";
+                    _statusBadgeColor = "#E81123";
+                    _statusCategory = HttpStatusCategory.ClientError4xx;
+                }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(StatusText));
+                OnPropertyChanged(nameof(StatusBadgeColor));
+                OnPropertyChanged(nameof(StatusCategory));
+                OnPropertyChanged(nameof(BlockActionBtnContent));
+                OnPropertyChanged(nameof(BlockActionBtnBg));
+                OnPropertyChanged(nameof(BlockActionBtnBorder));
+                OnPropertyChanged(nameof(BlockActionBtnFg));
+                OnPropertyChanged(nameof(BlockStatusBadgeText));
+            }
+        }
+
+        public string BlockActionBtnContent => _isBlocked ? "🚫 BỎ CHẶN" : "🛡️ CHẶN API";
+        public string BlockActionBtnBg => _isBlocked ? "#30FF5252" : "#1A4CC2FF";
+        public string BlockActionBtnBorder => _isBlocked ? "#FFFF5252" : "#354CC2FF";
+        public string BlockActionBtnFg => _isBlocked ? "#FF6E6E" : "#4CC2FF";
+        public string BlockStatusBadgeText => _isBlocked ? "🛡️ Đang chặn" : "✅ Cho phép";
+
         public string ResponseHeaders
         {
             get => _responseHeaders;

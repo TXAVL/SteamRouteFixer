@@ -61,6 +61,8 @@ namespace SteamRouteFixer.Services.TrafficMonitor
             }
         }
 
+        public HashSet<string> BlockedHosts { get; } = new(StringComparer.OrdinalIgnoreCase);
+
         private async Task ProcessContextAsync(HttpListenerContext context)
         {
             var req = context.Request;
@@ -70,6 +72,8 @@ namespace SteamRouteFixer.Services.TrafficMonitor
             string url = req.Url?.ToString() ?? "http://localhost/";
             string host = req.Url?.Host ?? "localhost";
             string path = req.Url?.PathAndQuery ?? "/";
+
+            bool isBlocked = BlockedHosts.Contains(host) || BlockedHosts.Contains(req.Url?.Authority ?? "");
 
             // Read Request Body
             string reqBody = "";
@@ -93,16 +97,27 @@ namespace SteamRouteFixer.Services.TrafficMonitor
                 }
             }
 
-            // Mock Proxy Forward or Handle local request
-            string respContent = "{\"status\":\"ok\",\"proxy\":\"SteamRouteFixer-Sniffer\",\"timestamp\":\"" + DateTime.UtcNow.ToString("o") + "\"}";
+            string respContent;
+            int statusCode;
+            if (isBlocked)
+            {
+                statusCode = 403;
+                respContent = "{\"error\":\"Forbidden\",\"message\":\"Blocked by SteamRouteFixer Traffic Inspector\",\"timestamp\":\"" + DateTime.UtcNow.ToString("o") + "\"}";
+            }
+            else
+            {
+                statusCode = 200;
+                respContent = "{\"status\":\"ok\",\"proxy\":\"SteamRouteFixer-Sniffer\",\"timestamp\":\"" + DateTime.UtcNow.ToString("o") + "\"}";
+            }
+
             byte[] respBuffer = Encoding.UTF8.GetBytes(respContent);
 
-            resp.StatusCode = 200;
+            resp.StatusCode = statusCode;
             resp.ContentType = "application/json; charset=utf-8";
             resp.ContentLength64 = respBuffer.Length;
 
             var sbRespHeaders = new StringBuilder();
-            sbRespHeaders.AppendLine("HTTP/1.1 200 OK");
+            sbRespHeaders.AppendLine($"HTTP/1.1 {statusCode} {(statusCode == 403 ? "Forbidden" : "OK")}");
             sbRespHeaders.AppendLine("Content-Type: application/json; charset=utf-8");
             sbRespHeaders.AppendLine($"Content-Length: {respBuffer.Length}");
             sbRespHeaders.AppendLine("Server: SteamRouteFixer-Sniffer/1.0");
@@ -118,21 +133,22 @@ namespace SteamRouteFixer.Services.TrafficMonitor
                 ProcessName = "LocalProxy.exe",
                 Protocol = "HTTP/1.1",
                 Method = method,
+                Url = url,
                 Host = host,
                 Path = path,
-                Url = url,
                 RemoteIp = "127.0.0.1",
-                RemotePort = req.Url?.Port ?? 80,
-                StatusCode = 200,
+                RemotePort = 8888,
+                StatusCode = statusCode,
                 RequestBytes = reqBytes,
                 ResponseBytes = respBuffer.Length,
                 FormattedSize = FormatHelper.FormatBytes(respBuffer.Length),
                 DurationMs = 5,
-                ContentType = "application/json",
                 RequestHeaders = sbReqHeaders.ToString(),
                 RequestBody = reqBody,
                 ResponseHeaders = sbRespHeaders.ToString(),
-                ResponseBody = respContent
+                ResponseBody = respContent,
+                ContentType = "application/json",
+                IsBlocked = isBlocked
             };
 
             OnRequestCaptured?.Invoke(item);

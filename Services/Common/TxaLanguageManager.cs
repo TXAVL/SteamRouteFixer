@@ -353,6 +353,8 @@ namespace SteamRouteFixer.Services.Common
                     { "t_col_proto", "Giao Thức" },
                     { "t_col_host", "Host / Endpoint URL" },
                     { "t_col_size", "Dung Lượng (↓/↑)" },
+                    { "t_col_block_action", "🛡️ Chặn API / Tắt Bật" },
+                    { "t_search_placeholder", "🔍 Tìm kiếm URL, API, Domain, IP..." },
 
                     // Bottom Tips
                     { "t_tip_tab1", "💡 Mẹo: Nhấn '1-Click Auto Fix' để tự động ghim IP sạch & sửa lỗi Steam không cần VPN" },
@@ -528,6 +530,8 @@ namespace SteamRouteFixer.Services.Common
                     { "t_col_proto", "Protocol" },
                     { "t_col_host", "Host / Endpoint URL" },
                     { "t_col_size", "Size (↓/↑)" },
+                    { "t_col_block_action", "🛡️ Block API / Toggle" },
+                    { "t_search_placeholder", "🔍 Search URL, API, Domain, IP..." },
 
                     // Bottom Tips
                     { "t_tip_tab1", "💡 Tip: Click '1-Click Auto Fix' to automatically pin clean IPs and fix Steam issues without a VPN" },
