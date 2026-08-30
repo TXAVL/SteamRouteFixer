@@ -558,6 +558,7 @@
                                   AutoGenerateColumns="False"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
+                                  CanUserSortColumns="True"
                                   IsReadOnly="True"
                                   HeadersVisibility="Column"
                                   GridLinesVisibility="Horizontal"
@@ -579,7 +580,7 @@
                                   MouseDoubleClick="GridRequests_MouseDoubleClick">
                             <DataGrid.Columns>
                                 <!-- ID -->
-                                <DataGridTemplateColumn Header="#" Width="45">
+                                <DataGridTemplateColumn x:Name="ColReqId" Header="#" Width="50" SortMemberPath="Id">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Id, Mode=OneWay}" Foreground="#8A8886" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -588,7 +589,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Time -->
-                                <DataGridTemplateColumn Header="Thời Gian" Width="95">
+                                <DataGridTemplateColumn x:Name="ColReqTime" Header="Thời Gian" Width="100" SortMemberPath="Timestamp">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding TimeString, Mode=OneWay}" Foreground="#9E9E9E" FontSize="11.5" VerticalAlignment="Center"/>
@@ -597,7 +598,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- App (Icon + Name + PID Pill) -->
-                                <DataGridTemplateColumn Header="Ứng Dụng" Width="180">
+                                <DataGridTemplateColumn x:Name="ColReqApp" Header="Ứng Dụng" Width="180" SortMemberPath="ProcessName">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -612,7 +613,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Method (Color Badge) -->
-                                <DataGridTemplateColumn Header="Method" Width="80">
+                                <DataGridTemplateColumn x:Name="ColReqMethod" Header="Method" Width="85" SortMemberPath="Method">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Border Background="{Binding MethodBadgeBg, Mode=OneWay}" CornerRadius="4" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -623,7 +624,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Protocol -->
-                                <DataGridTemplateColumn Header="Giao Thức" Width="75">
+                                <DataGridTemplateColumn x:Name="ColReqProto" Header="Giao Thức" Width="80" SortMemberPath="Protocol">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Protocol, Mode=OneWay}" Foreground="#CCCCCC" FontSize="11.5" VerticalAlignment="Center"/>
@@ -632,7 +633,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Host / URL (With Path breakdown) -->
-                                <DataGridTemplateColumn Header="Host / Endpoint URL" Width="*">
+                                <DataGridTemplateColumn x:Name="ColReqHost" Header="Host / Endpoint URL" Width="*" SortMemberPath="Host">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center">
@@ -644,7 +645,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Remote Endpoint -->
-                                <DataGridTemplateColumn Header="Remote Socket" Width="150">
+                                <DataGridTemplateColumn x:Name="ColReqSocket" Header="Remote Socket" Width="150" SortMemberPath="RemoteEndpoint">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding RemoteEndpoint, Mode=OneWay}" Foreground="#C8C8C8" FontFamily="{DynamicResource ConsolasFont}" FontSize="11.5" VerticalAlignment="Center"/>
@@ -653,7 +654,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Size (Down / Up) -->
-                                <DataGridTemplateColumn Header="Dung Lượng (↓/↑)" Width="130">
+                                <DataGridTemplateColumn x:Name="ColReqSize" Header="Dung Lượng (↓/↑)" Width="135" SortMemberPath="ResponseBytes">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding TrafficSizeBreakdown, Mode=OneWay}" Foreground="#26E07F" FontWeight="SemiBold" FontSize="11.5" VerticalAlignment="Center"/>
@@ -662,7 +663,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Latency -->
-                                <DataGridTemplateColumn Header="Độ Trễ" Width="70">
+                                <DataGridTemplateColumn x:Name="ColReqLatency" Header="Độ Trễ" Width="75" SortMemberPath="DurationMs">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding DurationDisplay, Mode=OneWay}" Foreground="#FFD54F" FontSize="11.5" VerticalAlignment="Center"/>
@@ -671,7 +672,7 @@
                                 </DataGridTemplateColumn>
 
                                 <!-- Status Badge -->
-                                <DataGridTemplateColumn Header="Status" Width="105">
+                                <DataGridTemplateColumn x:Name="ColReqStatus" Header="Status" Width="110" SortMemberPath="StatusCode">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Border Background="{Binding StatusBadgeColor, Mode=OneWay}" CornerRadius="4" Padding="8,3" HorizontalAlignment="Left" VerticalAlignment="Center">

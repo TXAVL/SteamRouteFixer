@@ -97,6 +97,16 @@ namespace SteamRouteFixer
                 if (TxtFilterAppLabel != null) TxtFilterAppLabel.Text = TxaLanguageManager.GetString("t_filter_app", "📱 LỌC THEO APP: ");
                 if (BtnRefreshProcesses != null) BtnRefreshProcesses.Content = TxaLanguageManager.GetString("t_btn_scan_app", "🔄 Quét App");
                 if (BtnClearRequests != null) BtnClearRequests.Content = TxaLanguageManager.GetString("t_btn_clear_table", "🧹 Xóa Bảng");
+
+                // Translate Tab 2 Grid Columns
+                if (ColReqTime != null) ColReqTime.Header = TxaLanguageManager.GetString("t_col_time", "Thời Gian");
+                if (ColReqApp != null) ColReqApp.Header = TxaLanguageManager.GetString("t_col_app", "Ứng Dụng");
+                if (ColReqProto != null) ColReqProto.Header = TxaLanguageManager.GetString("t_col_proto", "Giao Thức");
+                if (ColReqHost != null) ColReqHost.Header = TxaLanguageManager.GetString("t_col_host", "Host / Endpoint URL");
+                if (ColReqSize != null) ColReqSize.Header = TxaLanguageManager.GetString("t_col_size", "Dung Lượng (↓/↑)");
+                if (ColReqLatency != null) ColReqLatency.Header = TxaLanguageManager.GetString("t_col_latency", "Độ Trễ");
+
+                RefreshSteamSentinel();
             });
         }
 

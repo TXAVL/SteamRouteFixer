@@ -430,4 +430,59 @@
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
+    <!-- VSCode Studio DataGridColumnHeader with Sort Indicators (▲ / ▼ / ⇅) -->
+    <Style TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="#252526"/>
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridColumnHeader">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Grid.Column="0"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"/>
+                            <TextBlock x:Name="SortArrow" Grid.Column="1"
+                                       Text=" ⇅"
+                                       FontSize="11"
+                                       Foreground="#60007ACC"
+                                       Margin="5,0,0,0"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#2D2D30"/>
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="SortArrow" Property="Text" Value=" ▲"/>
+                            <Setter TargetName="SortArrow" Property="Foreground" Value="{StaticResource PrimaryAccentBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="SortArrow" Property="Text" Value=" ▼"/>
+                            <Setter TargetName="SortArrow" Property="Foreground" Value="{StaticResource PrimaryAccentBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryAccentBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
