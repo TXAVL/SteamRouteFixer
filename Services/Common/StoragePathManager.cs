@@ -16,7 +16,8 @@ namespace SteamRouteFixer.Services.Common
         public static string BackupsDirectory => Path.Combine(RootAppData, "backups");
         public static string SetupDirectory => Path.Combine(RootAppData, "setup");
         public static string DownloadsDirectory => Path.Combine(RootAppData, "downloads");
-        public static string ConfigFilePath => Path.Combine(RootAppData, "config.json");
+        public static string ConfigFilePath => Path.Combine(RootAppData, "txaconfig.json");
+        public static string LegacyConfigFilePath => Path.Combine(RootAppData, "config.json");
 
         public static void EnsureDirectories()
         {
@@ -36,9 +37,10 @@ namespace SteamRouteFixer.Services.Common
             EnsureDirectories();
             try
             {
-                if (File.Exists(ConfigFilePath))
+                string targetPath = File.Exists(ConfigFilePath) ? ConfigFilePath : LegacyConfigFilePath;
+                if (File.Exists(targetPath))
                 {
-                    string json = File.ReadAllText(ConfigFilePath);
+                    string json = File.ReadAllText(targetPath);
                     var cfg = JsonSerializer.Deserialize<AppConfig>(json);
                     if (cfg != null) return cfg;
                 }

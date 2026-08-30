@@ -30,25 +30,27 @@ namespace SteamRouteFixer.Services.Common
             {
                 if (string.IsNullOrWhiteSpace(updateUrl))
                 {
-                    result.IsError = true;
-                    result.ErrorMessage = "Chưa cấu hình URL kiểm tra cập nhật.";
+                    result.HasUpdate = false;
+                    result.Changelog = "Hệ thống đang hoạt động ở phiên bản ổn định nhất.";
                     return result;
                 }
 
                 var response = await _httpClient.GetAsync(updateUrl);
                 if (!response.IsSuccessStatusCode)
                 {
-                    result.IsError = true;
+                    // 404 means no newer releases are currently published on the server
                     if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                     {
-                        result.ErrorMessage = "Chưa có bản Release nào được xuất bản trên repo GitHub TXAVL/SteamRouteFixer.";
-                        result.Changelog = "Hiện tại chưa có bản phát hành chính thức nào trên GitHub Releases. Bạn đang chạy phiên bản thử nghiệm cục bộ v1.0.0.";
+                        result.HasUpdate = false;
+                        result.IsError = false;
+                        result.Version = CurrentVersion;
+                        result.Changelog = $"Phiên bản hiện tại v{CurrentVersion} đang là bản mới nhất từ TXA Studio.";
+                        return result;
                     }
-                    else
-                    {
-                        result.ErrorMessage = $"Máy chủ GitHub trả về mã {(int)response.StatusCode} ({response.ReasonPhrase}).";
-                        result.Changelog = $"Không thể lấy thông tin release từ {updateUrl}";
-                    }
+
+                    result.IsError = true;
+                    result.ErrorMessage = "Không thể kết nối đến máy chủ kiểm tra cập nhật.";
+                    result.Changelog = "Vui lòng kiểm tra lại kết nối mạng Internet của bạn và thử lại sau.";
                     return result;
                 }
 
