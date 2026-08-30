@@ -33,11 +33,51 @@
     <SolidColorBrush x:Key="DataGridRowAltBackgroundBrush" Color="#252525"/>
     <SolidColorBrush x:Key="DataGridGridLineBrush" Color="#333333"/>
     <SolidColorBrush x:Key="LogConsoleBackgroundBrush" Color="#101010"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="#202020"/>
+    <SolidColorBrush x:Key="InputBorderBrush" Color="#383838"/>
 
     <FontFamily x:Key="SegoeFluentFont">Segoe UI Variable Text, Segoe UI, sans-serif</FontFamily>
     <FontFamily x:Key="ConsolasFont">Cascadia Code, Consolas, monospace</FontFamily>
     <CornerRadius x:Key="ControlCornerRadius">6</CornerRadius>
     <CornerRadius x:Key="CardCornerRadius">8</CornerRadius>
+
+    <!-- TextBox WinUI 3 Dark Style -->
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource SubCardBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+        <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+        <Setter Property="Padding" Value="8,5"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!-- ======================================================== -->
     <!-- WINUI 3 MENU, MENUITEM & POPUP STYLES (DARK & CRISP)     -->

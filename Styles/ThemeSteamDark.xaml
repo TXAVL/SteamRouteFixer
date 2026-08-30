@@ -25,11 +25,51 @@
     <SolidColorBrush x:Key="DataGridRowAltBackgroundBrush" Color="#141E28"/>
     <SolidColorBrush x:Key="DataGridGridLineBrush" Color="#2A475E"/>
     <SolidColorBrush x:Key="LogConsoleBackgroundBrush" Color="#0B0E13"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="#141E28"/>
+    <SolidColorBrush x:Key="InputBorderBrush" Color="#2A475E"/>
 
     <FontFamily x:Key="SegoeFluentFont">Segoe UI, sans-serif</FontFamily>
     <FontFamily x:Key="ConsolasFont">Consolas, Cascadia Code, monospace</FontFamily>
     <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
     <CornerRadius x:Key="CardCornerRadius">6</CornerRadius>
+
+    <!-- TextBox Steam Dark Style -->
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource SubCardBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+        <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+        <Setter Property="Padding" Value="8,5"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!-- Steam Menu & Dropdown Popup Styles -->
     <Style TargetType="Menu">

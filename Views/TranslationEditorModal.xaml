@@ -58,9 +58,10 @@
                         <TextBlock x:Name="TxtAuthorLabel" Text="✍️ TÊN / NICKNAME TÁC GIẢ BẢN DỊCH:" FontWeight="SemiBold" FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,0,0,6"/>
                         <TextBox x:Name="TxtAuthor"
                                  Padding="10,6" FontSize="12"
-                                 Background="{DynamicResource InputBackgroundBrush}"
+                                 Background="{DynamicResource SubCardBackgroundBrush}"
                                  Foreground="{DynamicResource TextPrimaryBrush}"
-                                 BorderBrush="{DynamicResource InputBorderBrush}"
+                                 BorderBrush="{DynamicResource CardBorderBrush}"
+                                 CaretBrush="{DynamicResource PrimaryAccentBrush}"
                                  TextChanged="TxtAuthor_TextChanged"/>
                     </StackPanel>
                 </Grid>
@@ -112,10 +113,11 @@
                                             <!-- Right: Target Translation TextBox -->
                                             <TextBox Grid.Column="1"
                                                      Text="{Binding TranslatedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     Padding="8,5" FontSize="12"
-                                                     Background="{DynamicResource InputBackgroundBrush}"
+                                                     Padding="10,6" FontSize="12"
+                                                     Background="{DynamicResource SubCardBackgroundBrush}"
                                                      Foreground="{DynamicResource TextPrimaryBrush}"
-                                                     BorderBrush="{DynamicResource InputBorderBrush}"
+                                                     BorderBrush="{DynamicResource CardBorderBrush}"
+                                                     CaretBrush="{DynamicResource PrimaryAccentBrush}"
                                                      VerticalAlignment="Center"
                                                      TextChanged="TranslationTextBox_TextChanged"/>
                                         </Grid>
