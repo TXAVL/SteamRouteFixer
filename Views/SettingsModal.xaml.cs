@@ -12,6 +12,8 @@ namespace SteamRouteFixer.Views
     {
         private readonly AppConfig _config;
 
+        private bool _isUpdatingLanguageDropdown = false;
+
         public SettingsModal()
         {
             InitializeComponent();
@@ -29,6 +31,9 @@ namespace SteamRouteFixer.Views
 
             if (TxtThemeHeader != null) TxtThemeHeader.Text = TxaLanguageManager.GetString("t_theme_header", "🎨 CHỦ ĐỀ GIAO DIỆN (THEME)");
             if (TxtThemeDesc != null) TxtThemeDesc.Text = TxaLanguageManager.GetString("t_theme_desc", "Tùy biến phong cách hiển thị WinUI 3 Fluent, Steam Dark Gaming hoặc VS Code Studio Dark:");
+            if (RbThemeWinUI3 != null) RbThemeWinUI3.Content = TxaLanguageManager.GetString("t_theme_winui3", "WinUI 3 (Windows 11 Fluent Mica)");
+            if (RbThemeSteam != null) RbThemeSteam.Content = TxaLanguageManager.GetString("t_theme_steam", "Steam Dark (Cyberpunk Glow)");
+            if (RbThemeVSCode != null) RbThemeVSCode.Content = TxaLanguageManager.GetString("t_theme_vscode", "VS Code Studio Dark");
 
             if (TxtLangHeader != null) TxtLangHeader.Text = TxaLanguageManager.GetString("t_lang_header", "🌐 NGÔN NGỮ ỨNG DỤNG (TXA LANGUAGE)");
             if (TxtLangDesc != null) TxtLangDesc.Text = TxaLanguageManager.GetString("t_lang_desc", "Quét tự động các gói ngôn ngữ (.txal) trong %LocalAppData%\\SteamRouteFixer\\languages\\:");
@@ -63,29 +68,39 @@ namespace SteamRouteFixer.Views
 
         private void LoadLanguagesList()
         {
-            TxaLanguageManager.ScanAvailableLanguages();
-            CmbLanguage.Items.Clear();
-
-            int selectedIndex = 0;
-            for (int i = 0; i < TxaLanguageManager.AvailableLanguages.Count; i++)
+            _isUpdatingLanguageDropdown = true;
+            try
             {
-                var lang = TxaLanguageManager.AvailableLanguages[i];
-                CmbLanguage.Items.Add($"{lang.lang_name} ({lang.lang_code})");
+                TxaLanguageManager.ScanAvailableLanguages();
+                CmbLanguage.Items.Clear();
 
-                if (lang.lang_code.Equals(_config.LanguageCode, StringComparison.OrdinalIgnoreCase))
+                int selectedIndex = 0;
+                for (int i = 0; i < TxaLanguageManager.AvailableLanguages.Count; i++)
                 {
-                    selectedIndex = i;
+                    var lang = TxaLanguageManager.AvailableLanguages[i];
+                    CmbLanguage.Items.Add($"{lang.lang_name} ({lang.lang_code})");
+
+                    if (lang.lang_code.Equals(TxaLanguageManager.CurrentLanguage.lang_code, StringComparison.OrdinalIgnoreCase))
+                    {
+                        selectedIndex = i;
+                    }
+                }
+
+                if (CmbLanguage.Items.Count > 0)
+                {
+                    CmbLanguage.SelectedIndex = selectedIndex;
                 }
             }
-
-            if (CmbLanguage.Items.Count > 0)
+            finally
             {
-                CmbLanguage.SelectedIndex = selectedIndex;
+                _isUpdatingLanguageDropdown = false;
             }
         }
 
         private void CmbLanguage_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            if (_isUpdatingLanguageDropdown) return;
+
             if (CmbLanguage.SelectedIndex >= 0 && CmbLanguage.SelectedIndex < TxaLanguageManager.AvailableLanguages.Count)
             {
                 var selected = TxaLanguageManager.AvailableLanguages[CmbLanguage.SelectedIndex];
@@ -182,23 +197,32 @@ namespace SteamRouteFixer.Views
             if (LstBackups.SelectedItem is string selectedFile)
             {
                 string fullPath = Path.Combine(StoragePathManager.BackupsDirectory, selectedFile);
-                if (TxaMessageBox.Show(this, $"Bạn có chắc chắn muốn khôi phục file hosts từ bản sao lưu:\n{selectedFile}?", "Xác nhận khôi phục", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                string confirmFmt = TxaLanguageManager.GetString("t_backup_confirm_restore_fmt", "Bạn có chắc chắn muốn khôi phục file hosts từ bản sao lưu:\n{0}?");
+                string confirmTitle = TxaLanguageManager.GetString("t_backup_restore_title", "Xác nhận khôi phục");
+
+                if (TxaMessageBox.Show(this, string.Format(confirmFmt, selectedFile), confirmTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     if (HostsManager.RestoreBackup(fullPath))
                     {
                         DnsFlusher.FlushDnsCache();
-                        TxaMessageBox.Show(this, "Khôi phục file hosts thành công và đã Flush DNS!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                        string succMsg = TxaLanguageManager.GetString("t_backup_restore_success", "Khôi phục file hosts thành công và đã Flush DNS!");
+                        string succTitle = TxaLanguageManager.GetString("t_dialog_success", "Thành công");
+                        TxaMessageBox.Show(this, succMsg, succTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         RefreshBackupsList();
                     }
                     else
                     {
-                        TxaMessageBox.Show(this, "Không thể khôi phục file hosts. Vui lòng chạy phần mềm với quyền Administrator.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        string errMsg = TxaLanguageManager.GetString("t_backup_restore_error", "Không thể khôi phục file hosts. Vui lòng chạy phần mềm với quyền Administrator.");
+                        string errTitle = TxaLanguageManager.GetString("t_dialog_error", "Lỗi");
+                        TxaMessageBox.Show(this, errMsg, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             else
             {
-                TxaMessageBox.Show(this, "Vui lòng chọn 1 bản sao lưu trong danh sách!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                string warnMsg = TxaLanguageManager.GetString("t_backup_select_warning", "Vui lòng chọn 1 bản sao lưu trong danh sách!");
+                string warnTitle = TxaLanguageManager.GetString("t_dialog_notice", "Thông báo");
+                TxaMessageBox.Show(this, warnMsg, warnTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

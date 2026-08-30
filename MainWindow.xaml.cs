@@ -122,7 +122,6 @@ namespace SteamRouteFixer
                 if (MenuClearLog != null) MenuClearLog.Header = TxaLanguageManager.GetString("t_menu_clear_log", "🧹 Xóa sạch Console Log");
                 if (MenuRefreshAll != null) MenuRefreshAll.Header = TxaLanguageManager.GetString("t_menu_refresh", "🔄 Làm mới dữ liệu");
 
-                if (MenuTheme != null) MenuTheme.Header = TxaLanguageManager.GetString("t_menu_theme", "_Theme");
                 if (MenuTools != null) MenuTools.Header = TxaLanguageManager.GetString("t_menu_tools", "_Tools");
                 if (MenuAutoFix != null) MenuAutoFix.Header = TxaLanguageManager.GetString("t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam");
                 if (MenuDiagnose != null) MenuDiagnose.Header = TxaLanguageManager.GetString("t_menu_diagnose", "🔍 Chẩn đoán kết nối ngay");
@@ -961,27 +960,6 @@ namespace SteamRouteFixer
             RefreshProcessesList();
             InitSteamPresets();
             TxaLogger.Info("Đã làm mới toàn bộ dữ liệu.");
-        }
-
-        private void MenuThemeWinUI3_Click(object sender, RoutedEventArgs e)
-        {
-            _config.Theme = "WinUI3";
-            StoragePathManager.SaveConfig(_config);
-            ThemeManager.ApplyTheme("WinUI3", this);
-        }
-
-        private void MenuThemeSteamDark_Click(object sender, RoutedEventArgs e)
-        {
-            _config.Theme = "SteamDark";
-            StoragePathManager.SaveConfig(_config);
-            ThemeManager.ApplyTheme("SteamDark", this);
-        }
-
-        private void MenuThemeVSCode_Click(object sender, RoutedEventArgs e)
-        {
-            _config.Theme = "VSCode";
-            StoragePathManager.SaveConfig(_config);
-            ThemeManager.ApplyTheme("VSCode", this);
         }
 
         private void MenuSettings_Click(object sender, RoutedEventArgs e)

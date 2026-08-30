@@ -289,7 +289,6 @@ namespace SteamRouteFixer.Services.Common
                     { "t_menu_copy_logs", "📋 Copy toàn bộ Console Logs" },
                     { "t_menu_clear_log", "🧹 Xóa sạch Console Log" },
                     { "t_menu_refresh", "🔄 Làm mới dữ liệu" },
-                    { "t_menu_theme", "_Theme" },
                     { "t_menu_tools", "_Tools" },
                     { "t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam" },
                     { "t_menu_diagnose", "🔍 Chẩn đoán kết nối ngay" },
@@ -300,6 +299,16 @@ namespace SteamRouteFixer.Services.Common
                     { "t_menu_help", "_Help" },
                     { "t_menu_check_update", "🔄 Kiểm tra cập nhật (Check Update...)" },
                     { "t_menu_about", "ℹ️ Giới thiệu (About SteamRouteFixer...)" },
+
+                    // Settings Modal Additional Keys
+                    { "t_theme_winui3", "WinUI 3 (Windows 11 Fluent Mica)" },
+                    { "t_theme_steam", "Steam Dark (Cyberpunk Glow)" },
+                    { "t_theme_vscode", "VS Code Studio Dark" },
+                    { "t_backup_confirm_restore_fmt", "Bạn có chắc chắn muốn khôi phục file hosts từ bản sao lưu:\n{0}?" },
+                    { "t_backup_restore_title", "Xác nhận khôi phục" },
+                    { "t_backup_restore_success", "Khôi phục file hosts thành công và đã Flush DNS!" },
+                    { "t_backup_restore_error", "Không thể khôi phục file hosts. Vui lòng chạy phần mềm với quyền Administrator." },
+                    { "t_backup_select_warning", "Vui lòng chọn 1 bản sao lưu trong danh sách!" },
 
                     // Tab 1 Steam Sentinel & Warnings
                     { "t_sentinel_title", "BẢO VỆ STEAM SENTINEL: " },
@@ -477,7 +486,6 @@ namespace SteamRouteFixer.Services.Common
                     { "t_menu_copy_logs", "📋 Copy Console Logs" },
                     { "t_menu_clear_log", "🧹 Clear Console Log" },
                     { "t_menu_refresh", "🔄 Refresh Data" },
-                    { "t_menu_theme", "_Theme" },
                     { "t_menu_tools", "_Tools" },
                     { "t_menu_auto_fix", "⚡ 1-Click Auto Fix Steam" },
                     { "t_menu_diagnose", "🔍 Diagnose Connections Now" },
@@ -488,6 +496,16 @@ namespace SteamRouteFixer.Services.Common
                     { "t_menu_help", "_Help" },
                     { "t_menu_check_update", "🔄 Check for Updates..." },
                     { "t_menu_about", "ℹ️ About SteamRouteFixer..." },
+
+                    // Settings Modal Additional Keys
+                    { "t_theme_winui3", "WinUI 3 (Windows 11 Fluent Mica)" },
+                    { "t_theme_steam", "Steam Dark (Cyberpunk Glow)" },
+                    { "t_theme_vscode", "VS Code Studio Dark" },
+                    { "t_backup_confirm_restore_fmt", "Are you sure you want to restore the hosts file from backup:\n{0}?" },
+                    { "t_backup_restore_title", "Confirm Restore" },
+                    { "t_backup_restore_success", "Hosts file restored successfully and DNS flushed!" },
+                    { "t_backup_restore_error", "Cannot restore hosts file. Please run with Administrator privileges." },
+                    { "t_backup_select_warning", "Please select a backup from the list!" },
 
                     // Tab 1 Steam Sentinel & Warnings
                     { "t_sentinel_title", "STEAM SENTINEL PROTECTION: " },
