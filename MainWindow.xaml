@@ -748,8 +748,8 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="TxtGlobalStatus" Text="Steam Route Fixer v1.1.0 (.NET 10) - Sẵn sàng."
-                           FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                <TextBlock x:Name="TxtGlobalStatus" Text="Steam Route Fixer v1.2.0 (.NET 10) - Sẵn sàng."
+                           FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
 
                 <TextBlock x:Name="TxtBottomTip" Grid.Column="1" Text="💡 Mẹo: Nhấn '1-Click Auto Fix' để tự động ghim IP sạch &amp; sửa lỗi Steam không cần VPN"
                            FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}"/>

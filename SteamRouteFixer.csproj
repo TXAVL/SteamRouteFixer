@@ -18,9 +18,9 @@
     <Authors>TXA Studio</Authors>
     <Description>Tool Steam Route Fixer &amp; HTTP/HTTPS Traffic Inspector by TXA</Description>
     <Copyright>Copyright © 2026 TXA Studio. All rights reserved.</Copyright>
-    <Version>1.1.0</Version>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.2.0</Version>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

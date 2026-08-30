@@ -38,7 +38,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0">
-                            <TextBlock x:Name="TxtCurrentVersion" Text="Phiên bản hiện tại: v1.1.0" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            <TextBlock x:Name="TxtCurrentVersion" Text="Phiên bản hiện tại: v1.2.0" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
                             <TextBlock x:Name="TxtUpdateStatus" Text="Nhấn 'Kiểm Tra Ngay' để kết nối tới GitHub Releases."
                                        FontSize="11.5" Foreground="{DynamicResource PrimaryAccentBrush}" Margin="0,3,0,0" TextWrapping="Wrap"/>
                         </StackPanel>

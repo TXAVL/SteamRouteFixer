@@ -244,7 +244,7 @@ namespace SteamRouteFixer.Services.TrafficMonitor
             }
             else if (host.Contains("github"))
             {
-                body = "{\r\n  \"url\": \"https://api.github.com/repos/TXAVL/SteamRouteFixer/releases/latest\",\r\n  \"tag_name\": \"v1.1.0\",\r\n  \"name\": \"Steam Route Fixer v1.1.0\",\r\n  \"author\": \"TXA Studio\",\r\n  \"status\": \"published\",\r\n  \"rate_limit_remaining\": 59\r\n}";
+                body = "{\r\n  \"url\": \"https://api.github.com/repos/TXAVL/SteamRouteFixer/releases/latest\",\r\n  \"tag_name\": \"v1.2.0\",\r\n  \"name\": \"Steam Route Fixer v1.2.0\",\r\n  \"author\": \"TXA Studio\",\r\n  \"status\": \"published\",\r\n  \"rate_limit_remaining\": 59\r\n}";
             }
             else if (host.Contains("google") || host.Contains("gemini"))
             {

@@ -3,7 +3,7 @@
 ; Created by TXA Studio
 
 #define MyAppName "Steam Route Fixer"
-#define MyAppVersion "1.1.0"
+#define MyAppVersion "1.2.0"
 #define MyAppPublisher "TXA Studio"
 #define MyAppURL "https://github.com/TXAVL/SteamRouteFixer"
 #define MyAppExeName "SteamRouteFixer.exe"

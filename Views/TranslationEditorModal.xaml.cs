@@ -209,10 +209,19 @@ namespace SteamRouteFixer.Views
                 SaveDraftToDisk();
             };
 
-            TxtAuthor.Text = Environment.UserName;
-            EnsureDraftsDirectory();
-            LoadAvailableCultures();
-            LoadEnglishSourceTemplate();
+            _isLoadingData = true;
+            try
+            {
+                TxtAuthor.Text = Environment.UserName;
+                EnsureDraftsDirectory();
+                LoadEnglishSourceTemplate();
+                LoadAvailableCultures();
+            }
+            finally
+            {
+                _isLoadingData = false;
+                UpdateProgress();
+            }
         }
 
         private void ApplyLanguageTranslations()
@@ -255,14 +264,14 @@ namespace SteamRouteFixer.Views
             );
 
             var cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+                .Where(c => !string.IsNullOrEmpty(c.Name) && !existingCodes.Contains(c.Name))
+                .GroupBy(c => c.Name)
+                .Select(g => g.First())
                 .OrderBy(c => c.EnglishName)
                 .ToList();
 
             foreach (var ci in cultures)
             {
-                // Filter out existing installed languages (vi-VN, en-US, etc.) unless editing draft
-                if (existingCodes.Contains(ci.Name)) continue;
-
                 _allCultures.Add(new CultureOption
                 {
                     Code = ci.Name,
@@ -275,6 +284,7 @@ namespace SteamRouteFixer.Views
             if (_allCultures.Count > 0)
             {
                 CmbTargetCulture.SelectedIndex = 0;
+                LoadDraftForCulture(_allCultures[0].Code);
             }
         }
 
@@ -292,12 +302,11 @@ namespace SteamRouteFixer.Views
                     TranslatedText = string.Empty
                 });
             }
-
-            UpdateProgress();
         }
 
         private void CmbTargetCulture_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (_isLoadingData) return;
             if (CmbTargetCulture.SelectedItem is not CultureOption selected) return;
 
             LoadDraftForCulture(selected.Code);

@@ -42,8 +42,8 @@ if (-not (Test-Path ".\release_artifacts")) {
     New-Item -ItemType Directory -Path ".\release_artifacts" | Out-Null
 }
 
-Copy-Item ".\setup_output\SteamRouteFixer_Setup_v1.1.0.exe" ".\release_artifacts\" -Force -ErrorAction SilentlyContinue
-Copy-Item ".\publish_portable\SteamRouteFixer.exe" ".\release_artifacts\SteamRouteFixer_Portable_v1.1.0.exe" -Force -ErrorAction SilentlyContinue
+Copy-Item ".\setup_output\SteamRouteFixer_Setup_v1.2.0.exe" ".\release_artifacts\" -Force -ErrorAction SilentlyContinue
+Copy-Item ".\publish_portable\SteamRouteFixer.exe" ".\release_artifacts\SteamRouteFixer_Portable_v1.2.0.exe" -Force -ErrorAction SilentlyContinue
 
 Write-Host "`n==========================================================" -ForegroundColor Green
 Write-Host "✅ DONG GOI HOAN TAT! Cac file Release da san sang:" -ForegroundColor Green

@@ -92,48 +92,74 @@
                         </Grid>
                     </Border>
 
-                    <!-- Scrollable Items Container -->
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                        <ItemsControl x:Name="ItemsTranslationList" Margin="8,4">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="0,0,0,1" Padding="6,8">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="410"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
+                    <!-- Scrollable Virtualized Items Container -->
+                    <ListBox Grid.Row="1" x:Name="ItemsTranslationList"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Margin="4,2"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.CanContentScroll="True"
+                             VirtualizingPanel.IsVirtualizing="True"
+                             VirtualizingPanel.VirtualizationMode="Recycling"
+                             VirtualizingPanel.ScrollUnit="Pixel"
+                             HorizontalContentAlignment="Stretch"
+                             SelectionMode="Single">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="0,0,0,1" Padding="6,8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="410"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                            <!-- Left: Key & English Source & Variable Notice Badge -->
-                                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0">
-                                                <TextBlock Text="{Binding Key}" FontSize="10" Foreground="{DynamicResource TextMutedBrush}" FontFamily="Consolas"/>
-                                                <TextBlock Text="{Binding EnglishText}" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,2,0,0"/>
-                                                <Border Background="#20FFA500" BorderBrush="#66FFA500" BorderThickness="1" CornerRadius="3" Padding="6,2" Margin="0,4,0,0" HorizontalAlignment="Left" Visibility="{Binding VariableBadgeVisibility}">
-                                                    <TextBlock Text="{Binding VariablesHint}" Foreground="#FFB900" FontSize="11" FontWeight="SemiBold"/>
-                                                </Border>
-                                            </StackPanel>
+                                        <!-- Left: Key & English Source & Variable Notice Badge -->
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0">
+                                            <TextBlock Text="{Binding Key}" FontSize="10" Foreground="{DynamicResource TextMutedBrush}" FontFamily="Consolas"/>
+                                            <TextBlock Text="{Binding EnglishText}" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                                            <Border Background="#20FFA500" BorderBrush="#66FFA500" BorderThickness="1" CornerRadius="3" Padding="6,2" Margin="0,4,0,0" HorizontalAlignment="Left" Visibility="{Binding VariableBadgeVisibility}">
+                                                <TextBlock Text="{Binding VariablesHint}" Foreground="#FFB900" FontSize="11" FontWeight="SemiBold"/>
+                                            </Border>
+                                        </StackPanel>
 
-                                            <!-- Right: Target Translation TextBox & Error Alert -->
-                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                <TextBox Text="{Binding TranslatedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                         Padding="10,6" FontSize="12"
-                                                         Background="{DynamicResource SubCardBackgroundBrush}"
-                                                         Foreground="{DynamicResource TextPrimaryBrush}"
-                                                         BorderBrush="{Binding InputBorderBrushColor, Mode=OneWay}"
-                                                         BorderThickness="1.5"
-                                                         CaretBrush="{DynamicResource PrimaryAccentBrush}"
-                                                         TextChanged="TranslationTextBox_TextChanged"/>
-                                                <TextBlock Text="{Binding ValidationErrorMessage}"
-                                                           Foreground="#FF5252" FontSize="11" FontWeight="SemiBold"
-                                                           Margin="2,4,0,0"
-                                                           Visibility="{Binding ValidationWarningVisibility}"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                                        <!-- Right: Target Translation TextBox & Error Alert -->
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                            <TextBox Text="{Binding TranslatedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     Padding="10,6" FontSize="12"
+                                                     Background="{DynamicResource SubCardBackgroundBrush}"
+                                                     Foreground="{DynamicResource TextPrimaryBrush}"
+                                                     BorderBrush="{Binding InputBorderBrushColor, Mode=OneWay}"
+                                                     BorderThickness="1.5"
+                                                     CaretBrush="{DynamicResource PrimaryAccentBrush}"
+                                                     TextChanged="TranslationTextBox_TextChanged"/>
+                                            <TextBlock Text="{Binding ValidationErrorMessage}"
+                                                       Foreground="#FF5252" FontSize="11" FontWeight="SemiBold"
+                                                       Margin="2,4,0,0"
+                                                       Visibility="{Binding ValidationWarningVisibility}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </Border>
 

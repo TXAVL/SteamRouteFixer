@@ -8,7 +8,7 @@ namespace SteamRouteFixer.Services.Common
     public class UpdateChecker
     {
         private readonly HttpClient _httpClient;
-        public static readonly string CurrentVersion = "1.1.0";
+        public static readonly string CurrentVersion = "1.2.0";
 
         public UpdateChecker()
         {
