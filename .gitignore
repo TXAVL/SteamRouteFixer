@@ -2,6 +2,8 @@
 [Bb]in/
 [Oo]bj/
 publish_portable/
+setup_output/
+release_artifacts/
 
 ## Visual Studio & Rider Cache
 .vs/
