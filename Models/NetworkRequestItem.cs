@@ -56,7 +56,7 @@ namespace SteamRouteFixer.Models
 
         public string TimeString
         {
-            get => _timestamp.ToString("HH:mm:ss.fff");
+            get => SteamRouteFixer.Services.Common.TxaFormat.FormatTime(_timestamp);
             set { }
         }
 
@@ -221,7 +221,7 @@ namespace SteamRouteFixer.Models
 
         public string DurationDisplay
         {
-            get => $"{_durationMs} ms";
+            get => SteamRouteFixer.Services.Common.TxaFormat.FormatLatency(_durationMs);
             set { }
         }
 

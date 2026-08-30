@@ -44,7 +44,7 @@ namespace SteamRouteFixer.Models
 
         public string TimeString
         {
-            get => Timestamp.ToString("HH:mm:ss.fff");
+            get => SteamRouteFixer.Services.Common.TxaFormat.FormatTime(Timestamp);
             set { }
         }
 
